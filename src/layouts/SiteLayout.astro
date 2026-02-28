@@ -1,0 +1,92 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Revanth Pattipati',
+  description = 'AI infrastructure and agentic systems architect',
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body class="site-body">
+    <Header />
+
+    <div class="site-shell">
+      <main class="site-main">
+        <slot />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(html),
+  :global(body) {
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(body.site-body) {
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+      sans-serif;
+    background: #020617; /* slate-950 vibe */
+    color: #e5e7eb; /* slate-200 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .site-shell {
+    min-height: calc(100vh - 120px); /* rough space for header/footer */
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1.5rem 3rem;
+    box-sizing: border-box;
+  }
+
+  .site-main {
+    width: 100%;
+    max-width: 960px;
+  }
+
+  /* Basic typography */
+  .site-main h1,
+  .site-main h2,
+  .site-main h3 {
+    color: #f9fafb; /* almost white */
+    letter-spacing: 0.02em;
+  }
+
+  .site-main p {
+    line-height: 1.7;
+    color: #d1d5db; /* slate-300 */
+  }
+
+  .site-main a {
+    color: #38bdf8; /* sky-400 */
+    text-decoration: none;
+  }
+
+  .site-main a:hover {
+    text-decoration: underline;
+  }
+
+  /* Optional: subtle divider style if you use <hr> */
+  .site-main hr {
+    border: 0;
+    border-top: 1px solid #1f2937; /* slate-800 */
+    margin: 2rem 0;
+  }
+</style>
