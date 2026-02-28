@@ -3,28 +3,118 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
 <SiteLayout
-  title="Revanth Pattipati – Agentic Systems & AI Infrastructure"
-  description="Principal-track AI infrastructure leader focused on production-grade agentic systems, evaluation, and observability."
+  title="Revanth Pattipati – Agentic Systems Architect"
+  description="AI infrastructure leader building production-grade agentic systems, evaluation frameworks, and enterprise AI platforms."
 >
-  <section>
-    <h1>Revanth Pattipati</h1>
-    <p>
-      AI infrastructure leader building production-grade agentic systems,
-      evaluation frameworks, and enterprise AI platforms.
-    </p>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">AI Infrastructure • Agentic Systems • Enterprise Architecture</p>
 
-    <hr />
+      <h1>
+        Designing and operationalizing
+        <span class="accent">production-grade agentic systems</span>
+        at enterprise scale.
+      </h1>
 
-    <h2>Current Focus</h2>
-    <ul>
-      <li>Designing secure multi-agent orchestration systems</li>
-      <li>Building evaluation harnesses for LLM & agent workflows</li>
-      <li>Cost-aware model routing & observability tooling</li>
-    </ul>
+      <p class="subtext">
+        I lead AI infrastructure initiatives focused on secure orchestration,
+        evaluation frameworks, observability, and cost-aware LLM systems.
+        I build systems others build on.
+      </p>
 
-    <p>
-      This site will evolve into a public record of systems built,
-      architectural thinking, and long-form technical writing.
-    </p>
+      <div class="hero-cta">
+        <a href="/blog">Read Writing</a>
+        <a href="/about" class="secondary">About Me</a>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div class="snapshot">
+        <h3>Currently Leading</h3>
+        <ul>
+          <li>Enterprise multi-agent orchestration</li>
+          <li>LLM evaluation & regression testing frameworks</li>
+          <li>Secure tool-calling pipelines</li>
+          <li>Cost & latency optimization systems</li>
+        </ul>
+
+        <hr />
+
+        <p class="micro">
+          Off-duty: marathon training, skydiving, and recently promoted to dad.
+        </p>
+      </div>
+    </div>
   </section>
 </SiteLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: #64748b;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .accent {
+    color: #38bdf8;
+  }
+
+  .subtext {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta a {
+    margin-right: 1.5rem;
+    font-weight: 500;
+  }
+
+  .hero-cta .secondary {
+    color: #94a3b8;
+  }
+
+  .snapshot {
+    background: #0f172a;
+    padding: 1.75rem;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+  }
+
+  .snapshot h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .snapshot ul {
+    padding-left: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .micro {
+    font-size: 0.85rem;
+    color: #94a3b8;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
