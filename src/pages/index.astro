@@ -7,14 +7,20 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   description="AI infrastructure leader building production-grade agentic systems, evaluation frameworks, and enterprise AI platforms."
 >
   <section class="hero">
-    <div class="hero-text">
-      <p class="eyebrow">AI Infrastructure • Agentic Systems • Enterprise Architecture</p>
 
-      <h1>
+    <div class="hero-text">
+
+      <h1 class="name">Revanth Pattipati</h1>
+
+      <p class="eyebrow">
+        AI Infrastructure • Agentic Systems • Enterprise Architecture
+      </p>
+
+      <h2 class="headline">
         Designing and operationalizing
         <span class="accent">production-grade agentic systems</span>
         at enterprise scale.
-      </h1>
+      </h2>
 
       <p class="subtext">
         I lead AI infrastructure initiatives focused on secure orchestration,
@@ -26,6 +32,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         <a href="/blog">Read Writing</a>
         <a href="/about" class="secondary">About Me</a>
       </div>
+
     </div>
 
     <div class="hero-side">
@@ -45,6 +52,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         </p>
       </div>
     </div>
+
   </section>
 </SiteLayout>
 
@@ -53,8 +61,18 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 3rem;
-    margin-top: 3rem;
+    margin-top: 4rem;
     align-items: start;
+  }
+
+  .name {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #ffffff, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .eyebrow {
@@ -62,12 +80,12 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     font-size: 0.8rem;
     letter-spacing: 0.12em;
     color: #64748b;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
   }
 
-  h1 {
-    font-size: 2.6rem;
-    line-height: 1.2;
+  .headline {
+    font-size: 2.2rem;
+    line-height: 1.25;
     margin-bottom: 1.5rem;
   }
 
@@ -115,6 +133,14 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
+    }
+
+    .name {
+      font-size: 2.4rem;
+    }
+
+    .headline {
+      font-size: 1.7rem;
     }
   }
 </style>
