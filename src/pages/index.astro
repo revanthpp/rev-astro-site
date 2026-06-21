@@ -56,16 +56,12 @@ const certifications = getCertifications().filter((certification) => certificati
 				<div class="trace trace-b"></div>
 				<div class="contour contour-a"></div>
 				<div class="contour contour-b"></div>
-				<div class="node primary">After demo</div>
-				<div class="node">Evaluate</div>
-				<div class="node">Adopt</div>
-				<div class="node">Operate</div>
-				<div class="node">Govern</div>
+				<div class="node node-primary">After demo</div>
+				<div class="node node-evaluate">Evaluate</div>
+				<div class="node node-adopt">Adopt</div>
+				<div class="node node-operate">Operate</div>
+				<div class="node node-govern">Govern</div>
 				<div class="signal"></div>
-				<div class="visual-caption">
-					<span>Applied AI</span>
-					<strong>Infrastructure-tested thinking</strong>
-				</div>
 			</div>
 		</div>
 	</section>
@@ -147,11 +143,11 @@ const certifications = getCertifications().filter((certification) => certificati
 		<div class="life-grid">
 			<figure>
 				<img src={profile.images.skydiving.src} alt={profile.images.skydiving.alt} loading="lazy" />
-				<figcaption>Certified skydiver / respect the failure modes</figcaption>
+				<figcaption>Certified skydiver</figcaption>
 			</figure>
 			<figure>
 				<img src={profile.images.halfMarathon.src} alt={profile.images.halfMarathon.alt} loading="lazy" />
-				<figcaption>First half marathon / feedback loops with mileage</figcaption>
+				<figcaption>First half marathon</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -237,14 +233,16 @@ const certifications = getCertifications().filter((certification) => certificati
 
 	.hero-photo {
 		position: absolute;
-		inset: 7% 8% auto auto;
-		width: min(72%, 370px);
+		left: 50%;
+		top: 50%;
+		width: min(62%, 340px);
 		aspect-ratio: 4 / 5;
 		border: 1px solid rgba(17, 19, 24, 0.12);
 		border-radius: var(--radius);
 		box-shadow: 0 24px 70px rgba(17, 19, 24, 0.16);
 		object-fit: cover;
 		object-position: center 32%;
+		transform: translate(-50%, -50%);
 		z-index: 1;
 	}
 
@@ -264,32 +262,32 @@ const certifications = getCertifications().filter((certification) => certificati
 		text-transform: uppercase;
 	}
 
-	.node.primary {
-		left: 28%;
-		top: 40%;
+	.node-primary {
+		left: 1rem;
+		bottom: 1rem;
 		border-color: rgba(21, 93, 252, 0.34);
 		background: #f7fbff;
 		color: var(--accent);
 	}
 
-	.node:nth-of-type(2) {
-		left: 8%;
-		top: 18%;
+	.node-evaluate {
+		right: 1rem;
+		top: 1rem;
 	}
 
-	.node:nth-of-type(3) {
-		right: 12%;
-		top: 22%;
+	.node-adopt {
+		right: 1rem;
+		bottom: 1rem;
 	}
 
-	.node:nth-of-type(4) {
-		left: 10%;
-		bottom: 18%;
+	.node-operate {
+		left: 1rem;
+		top: 48%;
 	}
 
-	.node:nth-of-type(5) {
-		right: 10%;
-		bottom: 20%;
+	.node-govern {
+		left: 1rem;
+		top: 1rem;
 	}
 
 	.trace {
@@ -339,34 +337,6 @@ const certifications = getCertifications().filter((certification) => certificati
 		border-radius: 50%;
 		background: var(--accent);
 		box-shadow: 0 0 0 14px rgba(21, 93, 252, 0.1);
-	}
-
-	.visual-caption {
-		position: absolute;
-		left: 1rem;
-		bottom: 1rem;
-		z-index: 3;
-		display: grid;
-		gap: 0.2rem;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.76);
-		backdrop-filter: blur(18px);
-		padding: 0.85rem 1rem;
-	}
-
-	.visual-caption span {
-		color: var(--accent);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	.visual-caption strong {
-		color: var(--ink);
-		font-size: 0.95rem;
 	}
 
 	.credibility {
@@ -617,7 +587,7 @@ const certifications = getCertifications().filter((certification) => certificati
 		}
 
 		.hero-photo {
-			width: min(68%, 320px);
+			width: min(58%, 300px);
 		}
 
 		.credibility,
@@ -639,8 +609,7 @@ const certifications = getCertifications().filter((certification) => certificati
 		}
 
 		.hero-photo {
-			inset: 5% 5% auto auto;
-			width: 76%;
+			width: 64%;
 		}
 
 		.credibility span {
