@@ -37,6 +37,7 @@ const certifications = getCertifications().filter((certification) => certificati
 				<p>{profile.personalInterests}</p>
 			</div>
 			<aside>
+				<img class="about-photo" src={profile.images.professional.src} alt={profile.images.professional.alt} />
 				<h2>Current interests</h2>
 				<div class="interest-list">
 					{interests.map((interest) => <span>{interest}</span>)}
@@ -93,6 +94,16 @@ const certifications = getCertifications().filter((certification) => certificati
 	aside h2 {
 		font-size: 1.25rem;
 		margin-bottom: 1rem;
+	}
+
+	.about-photo {
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		margin-bottom: 1.25rem;
+		object-fit: cover;
+		object-position: center 34%;
 	}
 
 	.interest-list {

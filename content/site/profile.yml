@@ -22,3 +22,14 @@ personalInterests: |
   Outside work, I’m usually training for something, learning something, or finding outdoor hobbies that make risk management feel less theoretical. I’m a certified skydiver with 75 jumps and I’m into snowboarding, mountain biking, hiking, camping, and most things involving fresh air and controlled chaos.
 
   I like systems with guardrails and hobbies that occasionally test them.
+
+images:
+  professional:
+    src: "/images/revanth-professional.jpg"
+    alt: "Revanth Pattipati professional portrait"
+  skydiving:
+    src: "/images/revanth-skydiving-web.jpg"
+    alt: "Revanth Pattipati skydiving above the landscape"
+  halfMarathon:
+    src: "/images/revanth-half-marathon.jpg"
+    alt: "Revanth Pattipati and his wife after finishing their first half marathon"
