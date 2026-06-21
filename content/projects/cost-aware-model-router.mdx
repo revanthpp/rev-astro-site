@@ -1,0 +1,28 @@
+---
+title: Cost-Aware Model Router
+description: A routing layer that balances task complexity, latency, confidence, and budget.
+problem: >-
+  Using the largest model for every task creates avoidable cost and latency, while under-routing can
+  degrade quality.
+architecture: >-
+  Requests are classified by task profile, routed through policy and budget checks, and resolved
+  with fallback paths based on confidence and evaluation signals.
+tradeoffs:
+  - Introduces routing complexity to reduce long-term unit economics.
+  - Requires good telemetry before routing decisions can become trustworthy.
+  - Allows teams to tune for business constraints instead of raw model preference.
+technologies:
+  - TypeScript
+  - FastAPI
+  - Redis
+  - OpenTelemetry
+status: Prototype
+featured: true
+githubUrl: https://github.com/revanthpattipati/model-router
+writeupUrl: /writing/model-routing-enterprise-ai/
+draft: false
+category: Systems Design
+---
+
+
+The router treats model choice as a runtime architecture decision. The goal is not just cheaper inference; it is disciplined orchestration aligned to task risk.

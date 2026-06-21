@@ -1,0 +1,112 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const notes = (await getCollection('notes')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+).filter((note) => !note.data.draft);
+const renderedNotes = await Promise.all(
+	notes.map(async (note) => ({
+		...note,
+		Content: (await render(note)).Content,
+	})),
+);
+---
+
+<SiteLayout
+	title="Field Notes | Revanth Pattipati"
+	description="Short notes and observations on AI systems, enterprise adoption, infrastructure, and leadership."
+>
+	<section class="page-hero section-shell">
+		<p class="kicker">Field Notes</p>
+		<h1>Field Notes</h1>
+		<p>
+			Short thoughts on applied AI, systems, leadership, and the messy middle between
+			prototype and production.
+		</p>
+		<p>
+			Some ideas are not ready to become essays yet. Some are better as sharp little
+			reminders.
+		</p>
+		<p>
+			Also, not every thought needs a 12-part thread and a dramatic diagram.
+		</p>
+	</section>
+
+	<section class="notes-grid section-shell">
+		{renderedNotes.map((note) => (
+			<article class="note-card">
+				<div class="note-meta">
+					<span class="tag">{note.data.topic ?? note.data.category}</span>
+					<span class="meta">{note.data.date.toLocaleDateString('en-US', {
+						month: 'short',
+						day: 'numeric',
+						year: 'numeric',
+					})}</span>
+				</div>
+				<blockquote>{note.data.title}</blockquote>
+				<div class="prose">
+					<note.Content />
+				</div>
+			</article>
+		))}
+	</section>
+</SiteLayout>
+
+<style>
+	.page-hero {
+		padding: 5rem 0 3rem;
+	}
+
+	.page-hero h1 {
+		max-width: 980px;
+		margin: 0.7rem 0 1.2rem;
+	}
+
+	.page-hero p:not(.kicker) {
+		max-width: 720px;
+		font-size: 1.18rem;
+	}
+
+	.notes-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		padding-bottom: 6rem;
+	}
+
+	.note-card {
+		display: grid;
+		gap: 1.4rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: rgba(255, 255, 255, 0.58);
+		padding: 1.25rem;
+	}
+
+	.note-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	blockquote {
+		border: 0;
+		color: var(--ink);
+		font-size: clamp(1.6rem, 3vw, 2.6rem);
+		font-weight: 640;
+		line-height: 1.12;
+		padding: 0;
+	}
+
+	.prose {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 820px) {
+		.notes-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

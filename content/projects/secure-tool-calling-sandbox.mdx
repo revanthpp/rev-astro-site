@@ -1,0 +1,28 @@
+---
+title: Secure Tool-Calling Sandbox
+description: Permissioned tool execution with scoped access, audit logs, and approval gates.
+problem: >-
+  Agent tools can create security and governance risk when access is broad, implicit, or poorly
+  audited.
+architecture: >-
+  A tool gateway validates typed calls against policy, OAuth scopes, sandbox rules, and human
+  approval thresholds before execution.
+tradeoffs:
+  - Makes tool execution slower where approval or policy checks are required.
+  - Keeps auditability and least privilege ahead of raw automation speed.
+  - Makes fallback behavior a first-class design concern.
+technologies:
+  - OAuth
+  - Policy engine
+  - TypeScript
+  - Audit logging
+status: Prototype
+featured: false
+githubUrl: https://github.com/revanthpattipati/tool-sandbox
+writeupUrl: /writing/designing-secure-tool-calling/
+draft: false
+category: Systems Design
+---
+
+
+This sandbox explores what enterprise-grade tool execution needs before agents can safely act inside sensitive workflows.

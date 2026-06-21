@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+export async function getStaticPaths() {
+	const posts = (await getCollection('writing')).filter((post) => !post.data.draft);
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<SiteLayout title={`${post.data.title} | Revanth Pattipati`} description={post.data.description}>
+	<article class="article section-shell">
+		<header class="article-header">
+			<a class="back-link" href="/writing">Writing</a>
+			<div class="article-meta">
+				<span class="tag">{post.data.category}</span>
+				<span class="meta">{post.data.readingTime}</span>
+			</div>
+			<h1>{post.data.title}</h1>
+			<p>{post.data.description}</p>
+		</header>
+		<div class="prose">
+			<Content />
+		</div>
+	</article>
+</SiteLayout>
+
+<style>
+	.article {
+		max-width: 860px;
+		padding: 5rem 0 7rem;
+	}
+
+	.article-header {
+		display: grid;
+		gap: 1.2rem;
+		margin-bottom: 3rem;
+	}
+
+	.article-header h1 {
+		font-size: clamp(2.8rem, 7vw, 5.4rem);
+	}
+
+	.article-header p {
+		color: var(--graphite);
+		font-size: 1.2rem;
+		line-height: 1.55;
+	}
+
+	.article-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.back-link {
+		width: fit-content;
+		color: var(--muted);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.back-link:hover {
+		color: var(--accent);
+	}
+</style>

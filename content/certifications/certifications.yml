@@ -1,0 +1,16 @@
+certifications:
+  - name: "Artificial Intelligence Certification"
+    issuer: "UC Berkeley"
+    date: ""
+    url: ""
+    featured: true
+  - name: "Artificial Intelligence Certification"
+    issuer: "MIT"
+    date: ""
+    url: ""
+    featured: true
+  - name: "SAFe Agilist 6.0"
+    issuer: "Scaled Agile"
+    date: ""
+    url: ""
+    featured: true

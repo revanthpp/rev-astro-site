@@ -1,0 +1,28 @@
+---
+title: LLM Observability Dashboard
+description: A dashboard concept for tracing workflow quality, cost, latency, and failures.
+problem: >-
+  Teams often know that an AI workflow failed without knowing where, why, how often, or what
+  changed.
+architecture: >-
+  Prompt, completion, tool, retry, latency, cost, and evaluation events are stitched into workflow
+  traces with release and version metadata.
+tradeoffs:
+  - Prioritizes trace readability over maximal metric density.
+  - Connects evaluation outcomes to observability so quality and operations stay close.
+  - Requires careful data handling for sensitive prompts and outputs.
+technologies:
+  - OpenTelemetry
+  - ClickHouse
+  - React
+  - PostgreSQL
+status: Concept
+featured: false
+githubUrl: https://github.com/revanthpattipati/llm-observability
+writeupUrl: /writing/observability-for-llm-workflows/
+draft: false
+category: Systems Design
+---
+
+
+The dashboard is a thinking tool for AI operations: traces that make workflow behavior explainable across cost, latency, quality, and release history.

@@ -1,5 +1,14 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+import { getProfile, getSocialLinks } from './lib/siteContent';
 
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+const profile = getProfile();
+const socialLinks = getSocialLinks();
+
+export const SITE_TITLE = profile.name;
+export const SITE_DESCRIPTION =
+	'Applied AI leader with infrastructure roots, helping turn AI ideas into practical enterprise systems for the part after the demo.';
+
+export const SOCIAL_LINKS = {
+	linkedin: socialLinks.linkedin,
+	github: socialLinks.github,
+	email: socialLinks.emailHref,
+};

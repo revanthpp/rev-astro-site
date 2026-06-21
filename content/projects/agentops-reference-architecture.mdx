@@ -1,0 +1,28 @@
+---
+title: AgentOps Reference Architecture
+description: A production-style architecture for enterprise agent orchestration.
+problem: >-
+  Enterprise agent systems need patterns for planning, execution, memory, tool access, approval
+  gates, evaluation, and observability.
+architecture: >-
+  Planner-executor workflows run through a policy layer, scoped tool gateway, bounded memory
+  service, evaluation loop, and trace pipeline.
+tradeoffs:
+  - Adds explicit control points even when they create more orchestration overhead.
+  - Separates memory, tools, and planning so each boundary can be governed independently.
+  - Treats human-in-the-loop review as a system capability, not an exception path.
+technologies:
+  - LangGraph
+  - OpenTelemetry
+  - OAuth
+  - Redis
+status: Architecture exploration
+featured: true
+githubUrl: https://github.com/revanthpattipati/agentops-reference
+writeupUrl: /writing/why-most-ai-agents-fail-before-production/
+draft: false
+category: Systems Design
+---
+
+
+This reference architecture explores the practical layers required for reliable enterprise agents: orchestration, access control, state, evaluation, and operations.

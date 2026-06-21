@@ -1,0 +1,207 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const posts = (await getCollection('writing')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+).filter((post) => !post.data.draft);
+const categories = [...new Set(posts.map((post) => post.data.category))].sort();
+---
+
+<SiteLayout
+	title="Writing | Revanth Pattipati"
+	description="Essays on applied AI, enterprise systems, agentic workflows, and the practical realities of making AI useful."
+>
+	<section class="page-hero section-shell">
+		<p class="kicker">Writing</p>
+		<h1>Writing</h1>
+		<p>
+			I write about the practical side of AI: what it takes to move from interesting demos to
+			useful systems inside real organizations.
+		</p>
+		<p>
+			The themes I keep coming back to are enterprise adoption, agentic workflows, AI
+			productization, evaluation, observability, operating models, and the infrastructure
+			reality behind AI delivery.
+		</p>
+		<p>
+			Less “AI will change everything.”
+		</p>
+		<p>
+			More “Here is what breaks when you try to make it work.”
+		</p>
+	</section>
+
+	<section class="writing-page section-shell">
+		<div class="filters" aria-label="Filter writing by category">
+			<button class="filter active" type="button" data-filter="all">All</button>
+			{categories.map((category) => (
+				<button class="filter" type="button" data-filter={category}>{category}</button>
+			))}
+		</div>
+
+		<div class="article-grid">
+			{posts.length === 0 ? (
+				<div class="empty-state">
+					<span class="tag">Drafting</span>
+					<h2>Long-form essays are being shaped.</h2>
+					<p>
+						The first drafts are in the content system but intentionally unpublished. Field Notes
+						are carrying the current public thinking for V1.
+					</p>
+				</div>
+			) : (
+				posts.map((post) => (
+					<a class="article-card" href={`/writing/${post.id}/`} data-category={post.data.category}>
+						<div class="article-meta">
+							<span class="tag">{post.data.category}</span>
+							<span class="meta">{post.data.readingTime}</span>
+						</div>
+						<div>
+							<h2>{post.data.title}</h2>
+							<p>{post.data.description}</p>
+						</div>
+						<div class="article-footer">
+							<span class="meta">{post.data.date.toLocaleDateString('en-US', {
+								month: 'short',
+								day: 'numeric',
+								year: 'numeric',
+							})}</span>
+							{post.data.latest && <span class="tag">Latest</span>}
+							{post.data.featured && !post.data.latest && <span class="tag">Featured</span>}
+						</div>
+					</a>
+				))
+			)}
+		</div>
+	</section>
+</SiteLayout>
+
+<script>
+	const filters = [...document.querySelectorAll<HTMLButtonElement>('.filter')];
+	const cards = [...document.querySelectorAll<HTMLElement>('.article-card')];
+
+	filters.forEach((filter) => {
+		filter.addEventListener('click', () => {
+			const value = filter.dataset.filter;
+			filters.forEach((item) => item.classList.toggle('active', item === filter));
+			cards.forEach((card) => {
+				card.hidden = value !== 'all' && card.dataset.category !== value;
+			});
+		});
+	});
+</script>
+
+<style>
+	.page-hero {
+		padding: 5rem 0 3rem;
+	}
+
+	.page-hero h1 {
+		max-width: 980px;
+		margin: 0.7rem 0 1.2rem;
+	}
+
+	.page-hero p:not(.kicker) {
+		max-width: 760px;
+		font-size: 1.18rem;
+	}
+
+	.writing-page {
+		padding-bottom: 6rem;
+	}
+
+	.filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.filter {
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.64);
+		color: var(--muted);
+		cursor: pointer;
+		font: inherit;
+		font-size: 0.88rem;
+		font-weight: 650;
+		padding: 0.55rem 0.8rem;
+	}
+
+	.filter:hover,
+	.filter.active {
+		border-color: var(--ink);
+		background: var(--ink);
+		color: #fff;
+	}
+
+	.article-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	.article-card {
+		display: grid;
+		min-height: 310px;
+		align-content: space-between;
+		gap: 1.4rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: rgba(255, 255, 255, 0.58);
+		color: inherit;
+		padding: 1.25rem;
+		text-decoration: none;
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease,
+			background 160ms ease;
+	}
+
+	.empty-state {
+		grid-column: 1 / -1;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: rgba(255, 255, 255, 0.58);
+		padding: 1.5rem;
+	}
+
+	.empty-state h2 {
+		font-size: 1.7rem;
+		margin: 1rem 0 0.7rem;
+	}
+
+	.article-card:hover {
+		background: var(--surface);
+		box-shadow: var(--shadow);
+		transform: translateY(-2px);
+	}
+
+	.article-meta,
+	.article-footer {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.article-card h2 {
+		font-size: 1.45rem;
+		line-height: 1.12;
+		margin-bottom: 0.9rem;
+	}
+
+	@media (max-width: 980px) {
+		.article-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.article-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

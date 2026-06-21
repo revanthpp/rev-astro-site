@@ -1,0 +1,11 @@
+items:
+  - label: "Home"
+    href: "/"
+  - label: "Writing"
+    href: "/writing"
+  - label: "Field Notes"
+    href: "/notes"
+  - label: "About"
+    href: "/about"
+  - label: "Contact"
+    href: "/contact"

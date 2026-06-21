@@ -1,0 +1,30 @@
+---
+title: EvalKit
+description: A lightweight evaluation framework for LLM and agentic workflows.
+problem: >-
+  Teams need a repeatable way to catch regressions, classify failures, and understand whether
+  prompt, model, or tool changes improved behavior.
+architecture: >-
+  Scenario suites feed versioned prompts and workflows into evaluators, producing scorecards,
+  failure labels, trace links, and release notes.
+tradeoffs:
+  - Keeps evaluation lightweight enough for teams to adopt before a heavier platform exists.
+  - Prioritizes workflow regression and failure taxonomy over broad benchmark coverage.
+  - Makes traces reviewable by humans instead of hiding judgment inside a single score.
+technologies:
+  - TypeScript
+  - MDX
+  - OpenTelemetry
+  - PostgreSQL
+status: Reference design
+featured: true
+githubUrl: https://github.com/revanthpattipati/evalkit
+writeupUrl: /writing/evaluation-operating-system-agentic-workflows/
+draft: false
+category: Systems Design
+---
+
+
+EvalKit is designed as a pragmatic evaluation layer for teams moving from prompt experiments to governed workflow releases.
+
+The system emphasizes regression testing, failure classification, prompt and workflow versioning, and scorecards that are easy for product, engineering, and risk teams to discuss together.

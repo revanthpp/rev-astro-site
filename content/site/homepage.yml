@@ -1,0 +1,78 @@
+primaryCta: "Read my thinking"
+secondaryCta: "Connect on LinkedIn"
+
+featuredWriting:
+  - "why-most-ai-agents-fail-before-production"
+  - "the-real-work-starts-after-the-ai-demo"
+  - "why-enterprise-ai-needs-an-operating-model"
+
+featuredFieldNotes:
+  - "everyone-is-building-ai-tools"
+  - "after-the-demo"
+  - "ai-infrastructure-reality"
+  - "token-cost-is-architecture-feedback"
+  - "trust-is-getting-rearchitected"
+
+featuredProjects:
+  - "evalkit"
+  - "agentops-reference-architecture"
+  - "cost-aware-model-router"
+
+credibility:
+  - "Applied AI in the enterprise"
+  - "Agentic workflows"
+  - "AI productization"
+  - "Infrastructure-tested thinking"
+
+intro:
+  eyebrow: "Intro"
+  headline: "I care about the unglamorous parts of AI."
+  body: |
+    The prototype is the easy part. The harder questions usually show up later: Who owns it? How is it evaluated? What happens when it fails? How much does it cost? Who approved the tool call? Where are the logs? Why is the agent still looping?
+
+    That is where I like to work — in the space between AI ambition and operational reality.
+
+focusEyebrow: "What I Think About"
+focusHeadline: "Practical AI thinking for real organizations."
+focusDescription: "The work sits between applied AI, enterprise systems, infrastructure, analytics, productization, adoption, and the operating reality that decides whether AI becomes useful."
+
+focusAreas:
+  - title: "Applied AI in the Enterprise"
+    description: "Making AI useful inside large organizations, where real adoption depends on trust, governance, workflows, and execution — not just impressive demos."
+  - title: "Agentic Workflows and AI Assistants"
+    description: "Exploring where agents work, where they fail, and why orchestration, evaluation, human oversight, and exit conditions matter more than most teams realize."
+  - title: "AI Productization"
+    description: "Thinking through the path from idea to prototype to pilot to production-ish reality — the place where vague AI enthusiasm gets allergic to specifics."
+  - title: "AI Operating Models"
+    description: "How COEs, champions, product teams, engineering groups, business stakeholders, and governance teams can work together without turning AI delivery into committee theater."
+  - title: "AI Infrastructure and Reliability"
+    description: "The supporting superpower: permissions, data access, latency, cost, monitoring, resilience, and the uncomfortable truth that AI is only impressive until production constraints show up."
+
+currentThinking:
+  eyebrow: "Current Thinking"
+  headline: "Warm, practical notes on what breaks after the demo."
+  fallback: "Long-form essays are in draft. For now, Field Notes carry the live thinking."
+
+fieldNotes:
+  eyebrow: "Field Notes"
+  headline: "Short observations from the messy middle."
+
+outsideWork:
+  eyebrow: "Outside the Work"
+  headline: "Outside the work"
+  body: |
+    I’m drawn to hard systems, long races, and outdoor hobbies that occasionally make gravity a stakeholder.
+
+    Certified skydiver. Snowboarding learner. Mountain biking enthusiast. Hiking and camping whenever possible. Generally optimistic around fresh air, hard problems, and Type 2 fun.
+
+    The overlap with AI work is bigger than it sounds: preparation matters, feedback loops matter, and confidence without respect for failure modes is how you end up in a tree.
+
+certifications:
+  eyebrow: "Certifications / Signals"
+  headline: "Signals that support the applied AI, infrastructure, and leadership story."
+
+contact:
+  eyebrow: "Contact"
+  headline: "AI ideas are easy to start. Making them useful is the interesting part."
+  description: "I’m always interested in thoughtful conversations about applied AI, enterprise systems, infrastructure-tested thinking, and what happens after the demo."
+  cta: "Start a conversation"

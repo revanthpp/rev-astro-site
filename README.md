@@ -1,62 +1,135 @@
-# Astro Starter Kit: Blog
+# Revanth Pattipati Personal Site
+
+An Astro-powered personal website for AI infrastructure, agentic systems, enterprise AI architecture, writing, systems work, and field notes.
+
+## Local Development
 
 ```sh
-npm create astro@latest -- --template blog
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The dev server runs at `http://localhost:4321/` by default.
 
-Features:
+## Content Workflow
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+Editable website content lives in the root `content/` folder. The design and page code live in `src/`.
 
 ```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+content/
+  site/
+    profile.yml
+    homepage.yml
+    navigation.yml
+    social-links.yml
+  writing/
+  notes/
+  projects/
+  certifications/
+    certifications.yml
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Use `content/site/profile.yml` for name, title, target title, location, hero headline, hero subheadline, bios, positioning, and personal interests.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Use `content/site/homepage.yml` for featured writing, featured projects, focus areas, credibility strip, CTA labels, and the speaking/advisory section.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Use `content/site/navigation.yml` for header navigation.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Use `content/site/social-links.yml` for LinkedIn, GitHub, and email links.
 
-## 🧞 Commands
+Use `content/certifications/certifications.yml` for certifications.
 
-All commands are run from the root of the project, from a terminal:
+## Add Writing
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Create a file in `content/writing/` using lowercase words separated by hyphens.
 
-## 👀 Want to learn more?
+```mdx
+---
+title: "Why Most AI Agents Fail Before They Reach Production"
+description: "A systems view of why agentic workflows break down before production."
+date: "2026-06-20"
+category: "Agentic Systems"
+tags:
+  - agents
+  - enterprise-ai
+readingTime: "6 min read"
+featured: true
+draft: false
+---
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Article body in Markdown or MDX.
+```
 
-## Credit
+Set `draft: true` to keep it unpublished.
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+## Add Notes
+
+Create a file in `content/notes/`.
+
+```mdx
+---
+title: "Token cost is architecture feedback."
+date: "2026-06-20"
+category: "Field Notes"
+tags:
+  - llm-infrastructure
+  - cost
+draft: false
+---
+
+Token cost is not just a billing problem. It is a signal that the workflow, context strategy, routing logic, or agent loop may need better architecture.
+```
+
+## Add Projects
+
+Create a file in `content/projects/`.
+
+```mdx
+---
+title: "EvalKit"
+description: "A lightweight evaluation framework for LLM and agentic workflows."
+status: "In Progress"
+category: "Evaluation"
+technologies:
+  - TypeScript
+  - Python
+  - OpenAI
+problem: "LLM and agentic systems are difficult to trust without repeatable evaluation."
+architecture: "EvalKit provides test cases, scoring, failure classification, prompt versioning, and regression checks."
+tradeoffs:
+  - "Simplicity over excessive abstraction"
+  - "Repeatable tests over one-off demos"
+githubUrl: ""
+writeupUrl: ""
+featured: true
+draft: false
+---
+
+Longer project notes in Markdown or MDX.
+```
+
+## Validate And Build
+
+Run these before committing content changes:
+
+```sh
+npm run content:check
+npm run build
+```
+
+Preview the production build locally:
+
+```sh
+npm run preview
+```
+
+## Deploy
+
+The production build is emitted to `dist/`. Deploy the project to any static Astro host such as Vercel, Netlify, Cloudflare Pages, or GitHub Pages.
+
+For Vercel or Netlify:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+
+After pushing to GitHub, Vercel should automatically deploy the latest version.
