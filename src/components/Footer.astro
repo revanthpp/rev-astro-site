@@ -1,23 +1,20 @@
 ---
 import { SOCIAL_LINKS } from '../consts';
-import { getProfile } from '../lib/siteContent';
 
 const today = new Date();
-const profile = getProfile();
 ---
 
 <footer class="site-footer">
 	<div class="footer-shell">
-		<div>
-			<strong>{profile.name}</strong>
-			<p>{profile.positioning}</p>
+		<div class="footer-brand">
+			<strong>Revanth Pattipati</strong>
+			<span>&copy; {today.getFullYear()}</span>
 		</div>
 		<nav aria-label="Footer links">
 			<a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
 			<a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
 			<a href={SOCIAL_LINKS.email}>Email</a>
 		</nav>
-		<span>&copy; {today.getFullYear()}</span>
 	</div>
 </footer>
 
@@ -28,20 +25,25 @@ const profile = getProfile();
 	}
 
 	.footer-shell {
-		display: grid;
+		display: flex;
 		width: min(1180px, calc(100% - 40px));
-		grid-template-columns: 1.3fr auto auto;
-		gap: 2rem;
+		justify-content: space-between;
+		gap: 1.5rem;
 		align-items: center;
 		margin: 0 auto;
 	}
 
-	strong {
-		display: block;
-		margin-bottom: 0.25rem;
+	.footer-brand {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		align-items: baseline;
 	}
 
-	p,
+	strong {
+		font-size: 0.95rem;
+	}
+
 	span {
 		color: var(--muted);
 		font-size: 0.92rem;
@@ -49,7 +51,9 @@ const profile = getProfile();
 
 	nav {
 		display: flex;
-		gap: 1rem;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.35rem 1rem;
 	}
 
 	a {
@@ -65,9 +69,12 @@ const profile = getProfile();
 
 	@media (max-width: 760px) {
 		.footer-shell {
-			grid-template-columns: 1fr;
-			align-items: start;
-			gap: 1.2rem;
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		nav {
+			justify-content: flex-start;
 		}
 	}
 </style>

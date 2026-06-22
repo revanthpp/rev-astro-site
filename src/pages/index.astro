@@ -55,9 +55,9 @@ const certifications = getCertifications().filter((certification) => certificati
 				<div class="portrait-frame">
 					<img src={profile.images.professional.src} alt={profile.images.professional.alt} />
 				</div>
-				<span class="portrait-chip chip-operate">Operate</span>
+				<span class="portrait-chip chip-build">Build</span>
 				<span class="portrait-chip chip-evaluate">Evaluate</span>
-				<span class="portrait-chip chip-adopt">Adopt</span>
+				<span class="portrait-chip chip-operate">Operate</span>
 			</div>
 		</div>
 	</section>
@@ -291,34 +291,33 @@ const certifications = getCertifications().filter((certification) => certificati
 	.portrait-chip {
 		position: absolute;
 		z-index: 2;
-		border: 1px solid rgba(17, 19, 24, 0.1);
+		border: 1px solid rgba(17, 19, 24, 0.09);
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.74);
-		backdrop-filter: blur(18px);
-		box-shadow: 0 12px 34px rgba(17, 19, 24, 0.07);
-		color: var(--graphite);
+		background: rgba(255, 255, 255, 0.58);
+		backdrop-filter: blur(16px);
+		box-shadow: 0 10px 28px rgba(17, 19, 24, 0.045);
+		color: rgba(38, 42, 49, 0.78);
 		font-family: var(--mono);
-		font-size: 0.68rem;
+		font-size: 0.64rem;
 		font-weight: 700;
-		letter-spacing: 0.08em;
-		padding: 0.55rem 0.7rem;
+		letter-spacing: 0.07em;
+		padding: 0.42rem 0.58rem;
 		text-transform: uppercase;
 	}
 
-	.chip-operate {
-		left: 1.1rem;
-		top: 1.1rem;
+	.chip-build {
+		left: 1rem;
+		top: 1rem;
 	}
 
 	.chip-evaluate {
-		right: 1.1rem;
-		top: 22%;
+		right: 1rem;
+		top: 24%;
 	}
 
-	.chip-adopt {
-		left: 1.1rem;
-		bottom: 1.1rem;
-		color: var(--accent);
+	.chip-operate {
+		left: 1rem;
+		bottom: 1rem;
 	}
 
 	.credibility {
@@ -600,7 +599,7 @@ const certifications = getCertifications().filter((certification) => certificati
 
 		.portrait-chip {
 			font-size: 0.62rem;
-			padding: 0.45rem 0.58rem;
+			padding: 0.38rem 0.5rem;
 		}
 
 		.credibility span {

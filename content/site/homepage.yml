@@ -24,7 +24,7 @@ credibility:
   - "Applied AI in the enterprise"
   - "Agentic workflows"
   - "AI productization"
-  - "Infrastructure-tested thinking"
+  - "Production-minded systems"
 
 intro:
   eyebrow: "Intro"
@@ -76,5 +76,5 @@ certifications:
 contact:
   eyebrow: "Contact"
   headline: "AI ideas are easy to start. Making them useful is the interesting part."
-  description: "I’m always interested in thoughtful conversations about applied AI, enterprise systems, infrastructure-tested thinking, and what happens after the demo."
+  description: "I’m always interested in thoughtful conversations about applied AI, agentic systems, enterprise execution, and what happens after the demo."
   cta: "Start a conversation"
