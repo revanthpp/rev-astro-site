@@ -2,6 +2,7 @@ primaryCta: "Read my thinking"
 secondaryCta: "Connect on LinkedIn"
 
 featuredWriting:
+  - "ai-failure-atlas-agentic-system-failures"
   - "secure-tool-gateway-agent-tool-security"
   - "agentops-simulator-agent-workflow-simulation"
   - "why-most-ai-agents-fail-before-production"

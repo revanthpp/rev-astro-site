@@ -20,6 +20,13 @@ const { Content } = await render(post);
 			<a class="back-link" href="/writing">Writing</a>
 			<div class="article-meta">
 				<span class="tag">{post.data.category}</span>
+				<span class="meta">
+					{post.data.date.toLocaleDateString('en-US', {
+						month: 'long',
+						day: 'numeric',
+						year: 'numeric',
+					})}
+				</span>
 				<span class="meta">{post.data.readingTime}</span>
 			</div>
 			<h1>{post.data.title}</h1>
