@@ -2,12 +2,12 @@ primaryCta: "Read my thinking"
 secondaryCta: "Connect on LinkedIn"
 
 featuredWriting:
+  - "what-computer-use-agents-need-before-we-trust-them"
   - "ai-failure-atlas-agentic-system-failures"
   - "secure-tool-gateway-agent-tool-security"
   - "agentops-simulator-agent-workflow-simulation"
   - "why-most-ai-agents-fail-before-production"
   - "the-real-work-starts-after-the-ai-demo"
-  - "why-enterprise-ai-needs-an-operating-model"
 
 featuredFieldNotes:
   - "everyone-is-building-ai-tools"
