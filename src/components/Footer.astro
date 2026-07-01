@@ -11,6 +11,7 @@ const today = new Date();
 			<span>&copy; {today.getFullYear()}</span>
 		</div>
 		<nav aria-label="Footer links">
+			<a class="newsletter-cta" href="/newsletter">Join FutureProofOS</a>
 			<a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
 			<a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
 			<a href={SOCIAL_LINKS.email}>Email</a>
@@ -65,6 +66,17 @@ const today = new Date();
 
 	a:hover {
 		color: var(--accent);
+	}
+
+	.newsletter-cta {
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		padding: 0.35rem 0.7rem;
+	}
+
+	.newsletter-cta:hover {
+		border-color: rgba(17, 19, 24, 0.24);
+		background: var(--surface);
 	}
 
 	@media (max-width: 760px) {

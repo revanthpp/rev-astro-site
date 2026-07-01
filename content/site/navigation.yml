@@ -5,6 +5,8 @@ items:
     href: "/writing"
   - label: "Field Notes"
     href: "/notes"
+  - label: "Newsletter"
+    href: "/newsletter"
   - label: "About"
     href: "/about"
   - label: "Contact"

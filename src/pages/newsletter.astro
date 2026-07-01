@@ -1,0 +1,291 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const valueCards = [
+	{
+		title: 'Understand',
+		description: 'Simple AI explanations without jargon.',
+	},
+	{
+		title: 'Apply',
+		description: 'Prompts, workflows, and tools you can use immediately.',
+	},
+	{
+		title: 'Build',
+		description: 'Real projects, GitHub breakdowns, and build-in-public lessons.',
+	},
+];
+---
+
+<SiteLayout
+	title="FutureProofOS Newsletter | Revanth Pattipati"
+	description="Practical AI for everyone. Simple explanations, useful workflows, and real-world projects delivered weekly."
+>
+	<section class="newsletter-hero section-shell" aria-labelledby="newsletter-heading">
+		<div class="hero-copy">
+			<p class="brand-label">FutureProofOS</p>
+			<h1 id="newsletter-heading">Practical AI. <br />For Everyone.</h1>
+			<p class="hero-description">
+				Learn AI through simple explanations, useful workflows, and real-world projects.
+			</p>
+		</div>
+
+		<div
+			class="signup-panel"
+			id="join"
+			role="group"
+			aria-labelledby="signup-heading"
+			aria-describedby="signup-description signup-trust"
+		>
+			<h2 class="sr-only" id="signup-heading">Join FutureProofOS</h2>
+			<p class="sr-only" id="signup-description">
+				Enter your email address in the form to receive FutureProofOS every Sunday.
+			</p>
+			<div class="beehiiv-embed">
+				<!--
+					BEEHIIV EMBED START
+					To change the signup form later, replace only the Beehiiv loader script below.
+					Keep this .beehiiv-embed wrapper for responsive sizing and visual alignment.
+				-->
+				<script
+					is:inline
+					async
+					src="https://subscribe-forms.beehiiv.com/v3/loader.js"
+					data-beehiiv-form="a56888fb-5fbf-41f3-8da9-d886f1708e22"
+				></script>
+				<!-- BEEHIIV EMBED END -->
+				<noscript>
+					<p class="form-fallback">Enable JavaScript to join FutureProofOS.</p>
+				</noscript>
+			</div>
+			<script is:inline>
+				const beehiivEmbed = document.querySelector('.beehiiv-embed');
+
+				if (beehiivEmbed) {
+					const labelBeehiivFrame = () => {
+						const frame = beehiivEmbed.querySelector('iframe');
+
+						if (!frame) return false;
+
+						frame.title = 'Join FutureProofOS newsletter form';
+						return true;
+					};
+
+					if (!labelBeehiivFrame()) {
+						const observer = new MutationObserver(() => {
+							if (labelBeehiivFrame()) observer.disconnect();
+						});
+
+						observer.observe(beehiivEmbed, { childList: true, subtree: true });
+					}
+				}
+			</script>
+			<p class="trust-line" id="signup-trust">
+				5-minute read <span aria-hidden="true">•</span> Every Sunday <span aria-hidden="true"
+					>•</span
+				> No spam <span aria-hidden="true">•</span> Unsubscribe anytime
+			</p>
+		</div>
+	</section>
+
+	<section class="value-section section-shell" aria-labelledby="value-heading">
+		<div class="value-intro">
+			<p class="kicker">What you’ll get</p>
+			<h2 id="value-heading">Learn it. Use it. Build with it.</h2>
+		</div>
+		<div class="value-grid">
+			{
+				valueCards.map((card, index) => (
+					<article class="value-card">
+						<span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						<h3>{card.title}</h3>
+						<p>{card.description}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</SiteLayout>
+
+<style>
+	:global(body.site-body) {
+		background: #fbfbfa;
+	}
+
+	.newsletter-hero {
+		display: grid;
+		justify-items: center;
+		padding: clamp(5.5rem, 11vw, 9rem) 0 clamp(5rem, 9vw, 7.5rem);
+		text-align: center;
+	}
+
+	.hero-copy {
+		display: grid;
+		justify-items: center;
+		max-width: 850px;
+	}
+
+	.brand-label {
+		display: inline-flex;
+		align-items: center;
+		min-height: 30px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: var(--surface);
+		color: var(--graphite);
+		font-size: 0.78rem;
+		font-weight: 720;
+		letter-spacing: 0.1em;
+		padding: 0.25rem 0.8rem;
+		text-transform: uppercase;
+	}
+
+	.newsletter-hero h1 {
+		margin-top: 1.4rem;
+		font-size: clamp(3.5rem, 9.5vw, 7.75rem);
+		font-weight: 680;
+		letter-spacing: -0.055em;
+		line-height: 0.94;
+		text-wrap: balance;
+	}
+
+	.hero-description {
+		max-width: 650px;
+		margin-top: 1.7rem;
+		color: var(--muted);
+		font-size: clamp(1.05rem, 2vw, 1.3rem);
+		line-height: 1.65;
+		text-wrap: balance;
+	}
+
+	.signup-panel {
+		width: min(620px, 100%);
+		margin-top: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.beehiiv-embed {
+		width: 100%;
+		min-height: 82px;
+		border: 1px solid var(--line);
+		border-radius: 16px;
+		background: var(--surface);
+		box-shadow: 0 18px 55px rgba(17, 19, 24, 0.07);
+		overflow: hidden;
+		padding: 0.65rem;
+	}
+
+	.beehiiv-embed :global(iframe) {
+		display: block;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 auto !important;
+		border: 0 !important;
+		border-radius: 11px;
+	}
+
+	.form-fallback {
+		padding: 1rem;
+		text-align: center;
+	}
+
+	.trust-line {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.25rem 0.5rem;
+		margin-top: 1rem;
+		color: var(--muted);
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+
+	.trust-line span {
+		color: #a3a5aa;
+	}
+
+	.value-section {
+		border-top: 1px solid var(--line);
+		padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(5.5rem, 10vw, 8.5rem);
+	}
+
+	.value-intro {
+		display: grid;
+		max-width: 760px;
+		gap: 0.8rem;
+		margin-bottom: clamp(2.25rem, 5vw, 3.75rem);
+	}
+
+	.value-intro h2 {
+		font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+		letter-spacing: -0.045em;
+		line-height: 1;
+		text-wrap: balance;
+	}
+
+	.value-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.value-card {
+		min-height: 245px;
+		border: 1px solid var(--line);
+		border-radius: 14px;
+		background: var(--surface);
+		padding: clamp(1.5rem, 3vw, 2rem);
+	}
+
+	.value-card > span {
+		display: block;
+		margin-bottom: clamp(3.25rem, 6vw, 5rem);
+		color: var(--accent);
+		font-family: var(--mono);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.value-card h3 {
+		margin-bottom: 0.75rem;
+		font-size: clamp(1.4rem, 2.3vw, 1.75rem);
+		letter-spacing: -0.025em;
+	}
+
+	.value-card p {
+		max-width: 28ch;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 760px) {
+		.newsletter-hero {
+			padding-top: 4.5rem;
+		}
+
+		.newsletter-hero h1 {
+			font-size: clamp(3rem, 15vw, 5.5rem);
+		}
+
+		.value-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.value-card {
+			min-height: 210px;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.newsletter-hero h1 {
+			font-size: clamp(2.75rem, 14.5vw, 4rem);
+		}
+
+		.beehiiv-embed {
+			padding: 0.35rem;
+		}
+
+		.trust-line {
+			font-size: 0.73rem;
+		}
+	}
+</style>
