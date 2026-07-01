@@ -1,150 +1,305 @@
 ---
+import SystemFlow from '../components/SystemFlow.astro';
+import { SOCIAL_LINKS } from '../consts';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { getCertifications, getProfile } from '../lib/siteContent';
 
-const interests = [
-	'Applied AI in the enterprise',
-	'Agentic workflows and AI assistants',
-	'AI productization',
-	'Evaluation and observability',
-	'AI operating models',
-	'Infrastructure and reliability for AI systems',
-];
 const profile = getProfile();
 const certifications = getCertifications().filter((certification) => certification.featured);
+const careerFlow = [
+	{ label: 'IT engineering', detail: 'Learned how systems fail.' },
+	{ label: 'Analytics and data', detail: 'Learned to find the signal.' },
+	{ label: 'Cloud infrastructure', detail: 'Learned what scale costs.' },
+	{ label: 'Applied AI', detail: 'Now putting judgment into the loop.' },
+];
 ---
 
 <SiteLayout
-	title="About | Revanth Pattipati"
-	description="About Revanth Pattipati — applied AI leader with infrastructure roots."
+	title="About and Contact | Revanth Pattipati"
+	description="About Revanth Pattipati, an applied AI leader in Chicago with infrastructure roots, plus certifications and contact links."
 >
-	<section class="about-page section-shell">
-		<header>
+	<section class="about-hero section-shell">
+		<div>
 			<p class="kicker">About</p>
-			<h1>About</h1>
-		</header>
-
-		<div class="about-grid">
-			<div class="prose">
-				<p>{profile.shortBio}</p>
-				<p>{profile.longBio}</p>
-				<p>
-					I believe the next phase of AI will not be won by the teams with the most
-					prototypes. It will be won by the teams that build the nervous system around those
-					prototypes: evaluation, governance, orchestration, feedback loops, ownership, and
-					operational discipline.
-				</p>
-				<p>{profile.personalInterests}</p>
-			</div>
-			<aside>
-				<img class="about-photo" src={profile.images.professional.src} alt={profile.images.professional.alt} />
-				<h2>Current interests</h2>
-				<div class="interest-list">
-					{interests.map((interest) => <span>{interest}</span>)}
-				</div>
-				{certifications.length > 0 && (
-					<div class="certifications">
-						<h2>Featured certifications</h2>
-						{certifications.map((certification) => (
-							<p>
-								<strong>{certification.name}</strong>
-								<span>{certification.issuer} / {certification.date}</span>
-							</p>
-						))}
-					</div>
-				)}
-			</aside>
+			<h1>Infrastructure roots. Applied AI focus.</h1>
+			<p class="intro">
+				I turn AI ideas into systems that can survive permissions, cost, latency, governance,
+				and the deeply inconvenient existence of production.
+			</p>
+			<p class="location">{profile.location}</p>
 		</div>
+		<img src={profile.images.professional.src} alt={profile.images.professional.alt} />
+	</section>
+
+	<section class="career section-shell" aria-labelledby="career-heading">
+		<header>
+			<p class="kicker">The path here</p>
+			<h2 id="career-heading">A useful sequence of hard lessons.</h2>
+		</header>
+		<SystemFlow
+			steps={careerFlow}
+			label="Career path from IT engineering through analytics and cloud infrastructure to applied AI"
+		/>
+	</section>
+
+	<section class="about-copy section-shell">
+		<div>
+			<p>{profile.shortBio}</p>
+			<p>
+				My work sits around the model: orchestration, evaluation, security, observability, and
+				the operating decisions that turn a promising demo into something people can trust.
+			</p>
+		</div>
+		<p>
+			Outside work, I am usually training for something or finding outdoor hobbies that make risk
+			management feel less theoretical. I like systems with guardrails and hobbies that
+			occasionally test them.
+		</p>
+	</section>
+
+	<section class="credentials section-shell" aria-labelledby="credentials-heading">
+		<header>
+			<p class="kicker">Credentials</p>
+			<h2 id="credentials-heading">The full names, for once.</h2>
+		</header>
+		<div class="credential-list">
+			{certifications.map((certification, index) => (
+				<article>
+					<span>{String(index + 1).padStart(2, '0')}</span>
+					<div>
+						<h3>{certification.name}</h3>
+						<p>{certification.issuer}</p>
+					</div>
+					<div class="credential-meta">
+						{certification.date && <span>{certification.date}</span>}
+						{certification.credentialId && <span>Credential {certification.credentialId}</span>}
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="contact section-shell" id="contact" aria-labelledby="contact-heading">
+		<div>
+			<p class="kicker">Contact</p>
+			<h2 id="contact-heading">Good questions travel well.</h2>
+			<p>For thoughtful conversations about AI systems, enterprise architecture, and the part after the demo.</p>
+		</div>
+		<nav aria-label="Contact Revanth Pattipati">
+			<a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">
+				<span>LinkedIn</span>
+				<strong>Connect professionally →</strong>
+			</a>
+			<a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">
+				<span>GitHub</span>
+				<strong>Inspect the work →</strong>
+			</a>
+			<a href={SOCIAL_LINKS.email}>
+				<span>Email</span>
+				<strong>Start a conversation →</strong>
+			</a>
+		</nav>
 	</section>
 </SiteLayout>
 
 <style>
-	.about-page {
-		padding: 5rem 0 7rem;
+	:global(body.site-body) {
+		background: #f6f5f1;
 	}
 
-	header {
-		max-width: 1040px;
-		margin-bottom: 3rem;
-	}
-
-	header h1 {
-		margin-top: 0.7rem;
-	}
-
-	.about-grid {
+	.about-hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) 360px;
-		gap: 4rem;
-		align-items: start;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.46fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: center;
+		padding: clamp(5rem, 10vw, 8rem) 0;
 	}
 
-	.prose {
-		max-width: 760px;
-		font-size: 1.12rem;
+	.about-hero > div {
+		display: grid;
+		gap: 1rem;
 	}
 
-	aside {
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.58);
-		padding: 1.25rem;
+	.about-hero h1 {
+		max-width: 900px;
+		font-size: clamp(3.6rem, 8vw, 7rem);
+		letter-spacing: -0.06em;
 	}
 
-	aside h2 {
-		font-size: 1.25rem;
-		margin-bottom: 1rem;
+	.intro {
+		max-width: 690px;
+		color: var(--graphite);
+		font-size: clamp(1.08rem, 2vw, 1.3rem);
 	}
 
-	.about-photo {
+	.location {
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+	}
+
+	.about-hero img {
+		display: block;
 		width: 100%;
 		aspect-ratio: 4 / 5;
 		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		margin-bottom: 1.25rem;
+		border-radius: 18px;
+		box-shadow: var(--shadow);
 		object-fit: cover;
-		object-position: center 34%;
+		object-position: center 32%;
 	}
 
-	.interest-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+	.career,
+	.credentials,
+	.contact {
+		border-top: 1px solid var(--line);
+		padding: clamp(4rem, 8vw, 7rem) 0;
 	}
 
-	.interest-list span {
-		border: 1px solid var(--line);
-		border-radius: 999px;
+	.career {
+		display: grid;
+		grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: center;
+	}
+
+	.career header,
+	.credentials header,
+	.contact > div {
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.career h2,
+	.credentials h2,
+	.contact h2 {
+		font-size: clamp(2.4rem, 5vw, 4.8rem);
+		letter-spacing: -0.045em;
+	}
+
+	.about-copy {
+		display: grid;
+		grid-template-columns: 1fr 0.72fr;
+		gap: clamp(3rem, 8vw, 8rem);
+		border-top: 1px solid var(--ink);
+		padding: clamp(4rem, 8vw, 7rem) 0;
+	}
+
+	.about-copy > div {
+		display: grid;
+		gap: 1.2rem;
+	}
+
+	.about-copy p {
+		font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+		line-height: 1.75;
+	}
+
+	.credentials header {
+		max-width: 720px;
+		margin-bottom: 2.5rem;
+	}
+
+	.credential-list {
+		border-top: 1px solid var(--ink);
+	}
+
+	.credential-list article {
+		display: grid;
+		grid-template-columns: 70px minmax(0, 1fr) minmax(210px, 0.35fr);
+		gap: 1.5rem;
+		align-items: start;
+		border-bottom: 1px solid var(--line);
+		padding: 1.8rem 0;
+	}
+
+	.credential-list article > span,
+	.credential-meta span {
 		color: var(--muted);
 		font-family: var(--mono);
-		font-size: 0.76rem;
-		padding: 0.3rem 0.55rem;
+		font-size: 0.66rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 	}
 
-	.certifications {
-		border-top: 1px solid var(--line);
-		margin-top: 1.4rem;
-		padding-top: 1.4rem;
+	.credential-list h3 {
+		max-width: 720px;
+		font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+		line-height: 1.18;
 	}
 
-	.certifications p {
+	.credential-list p {
+		margin-top: 0.4rem;
+	}
+
+	.credential-meta {
 		display: grid;
-		gap: 0.15rem;
-		margin-top: 0.8rem;
+		gap: 0.4rem;
 	}
 
-	.certifications strong {
-		color: var(--ink);
+	.contact {
+		display: grid;
+		grid-template-columns: minmax(0, 0.75fr) minmax(320px, 0.55fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: start;
 	}
 
-	.certifications span {
+	.contact > div > p:not(.kicker) {
+		max-width: 620px;
+		margin-top: 0.5rem;
+	}
+
+	.contact nav {
+		display: grid;
+		border-top: 1px solid var(--ink);
+	}
+
+	.contact nav a {
+		display: grid;
+		gap: 0.25rem;
+		border-bottom: 1px solid var(--line);
+		color: inherit;
+		padding: 1.15rem 0;
+		text-decoration: none;
+	}
+
+	.contact nav a:hover strong {
+		color: var(--accent);
+	}
+
+	.contact nav span {
 		color: var(--muted);
-		font-size: 0.9rem;
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.contact nav strong {
+		transition: color 160ms ease;
 	}
 
 	@media (max-width: 820px) {
-		.about-grid {
+		.about-hero,
+		.career,
+		.about-copy,
+		.contact {
 			grid-template-columns: 1fr;
+		}
+
+		.about-hero img {
+			max-width: 430px;
+		}
+
+		.credential-list article {
+			grid-template-columns: 1fr;
+			gap: 0.8rem;
+		}
+
+		.credential-list article > span {
+			display: none;
 		}
 	}
 </style>

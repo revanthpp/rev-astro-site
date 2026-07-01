@@ -33,7 +33,7 @@ intro:
   body: |
     The prototype is the easy part. The harder questions usually show up later: Who owns it? How is it evaluated? What happens when it fails? How much does it cost? Who approved the tool call? Where are the logs? Why is the agent still looping?
 
-    That is where I like to work — in the space between AI ambition and operational reality.
+    That is where I like to work: in the space between AI ambition and operational reality.
 
 focusEyebrow: "What I Think About"
 focusHeadline: "Practical AI thinking for real organizations."
@@ -41,11 +41,11 @@ focusDescription: "The work sits between applied AI, enterprise systems, infrast
 
 focusAreas:
   - title: "Applied AI in the Enterprise"
-    description: "Making AI useful inside large organizations, where real adoption depends on trust, governance, workflows, and execution — not just impressive demos."
+    description: "Making AI useful inside large organizations, where real adoption depends on trust, governance, workflows, and execution, not just impressive demos."
   - title: "Agentic Workflows and AI Assistants"
     description: "Exploring where agents work, where they fail, and why orchestration, evaluation, human oversight, and exit conditions matter more than most teams realize."
   - title: "AI Productization"
-    description: "Thinking through the path from idea to prototype to pilot to production-ish reality — the place where vague AI enthusiasm gets allergic to specifics."
+    description: "Thinking through the path from idea to prototype to pilot to production-ish reality, the place where vague AI enthusiasm gets allergic to specifics."
   - title: "AI Operating Models"
     description: "How COEs, champions, product teams, engineering groups, business stakeholders, and governance teams can work together without turning AI delivery into committee theater."
   - title: "AI Infrastructure and Reliability"

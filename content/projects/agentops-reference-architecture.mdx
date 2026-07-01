@@ -1,28 +1,28 @@
 ---
-title: AgentOps Reference Architecture
-description: A production-style architecture for enterprise agent orchestration.
+title: AgentOps Simulator
+description: A simulator for agent workflow cost, routing, guardrails, reliability, and observability.
 problem: >-
-  Enterprise agent systems need patterns for planning, execution, memory, tool access, approval
-  gates, evaluation, and observability.
+  Agent workflows can loop, retry, route poorly, and burn tokens long before teams understand the
+  operational tradeoffs.
 architecture: >-
-  Planner-executor workflows run through a policy layer, scoped tool gateway, bounded memory
-  service, evaluation loop, and trace pipeline.
+  Configurable scenarios move through routing, execution, guardrails, retries, tracing, and
+  evaluation so cost and reliability choices stay visible.
 tradeoffs:
-  - Adds explicit control points even when they create more orchestration overhead.
-  - Separates memory, tools, and planning so each boundary can be governed independently.
-  - Treats human-in-the-loop review as a system capability, not an exception path.
+  - Uses simulation to expose tradeoffs without pretending to predict production perfectly.
+  - Keeps scenarios deterministic enough to compare architecture choices.
+  - Favors observable workflow behavior over a polished chat interface.
 technologies:
-  - LangGraph
+  - Python
+  - Streamlit
   - OpenTelemetry
-  - OAuth
-  - Redis
-status: Architecture exploration
+  - Pydantic
+status: Working simulator
 featured: true
-githubUrl: https://github.com/revanthpattipati/agentops-reference
-writeupUrl: /writing/why-most-ai-agents-fail-before-production/
+githubUrl: https://github.com/revanthpp/agentops-simulator
+writeupUrl: /writing/agentops-simulator-agent-workflow-simulation/
 draft: false
 category: Systems Design
 ---
 
 
-This reference architecture explores the practical layers required for reliable enterprise agents: orchestration, access control, state, evaluation, and operations.
+AgentOps Simulator makes routing, retries, cost, latency, guardrails, traces, and evaluation visible before production teaches the lesson with a bill.

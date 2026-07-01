@@ -1,112 +1,330 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
+import SystemFlow from '../../components/SystemFlow.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
-const notes = (await getCollection('notes')).sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-).filter((note) => !note.data.draft);
-const renderedNotes = await Promise.all(
-	notes.map(async (note) => ({
-		...note,
-		Content: (await render(note)).Content,
-	})),
-);
+const essays = (await getCollection('writing'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const quickNotes = (await getCollection('notes'))
+	.filter((note) => !note.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featuredEssay = essays[0];
+const remainingEssays = essays.slice(1);
+const topics = [
+	'AI Systems',
+	'Agents',
+	'Evaluation',
+	'Governance',
+	'Enterprise AI',
+	'Building in Public',
+	'Career',
+	'Useful Tools',
+];
+const thinkingFlow = [
+	{ label: 'Question', detail: 'Start with the real constraint.' },
+	{ label: 'Architecture', detail: 'Map the system around the model.' },
+	{ label: 'Failure test', detail: 'Find where the demo gets expensive.' },
+	{ label: 'Practical lesson', detail: 'Keep what survives contact.' },
+];
 ---
 
 <SiteLayout
-	title="Field Notes | Revanth Pattipati"
-	description="Short notes and observations on AI systems, enterprise adoption, infrastructure, and leadership."
+	title="Notes from the Messy Middle | Revanth Pattipati"
+	description="Long essays, quick lessons, and practical notes on AI systems, agents, evaluation, governance, and enterprise delivery."
 >
-	<section class="page-hero section-shell">
-		<p class="kicker">Field Notes</p>
-		<h1>Field Notes</h1>
+	<section class="notes-hero section-shell">
+		<h1>Notes from the Messy Middle</h1>
 		<p>
-			Short thoughts on applied AI, systems, leadership, and the messy middle between
-			prototype and production.
-		</p>
-		<p>
-			Some ideas are not ready to become essays yet. Some are better as sharp little
-			reminders.
-		</p>
-		<p>
-			Also, not every thought needs a 12-part thread and a dramatic diagram.
+			Long essays, quick lessons, and occasional scars from building AI systems that have to
+			work outside the demo.
 		</p>
 	</section>
 
-	<section class="notes-grid section-shell">
-		{renderedNotes.map((note) => (
-			<article class="note-card">
-				<div class="note-meta">
-					<span class="tag">{note.data.topic ?? note.data.category}</span>
-					<span class="meta">{note.data.date.toLocaleDateString('en-US', {
-						month: 'short',
-						day: 'numeric',
-						year: 'numeric',
-					})}</span>
-				</div>
-				<blockquote>{note.data.title}</blockquote>
-				<div class="prose">
-					<note.Content />
-				</div>
-			</article>
-		))}
+	<nav class="topic-list section-shell" aria-label="Notes topics">
+		{topics.map((topic) => <span>{topic}</span>)}
+	</nav>
+
+	<section class="featured-essay section-shell" aria-labelledby="featured-essay-heading">
+		<div class="featured-meta">
+			<span>{featuredEssay.data.category}</span>
+			<span>{featuredEssay.data.readingTime}</span>
+		</div>
+		<div>
+			<h2 id="featured-essay-heading">{featuredEssay.data.title}</h2>
+			<p>{featuredEssay.data.description}</p>
+			<a class="button" href={`/writing/${featuredEssay.id}/`}>Read the essay</a>
+			<div class="essay-flow">
+				<SystemFlow
+					steps={thinkingFlow}
+					label="Editorial flow from question through architecture and failure testing to a practical lesson"
+					compact
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="notes-layout section-shell">
+		<div class="essay-column">
+			<header>
+				<h2>Long-form thinking</h2>
+				<p>Deep writeups on the systems around the model.</p>
+			</header>
+			<div class="essay-list">
+				{remainingEssays.map((essay) => (
+					<a href={`/writing/${essay.id}/`}>
+						<div>
+							<span>{essay.data.category}</span>
+							<span>{essay.data.readingTime}</span>
+						</div>
+						<h3>{essay.data.title}</h3>
+						<p>{essay.data.description}</p>
+					</a>
+				))}
+			</div>
+		</div>
+
+		<aside class="quick-column" aria-labelledby="quick-notes-heading">
+			<header>
+				<h2 id="quick-notes-heading">Quick hits</h2>
+				<p>Small lessons with sharp elbows.</p>
+			</header>
+			<div class="quick-list">
+				{quickNotes.map((note) => (
+					<article>
+						<p>{note.data.title}</p>
+						<span>{note.data.date.toLocaleDateString('en-US', {
+							month: 'short',
+							day: 'numeric',
+							year: 'numeric',
+						})}</span>
+					</article>
+				))}
+			</div>
+		</aside>
+	</section>
+
+	<section class="notes-newsletter section-shell">
+		<div>
+			<h2>Prefer the useful bits by email?</h2>
+			<p>FutureProofOS turns the week’s practical AI lessons into a five-minute Sunday read.</p>
+		</div>
+		<a class="button" href="/newsletter">Join FutureProofOS</a>
 	</section>
 </SiteLayout>
 
 <style>
-	.page-hero {
-		padding: 5rem 0 3rem;
+	.notes-hero {
+		padding: clamp(5rem, 10vw, 8rem) 0 3rem;
 	}
 
-	.page-hero h1 {
+	.notes-hero h1 {
 		max-width: 980px;
-		margin: 0.7rem 0 1.2rem;
+		font-size: clamp(3.4rem, 8vw, 7rem);
+		letter-spacing: -0.055em;
 	}
 
-	.page-hero p:not(.kicker) {
-		max-width: 720px;
-		font-size: 1.18rem;
+	.notes-hero p {
+		max-width: 700px;
+		margin-top: 1.5rem;
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+		line-height: 1.65;
 	}
 
-	.notes-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-		padding-bottom: 6rem;
+	.topic-list {
+		display: flex;
+		gap: 0.55rem;
+		overflow-x: auto;
+		padding-bottom: 2.5rem;
+		scrollbar-width: none;
 	}
 
-	.note-card {
-		display: grid;
-		gap: 1.4rem;
+	.topic-list::-webkit-scrollbar {
+		display: none;
+	}
+
+	.topic-list span {
+		flex: 0 0 auto;
 		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.58);
-		padding: 1.25rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.54);
+		color: var(--graphite);
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 0.45rem 0.7rem;
 	}
 
-	.note-meta {
+	.featured-essay {
+		display: grid;
+		grid-template-columns: minmax(180px, 0.35fr) minmax(0, 1fr);
+		gap: clamp(2rem, 7vw, 7rem);
+		border-top: 1px solid var(--ink);
+		border-bottom: 1px solid var(--line);
+		padding: clamp(3rem, 7vw, 6rem) 0;
+	}
+
+	.featured-meta {
+		display: grid;
+		align-content: space-between;
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		text-transform: uppercase;
+	}
+
+	.featured-essay h2 {
+		max-width: 900px;
+		font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+		letter-spacing: -0.045em;
+		line-height: 1;
+	}
+
+	.featured-essay p {
+		max-width: 700px;
+		margin: 1.25rem 0 1.7rem;
+		font-size: 1.05rem;
+		line-height: 1.65;
+	}
+
+	.essay-flow {
+		margin-top: 2.5rem;
+	}
+
+	.notes-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		padding: clamp(5rem, 10vw, 8rem) 0;
+	}
+
+	.notes-layout header {
+		margin-bottom: 2rem;
+	}
+
+	.notes-layout header h2 {
+		margin-bottom: 0.6rem;
+		font-size: clamp(2rem, 3.5vw, 3.4rem);
+		letter-spacing: -0.035em;
+	}
+
+	.notes-layout header p {
+		font-size: 0.95rem;
+	}
+
+	.essay-list {
+		border-top: 1px solid var(--line);
+	}
+
+	.essay-list > a {
+		display: block;
+		border-bottom: 1px solid var(--line);
+		color: inherit;
+		padding: 1.7rem 0;
+		text-decoration: none;
+	}
+
+	.essay-list > a:hover h3 {
+		color: var(--accent);
+	}
+
+	.essay-list > a > div {
 		display: flex;
 		justify-content: space-between;
 		gap: 1rem;
-		align-items: center;
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.68rem;
+		text-transform: uppercase;
 	}
 
-	blockquote {
-		border: 0;
+	.essay-list h3 {
+		max-width: 760px;
+		margin: 0.8rem 0;
+		font-size: clamp(1.55rem, 3vw, 2.3rem);
+		letter-spacing: -0.025em;
+		line-height: 1.08;
+	}
+
+	.essay-list p {
+		max-width: 720px;
+		line-height: 1.6;
+	}
+
+	.quick-column {
+		border-left: 1px solid var(--line);
+		padding-left: clamp(1.5rem, 3vw, 2.5rem);
+	}
+
+	.quick-list {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.quick-list article {
+		border-radius: var(--radius);
+		background: rgba(255, 255, 255, 0.58);
+		padding: 1.1rem;
+	}
+
+	.quick-list p {
+		margin-bottom: 1rem;
 		color: var(--ink);
-		font-size: clamp(1.6rem, 3vw, 2.6rem);
-		font-weight: 640;
-		line-height: 1.12;
-		padding: 0;
+		font-size: 1.05rem;
+		font-weight: 650;
+		line-height: 1.45;
 	}
 
-	.prose {
-		font-size: 1rem;
+	.quick-list span {
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.65rem;
+		text-transform: uppercase;
 	}
 
-	@media (max-width: 820px) {
-		.notes-grid {
+	.notes-newsletter {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 2rem;
+		border-top: 1px solid var(--line);
+		padding: clamp(4rem, 8vw, 6rem) 0;
+	}
+
+	.notes-newsletter h2 {
+		margin-bottom: 0.8rem;
+		font-size: clamp(2.3rem, 4.5vw, 4rem);
+		letter-spacing: -0.04em;
+	}
+
+	.notes-newsletter p {
+		max-width: 650px;
+	}
+
+	.notes-newsletter .button {
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 780px) {
+		.featured-essay,
+		.notes-layout {
 			grid-template-columns: 1fr;
+		}
+
+		.featured-meta {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.quick-column {
+			border-top: 1px solid var(--line);
+			border-left: 0;
+			padding-top: 3rem;
+			padding-left: 0;
+		}
+
+		.notes-newsletter {
+			align-items: flex-start;
+			flex-direction: column;
 		}
 	}
 </style>

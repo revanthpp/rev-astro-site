@@ -1,0 +1,685 @@
+---
+import { getCollection } from 'astro:content';
+import PreviewLayout from '../../layouts/PreviewLayout.astro';
+
+const posts = (await getCollection('writing'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const notes = (await getCollection('notes'))
+	.filter((note) => !note.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const projects = (await getCollection('projects'))
+	.filter((project) => !project.data.draft)
+	.slice(0, 2);
+---
+
+<PreviewLayout
+	title="Human Signal Preview | Revanth Pattipati"
+	description="A warm, witty, human-first homepage direction for Revanth Pattipati."
+	concept="human"
+>
+	<header class="human-header">
+		<a class="human-brand" href="/">
+			<strong>Revanth Pattipati</strong>
+			<span>Practical AI, clearly explained</span>
+		</a>
+		<nav aria-label="Human Signal navigation">
+			<a href="/notes">Notes</a>
+			<a href="/systems">Projects</a>
+			<a href="/newsletter">Newsletter</a>
+			<a href="/about">About</a>
+			<a href="/contact">Contact</a>
+		</nav>
+	</header>
+
+	<section class="human-hero">
+		<div class="hero-photo">
+			<img
+				src="/images/revanth-professional.jpg"
+				alt="Revanth Pattipati smiling in a professional portrait"
+			/>
+		</div>
+		<div class="hero-copy">
+			<h1>Agentic AI, minus the theater.</h1>
+			<p>
+				I build practical AI systems and explain the tricky parts without making anyone feel
+				underqualified for their own browser.
+			</p>
+			<div class="human-actions">
+				<a class="human-button" href="/notes">Read the Notes</a>
+				<a href="/systems">See what I am building</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="human-intro">
+		<h2>Sharp systems. Plain English.</h2>
+		<div>
+			<p>
+				My route ran through analytics, data engineering, cloud, and infrastructure before
+				landing in applied AI.
+			</p>
+			<p>
+				That path made me practical, curious, and mildly allergic to pretty demos with no
+				operating model.
+			</p>
+		</div>
+	</section>
+
+	<section class="human-work">
+		<div class="work-lead">
+			<h2>What I work on</h2>
+			<p>Where models meet permissions, users, budgets, and the occasional mysterious retry loop.</p>
+		</div>
+		<div class="work-pairs">
+			<article>
+				<h3>Agent systems and evaluation</h3>
+				<p>Boundaries, tool use, failure testing, observability, and useful ways to stop.</p>
+			</article>
+			<article>
+				<h3>Enterprise AI delivery</h3>
+				<p>Governance, ownership, adoption, cost, and the work that begins after applause.</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="human-notes">
+		<div class="featured-note">
+			<p>Latest long read</p>
+			<h2>{posts[0].data.title}</h2>
+			<a href={`/writing/${posts[0].id}/`}>Read the essay</a>
+		</div>
+		<div class="quick-notes">
+			<h3>Quick notes</h3>
+			{notes.slice(0, 3).map((note) => (
+				<blockquote>{note.data.title}</blockquote>
+			))}
+			<a href="/notes">Browse all notes</a>
+		</div>
+	</section>
+
+	<section class="human-life">
+		<div class="life-copy">
+			<h2>Type 2 fun is still fun. Eventually.</h2>
+			<p>
+				Outside work, I run, jump out of planes, and choose hobbies that make risk management
+				feel pleasantly concrete.
+			</p>
+			<a href="/about">Meet the human</a>
+		</div>
+		<div class="life-gallery">
+			<img
+				src="/images/revanth-skydiving-web.jpg"
+				alt="Revanth Pattipati skydiving above the landscape"
+				loading="lazy"
+			/>
+			<img
+				src="/images/revanth-half-marathon.jpg"
+				alt="Revanth Pattipati and his wife after their first half marathon"
+				loading="lazy"
+			/>
+		</div>
+	</section>
+
+	<section class="human-projects">
+		<div>
+			<h2>Things I am building</h2>
+			<p>Reference designs and prototypes for the messy, useful parts of applied AI.</p>
+		</div>
+		<div class="project-list">
+			{projects.map((project) => (
+				<a href={`/systems/${project.id}/`}>
+					<h3>{project.data.title}</h3>
+					<p>{project.data.description}</p>
+					<span>View project</span>
+				</a>
+			))}
+		</div>
+	</section>
+
+	<section class="human-newsletter">
+		<div>
+			<p class="newsletter-name">FutureProofOS</p>
+			<h2>A smarter Sunday scroll.</h2>
+			<p>Practical AI ideas you can use before your coffee gets cold.</p>
+		</div>
+		<a class="human-button" href="/newsletter">Join FutureProofOS</a>
+	</section>
+
+	<footer class="human-footer">
+		<p>Revanth Pattipati</p>
+		<div>
+			<a href="/contact">Say hello</a>
+			<a href="/preview/editorial-operator">Back to Editorial Operator</a>
+		</div>
+	</footer>
+</PreviewLayout>
+
+<style>
+	:global(body.preview-human) {
+		--bg: #f0e8df;
+		--surface: #faf5ef;
+		--navy: #18283d;
+		--muted: #66707b;
+		--line: #cfc3b7;
+		--accent: #b8563e;
+		background: var(--bg);
+		color: var(--navy);
+		font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+	}
+
+	:global(.preview-human *) {
+		box-sizing: border-box;
+	}
+
+	:global(.preview-human a) {
+		color: inherit;
+	}
+
+	.human-header {
+		position: relative;
+		z-index: 4;
+		display: flex;
+		width: min(1180px, calc(100% - 40px));
+		min-height: 74px;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		margin: 0 auto;
+	}
+
+	.human-brand {
+		display: grid;
+		gap: 0.05rem;
+		text-decoration: none;
+	}
+
+	.human-brand strong {
+		font-size: 0.92rem;
+	}
+
+	.human-brand span {
+		color: var(--muted);
+		font-size: 0.68rem;
+	}
+
+	.human-header nav {
+		display: flex;
+		gap: 0.25rem;
+		border: 1px solid rgb(24 40 61 / 0.12);
+		border-radius: 999px;
+		background: rgb(250 245 239 / 0.72);
+		padding: 0.3rem;
+		backdrop-filter: blur(18px);
+	}
+
+	.human-header nav a {
+		border-radius: 999px;
+		color: var(--muted);
+		font-size: 0.78rem;
+		font-weight: 750;
+		padding: 0.5rem 0.7rem;
+		text-decoration: none;
+	}
+
+	.human-header nav a:hover {
+		background: var(--surface);
+		color: var(--navy);
+	}
+
+	.human-hero {
+		display: grid;
+		width: min(1180px, calc(100% - 40px));
+		min-height: calc(100dvh - 74px);
+		grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: center;
+		margin: 0 auto;
+		padding: 2rem 0;
+	}
+
+	h1,
+	h2,
+	h3,
+	p {
+		margin-top: 0;
+	}
+
+	h1,
+	h2,
+	h3 {
+		color: var(--navy);
+	}
+
+	.hero-photo {
+		position: relative;
+	}
+
+	.hero-photo::before {
+		position: absolute;
+		inset: -18px 18px 18px -18px;
+		z-index: -1;
+		border: 1px solid rgb(184 86 62 / 0.4);
+		border-radius: 28px;
+		content: "";
+	}
+
+	.hero-photo img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		border-radius: 28px;
+		object-fit: cover;
+	}
+
+	h1 {
+		max-width: 760px;
+		margin-bottom: 1.5rem;
+		font-size: clamp(3.7rem, 6vw, 5.8rem);
+		font-weight: 720;
+		letter-spacing: -0.065em;
+		line-height: 0.92;
+	}
+
+	.hero-copy > p {
+		max-width: 650px;
+		color: var(--muted);
+		font-size: clamp(1.05rem, 1.9vw, 1.3rem);
+		line-height: 1.55;
+	}
+
+	.human-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem 1.4rem;
+		align-items: center;
+		margin-top: 2rem;
+	}
+
+	.human-button {
+		display: inline-flex;
+		min-height: 48px;
+		align-items: center;
+		border-radius: 999px;
+		background: var(--navy);
+		color: #faf5ef !important;
+		font-size: 0.82rem;
+		font-weight: 800;
+		padding: 0.75rem 1.1rem;
+		text-decoration: none;
+		transition:
+			transform 160ms ease,
+			background 160ms ease;
+	}
+
+	.human-button:hover {
+		background: #243a57;
+		transform: translateY(-2px);
+	}
+
+	.human-actions > a:not(.human-button),
+	.human-life a {
+		font-size: 0.82rem;
+		font-weight: 800;
+		text-underline-offset: 0.25em;
+	}
+
+	.human-intro,
+	.human-work,
+	.human-notes,
+	.human-life,
+	.human-projects,
+	.human-newsletter,
+	.human-footer {
+		width: min(1180px, calc(100% - 40px));
+		margin: 0 auto;
+	}
+
+	.human-intro {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(320px, 0.65fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: start;
+		border-top: 1px solid var(--line);
+		padding: clamp(5rem, 10vw, 8rem) 0;
+	}
+
+	.human-intro h2,
+	.work-lead h2,
+	.human-projects > div:first-child h2,
+	.human-newsletter h2 {
+		font-size: clamp(2.8rem, 5.5vw, 5rem);
+		font-weight: 690;
+		letter-spacing: -0.055em;
+		line-height: 0.98;
+	}
+
+	.human-intro p,
+	.work-lead p,
+	.work-pairs p,
+	.human-projects > div:first-child p,
+	.human-newsletter p {
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.human-work {
+		display: grid;
+		grid-template-columns: 0.65fr 1fr;
+		gap: clamp(3rem, 8vw, 8rem);
+		background: var(--navy);
+		border-radius: 28px;
+		padding: clamp(2rem, 6vw, 5rem);
+	}
+
+	.work-lead h2,
+	.work-pairs h3 {
+		color: var(--surface);
+	}
+
+	.work-lead p,
+	.work-pairs p {
+		color: #b8c1ca;
+	}
+
+	.work-pairs {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.25rem;
+	}
+
+	.work-pairs article {
+		border-top: 1px solid rgb(250 245 239 / 0.24);
+		padding-top: 1rem;
+	}
+
+	.work-pairs h3 {
+		margin-bottom: 0.8rem;
+		font-size: clamp(1.4rem, 2.3vw, 1.9rem);
+	}
+
+	.human-notes {
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.55fr);
+		gap: clamp(3rem, 7vw, 7rem);
+		padding: clamp(6rem, 11vw, 9rem) 0;
+	}
+
+	.featured-note > p {
+		margin-bottom: 1rem;
+		color: var(--accent);
+		font-size: 0.72rem;
+		font-weight: 850;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.featured-note h2 {
+		max-width: 800px;
+		font-size: clamp(2.8rem, 5.5vw, 5.2rem);
+		font-weight: 690;
+		letter-spacing: -0.055em;
+		line-height: 1;
+	}
+
+	.featured-note a,
+	.quick-notes > a {
+		display: inline-block;
+		margin-top: 1.5rem;
+		color: var(--accent);
+		font-size: 0.8rem;
+		font-weight: 850;
+	}
+
+	.quick-notes {
+		border-left: 1px solid var(--line);
+		padding-left: 1.5rem;
+	}
+
+	.quick-notes h3 {
+		font-size: 1rem;
+	}
+
+	.quick-notes blockquote {
+		margin: 0;
+		border: 0;
+		border-bottom: 1px solid var(--line);
+		padding: 1.1rem 0;
+		color: var(--navy);
+		font-size: 1rem;
+		font-weight: 650;
+		line-height: 1.45;
+	}
+
+	.human-life {
+		display: grid;
+		grid-template-columns: minmax(280px, 0.55fr) minmax(0, 1fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: end;
+	}
+
+	.life-copy {
+		padding-bottom: 1rem;
+	}
+
+	.life-copy h2 {
+		font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+		letter-spacing: -0.05em;
+		line-height: 1;
+	}
+
+	.life-copy p {
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.life-gallery {
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 1rem;
+		align-items: end;
+	}
+
+	.life-gallery img {
+		display: block;
+		width: 100%;
+		border-radius: 28px;
+		object-fit: cover;
+	}
+
+	.life-gallery img:first-child {
+		aspect-ratio: 4 / 5;
+	}
+
+	.life-gallery img:last-child {
+		aspect-ratio: 1;
+	}
+
+	.human-projects {
+		display: grid;
+		grid-template-columns: minmax(280px, 0.55fr) minmax(0, 1fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		padding: clamp(6rem, 11vw, 9rem) 0;
+	}
+
+	.project-list {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.project-list a {
+		display: grid;
+		border: 1px solid var(--line);
+		border-radius: 28px;
+		background: var(--surface);
+		padding: 1.5rem;
+		text-decoration: none;
+		transition:
+			transform 160ms ease,
+			border-color 160ms ease;
+	}
+
+	.project-list a:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+	}
+
+	.project-list h3 {
+		margin-bottom: 0.7rem;
+		font-size: 1.55rem;
+	}
+
+	.project-list p {
+		color: var(--muted);
+		line-height: 1.6;
+	}
+
+	.project-list span {
+		margin-top: 1rem;
+		color: var(--accent);
+		font-size: 0.75rem;
+		font-weight: 850;
+	}
+
+	.human-newsletter {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 3rem;
+		border-radius: 28px;
+		background: var(--accent);
+		padding: clamp(2rem, 6vw, 5rem);
+	}
+
+	.newsletter-name {
+		margin-bottom: 0.9rem;
+		color: #f9eee7 !important;
+		font-size: 0.72rem;
+		font-weight: 850;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.human-newsletter h2 {
+		color: #fff7f1;
+	}
+
+	.human-newsletter p {
+		margin-bottom: 0;
+		color: #f3d8ce;
+	}
+
+	.human-newsletter .human-button {
+		flex-shrink: 0;
+	}
+
+	.human-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		padding: 2rem 0;
+		font-size: 0.76rem;
+		font-weight: 750;
+	}
+
+	.human-footer p {
+		margin: 0;
+		color: var(--muted);
+	}
+
+	.human-footer div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	@media (max-width: 860px) {
+		.human-header {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.8rem;
+			padding: 1rem 0;
+		}
+
+		.human-header nav {
+			width: 100%;
+			overflow-x: auto;
+			scrollbar-width: none;
+		}
+
+		.human-header nav::-webkit-scrollbar {
+			display: none;
+		}
+
+		.human-header nav a {
+			white-space: nowrap;
+		}
+
+		.human-hero,
+		.human-intro,
+		.human-work,
+		.human-notes,
+		.human-life,
+		.human-projects {
+			grid-template-columns: 1fr;
+		}
+
+		.human-hero {
+			min-height: auto;
+			padding: 4rem 0;
+		}
+
+		.hero-photo {
+			display: none;
+		}
+
+		h1 {
+			font-size: clamp(3.4rem, 14vw, 5.5rem);
+		}
+
+		.quick-notes {
+			border-top: 1px solid var(--line);
+			border-left: 0;
+			padding-top: 1.5rem;
+			padding-left: 0;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.work-pairs,
+		.life-gallery {
+			grid-template-columns: 1fr;
+		}
+
+		.human-newsletter {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.human-footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.human-header,
+		.human-hero,
+		.human-intro,
+		.human-work,
+		.human-notes,
+		.human-life,
+		.human-projects,
+		.human-newsletter,
+		.human-footer {
+			width: min(100% - 28px, 1180px);
+		}
+
+		.human-work,
+		.human-newsletter {
+			width: 100%;
+			border-radius: 0;
+		}
+	}
+</style>

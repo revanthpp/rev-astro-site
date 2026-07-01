@@ -1,12 +1,20 @@
 certifications:
-  - name: "Artificial Intelligence Certification"
-    issuer: "UC Berkeley"
-    date: ""
+  - name: "Applied Agentic AI for Organizational Transformation"
+    issuer: "MIT Professional Education"
+    date: "Issued December 2025"
+    credentialId: "168981804"
     url: ""
     featured: true
-  - name: "Artificial Intelligence Certification"
-    issuer: "MIT"
-    date: ""
+  - name: "Professional Certificate in Machine Learning and Artificial Intelligence"
+    issuer: "UC Berkeley Executive Education"
+    date: "Issued May 2025"
+    credentialId: "145483927"
+    url: ""
+    featured: true
+  - name: "Academy Accreditation - Azure Databricks Platform Architect"
+    issuer: "Databricks"
+    date: "Issued June 2025 / Expires June 2027"
+    credentialId: "145881378"
     url: ""
     featured: true
   - name: "SAFe Agilist 6.0"

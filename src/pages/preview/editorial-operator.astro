@@ -1,0 +1,542 @@
+---
+import { getCollection } from 'astro:content';
+import PreviewLayout from '../../layouts/PreviewLayout.astro';
+
+const posts = (await getCollection('writing'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
+const featuredPost = posts[0];
+const featuredProject = projects.find((project) => project.data.featured) ?? projects[0];
+---
+
+<PreviewLayout
+	title="Editorial Operator Preview | Revanth Pattipati"
+	description="A premium editorial homepage direction for Revanth Pattipati."
+	concept="editorial"
+>
+	<header class="editorial-header">
+		<a class="wordmark" href="/">Revanth Pattipati</a>
+		<nav aria-label="Editorial Operator navigation">
+			<a href="/notes">Notes</a>
+			<a href="/systems">Projects</a>
+			<a href="/newsletter">Newsletter</a>
+			<a href="/about">About</a>
+			<a href="/contact">Contact</a>
+		</nav>
+	</header>
+
+	<section class="editorial-hero">
+		<div class="hero-copy">
+			<p class="overline">Analytics-trained. Infrastructure-tested. AI-focused.</p>
+			<h1>AI systems for the part after the demo.</h1>
+			<p class="hero-deck">
+				I build and write about practical AI, agentic systems, evaluation, and enterprise delivery.
+			</p>
+			<div class="hero-actions">
+				<a class="primary-action" href="/notes">Read the Notes</a>
+				<a class="text-action" href="/systems">View Projects</a>
+			</div>
+		</div>
+		<figure class="editorial-portrait">
+			<img
+				src="/images/revanth-professional.jpg"
+				alt="Revanth Pattipati in a professional portrait"
+			/>
+			<figcaption>Practical AI, minus the ceremony.</figcaption>
+		</figure>
+	</section>
+
+	<section class="proof-bar" aria-label="Experience summary">
+		<p>Analytics and data engineering</p>
+		<p>Cloud and infrastructure</p>
+		<p>Applied AI and agent systems</p>
+	</section>
+
+	<section class="feature-story">
+		<div class="story-heading">
+			<p>Featured note</p>
+			<h2>{featuredPost.data.title}</h2>
+		</div>
+		<div class="story-summary">
+			<p>{featuredPost.data.description}</p>
+			<a href={`/writing/${featuredPost.id}/`}>Read the essay</a>
+		</div>
+	</section>
+
+	<section class="project-feature">
+		<div class="project-index">
+			<span>Selected project</span>
+			<strong>{featuredProject.data.status}</strong>
+		</div>
+		<div class="project-copy">
+			<h2>{featuredProject.data.title}</h2>
+			<p>{featuredProject.data.description}</p>
+			<ul aria-label="Project technologies">
+				{featuredProject.data.technologies.slice(0, 4).map((technology) => <li>{technology}</li>)}
+			</ul>
+			<a href={`/systems/${featuredProject.id}/`}>See the project</a>
+		</div>
+	</section>
+
+	<section class="editorial-newsletter">
+		<div>
+			<p class="newsletter-name">FutureProofOS</p>
+			<h2>Useful AI notes for Sunday morning.</h2>
+		</div>
+		<div>
+			<p>Agents, evaluations, workflows, tools, and the occasional production surprise.</p>
+			<a class="primary-action" href="/newsletter">Join FutureProofOS</a>
+		</div>
+	</section>
+
+	<section class="editorial-about">
+		<img
+			src="/images/revanth-half-marathon.jpg"
+			alt="Revanth Pattipati and his wife after their first half marathon"
+			loading="lazy"
+		/>
+		<div>
+			<h2>About Rev, in five lines.</h2>
+			<p>Started in IT. Trained in analytics. Tested by infrastructure.</p>
+			<p>Now building practical AI systems that can survive real organizations.</p>
+			<p>Also runs, skydives, and remains suspicious of effortless demos.</p>
+			<a href="/about">The longer version</a>
+		</div>
+	</section>
+
+	<footer class="editorial-footer">
+		<p>Revanth Pattipati</p>
+		<a href="/preview/field-manual">Next concept: Field Manual</a>
+	</footer>
+</PreviewLayout>
+
+<style>
+	:global(body.preview-editorial) {
+		--paper: #f3f0ea;
+		--ink: #171714;
+		--muted: #69665f;
+		--line: #c9c3b8;
+		--accent: #9f4a31;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "Helvetica Neue", Arial, sans-serif;
+	}
+
+	:global(.preview-editorial *) {
+		box-sizing: border-box;
+	}
+
+	:global(.preview-editorial a) {
+		color: inherit;
+	}
+
+	.editorial-header {
+		display: flex;
+		width: min(1240px, calc(100% - 48px));
+		min-height: 72px;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		margin: 0 auto;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.wordmark {
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 1.05rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	nav {
+		display: flex;
+		gap: clamp(1rem, 2.5vw, 2rem);
+	}
+
+	nav a {
+		color: var(--muted);
+		font-size: 0.82rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	nav a:hover {
+		color: var(--accent);
+	}
+
+	.editorial-hero {
+		display: grid;
+		width: min(1240px, calc(100% - 48px));
+		min-height: calc(100dvh - 72px);
+		grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.55fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: center;
+		margin: 0 auto;
+		padding: 4.5rem 0;
+	}
+
+	.hero-copy {
+		max-width: 820px;
+	}
+
+	.overline {
+		margin: 0 0 1rem;
+		color: var(--accent);
+		font-size: 0.7rem;
+		font-weight: 800;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	.newsletter-name,
+	.project-index span,
+	.story-heading > p {
+		margin: 0 0 1rem;
+		color: var(--accent);
+		font-size: 0.76rem;
+		font-weight: 800;
+	}
+
+	h1,
+	h2,
+	p {
+		margin-top: 0;
+	}
+
+	h1,
+	h2 {
+		font-family: Georgia, "Times New Roman", serif;
+		color: var(--ink);
+	}
+
+	h1 {
+		max-width: 760px;
+		margin-bottom: 1.5rem;
+		font-size: clamp(3.7rem, 7.6vw, 7.4rem);
+		font-weight: 500;
+		letter-spacing: -0.055em;
+		line-height: 0.93;
+	}
+
+	.hero-deck {
+		max-width: 610px;
+		margin-bottom: 2rem;
+		color: var(--muted);
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(1.15rem, 2vw, 1.45rem);
+		line-height: 1.5;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem 1.5rem;
+		align-items: center;
+	}
+
+	.primary-action {
+		display: inline-flex;
+		min-height: 46px;
+		align-items: center;
+		border: 1px solid var(--ink);
+		background: var(--ink);
+		color: var(--paper) !important;
+		font-size: 0.84rem;
+		font-weight: 800;
+		padding: 0.7rem 1rem;
+		text-decoration: none;
+		transition: transform 160ms ease;
+	}
+
+	.primary-action:hover {
+		transform: translateY(-2px);
+	}
+
+	.text-action,
+	.story-summary a,
+	.project-copy > a,
+	.editorial-about a {
+		font-size: 0.86rem;
+		font-weight: 800;
+		text-underline-offset: 0.25em;
+	}
+
+	.editorial-portrait {
+		margin: 0;
+	}
+
+	.editorial-portrait img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		border: 1px solid var(--line);
+		filter: grayscale(1) contrast(1.04);
+		object-fit: cover;
+	}
+
+	.editorial-portrait figcaption {
+		margin-top: 0.75rem;
+		color: var(--muted);
+		font-size: 0.75rem;
+		font-style: italic;
+	}
+
+	.proof-bar {
+		display: grid;
+		width: min(1240px, calc(100% - 48px));
+		grid-template-columns: repeat(3, 1fr);
+		margin: 0 auto;
+		border-top: 1px solid var(--ink);
+		border-bottom: 1px solid var(--ink);
+	}
+
+	.proof-bar p {
+		margin: 0;
+		padding: 1rem 0;
+		color: var(--ink);
+		font-size: 0.78rem;
+		font-weight: 750;
+	}
+
+	.proof-bar p + p {
+		border-left: 1px solid var(--line);
+		padding-left: 1.25rem;
+	}
+
+	.feature-story {
+		display: grid;
+		width: min(1240px, calc(100% - 48px));
+		grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.55fr);
+		gap: clamp(3rem, 9vw, 9rem);
+		align-items: end;
+		margin: 0 auto;
+		padding: clamp(6rem, 11vw, 10rem) 0;
+	}
+
+	.story-heading h2 {
+		max-width: 850px;
+		font-size: clamp(2.7rem, 5.5vw, 5.4rem);
+		font-weight: 500;
+		letter-spacing: -0.04em;
+		line-height: 1;
+	}
+
+	.story-summary {
+		border-top: 1px solid var(--ink);
+		padding-top: 1.2rem;
+	}
+
+	.story-summary p,
+	.project-copy p,
+	.editorial-newsletter p,
+	.editorial-about p {
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.story-summary p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-feature {
+		display: grid;
+		grid-template-columns: 0.4fr 1fr;
+		background: #ded9cf;
+	}
+
+	.project-index,
+	.project-copy {
+		padding: clamp(2rem, 6vw, 5rem);
+	}
+
+	.project-index {
+		display: grid;
+		align-content: space-between;
+		border-right: 1px solid var(--line);
+	}
+
+	.project-index strong {
+		max-width: 16ch;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+
+	.project-copy {
+		max-width: 900px;
+	}
+
+	.project-copy h2 {
+		margin-bottom: 1.2rem;
+		font-size: clamp(3rem, 6vw, 6rem);
+		font-weight: 500;
+		letter-spacing: -0.05em;
+	}
+
+	.project-copy p {
+		max-width: 700px;
+	}
+
+	.project-copy ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.7rem 1.2rem;
+		margin: 2rem 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.project-copy li {
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.72rem;
+	}
+
+	.editorial-newsletter {
+		display: grid;
+		width: min(1240px, calc(100% - 48px));
+		grid-template-columns: 1fr 0.7fr;
+		gap: clamp(3rem, 8vw, 8rem);
+		margin: 0 auto;
+		padding: clamp(6rem, 11vw, 9rem) 0;
+	}
+
+	.editorial-newsletter h2 {
+		max-width: 760px;
+		font-size: clamp(2.7rem, 5vw, 5rem);
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+
+	.editorial-newsletter > div:last-child {
+		align-self: end;
+	}
+
+	.editorial-newsletter > div:last-child p {
+		margin-bottom: 1.5rem;
+	}
+
+	.editorial-about {
+		display: grid;
+		grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1fr);
+		gap: clamp(2rem, 7vw, 7rem);
+		align-items: center;
+		background: var(--ink);
+		color: var(--paper);
+		padding: clamp(2rem, 6vw, 5rem);
+	}
+
+	.editorial-about img {
+		width: 100%;
+		max-height: 520px;
+		filter: grayscale(1);
+		object-fit: cover;
+	}
+
+	.editorial-about h2 {
+		margin-bottom: 1.5rem;
+		color: var(--paper);
+		font-size: clamp(2.5rem, 5vw, 4.8rem);
+		font-weight: 500;
+	}
+
+	.editorial-about p {
+		max-width: 600px;
+		color: #bbb7af;
+	}
+
+	.editorial-about a {
+		display: inline-block;
+		margin-top: 1.2rem;
+		color: var(--paper);
+	}
+
+	.editorial-footer {
+		display: flex;
+		width: min(1240px, calc(100% - 48px));
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		margin: 0 auto;
+		padding: 2rem 0;
+		font-size: 0.78rem;
+		font-weight: 700;
+	}
+
+	.editorial-footer p {
+		margin: 0;
+		color: var(--ink);
+	}
+
+	@media (max-width: 820px) {
+		.editorial-header {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.8rem;
+			padding: 1rem 0;
+		}
+
+		nav {
+			width: 100%;
+			overflow-x: auto;
+			padding-bottom: 0.25rem;
+		}
+
+		nav a {
+			white-space: nowrap;
+		}
+
+		.editorial-hero,
+		.feature-story,
+		.project-feature,
+		.editorial-newsletter,
+		.editorial-about {
+			grid-template-columns: 1fr;
+		}
+
+		.editorial-hero {
+			min-height: auto;
+			padding: 4rem 0;
+		}
+
+		h1 {
+			font-size: clamp(3.4rem, 15vw, 5.5rem);
+		}
+
+		.editorial-portrait {
+			max-width: 440px;
+		}
+
+		.proof-bar {
+			grid-template-columns: 1fr;
+		}
+
+		.proof-bar p + p {
+			border-top: 1px solid var(--line);
+			border-left: 0;
+			padding-left: 0;
+		}
+
+		.project-index {
+			gap: 1rem;
+			border-right: 0;
+			border-bottom: 1px solid var(--line);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.editorial-header,
+		.editorial-hero,
+		.proof-bar,
+		.feature-story,
+		.editorial-newsletter,
+		.editorial-footer {
+			width: min(100% - 28px, 1240px);
+		}
+
+		.editorial-footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>

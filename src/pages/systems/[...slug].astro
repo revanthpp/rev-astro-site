@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import SystemFlow from '../../components/SystemFlow.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 export async function getStaticPaths() {
@@ -12,26 +13,67 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const projectFlows: Record<string, Array<{ label: string; detail: string }>> = {
+	'agentops-reference-architecture': [
+		{ label: 'Scenario', detail: 'Choose the workflow and constraints.' },
+		{ label: 'Route', detail: 'Select a path and model.' },
+		{ label: 'Execute', detail: 'Run tools with guardrails.' },
+		{ label: 'Evaluate', detail: 'Compare cost, traces, and reliability.' },
+	],
+	'cost-aware-model-router': [
+		{ label: 'Task', detail: 'Declare the intended outcome.' },
+		{ label: 'Policy', detail: 'Check boundaries and approvals.' },
+		{ label: 'Browser', detail: 'Execute the allowed interaction.' },
+		{ label: 'Trace', detail: 'Capture evidence for review.' },
+	],
+	evalkit: [
+		{ label: 'Cases', detail: 'Version prompts and scenarios.' },
+		{ label: 'Run', detail: 'Exercise the workflow.' },
+		{ label: 'Score', detail: 'Classify quality and failures.' },
+		{ label: 'Review', detail: 'Make release decisions with evidence.' },
+	],
+	'llm-observability-dashboard': [
+		{ label: 'Failure', detail: 'Name the behavior to reproduce.' },
+		{ label: 'Fixture', detail: 'Create a deterministic case.' },
+		{ label: 'Trace', detail: 'Inspect where the system drifted.' },
+		{ label: 'Mitigate', detail: 'Document the architectural fix.' },
+	],
+	'secure-tool-calling-sandbox': [
+		{ label: 'Request', detail: 'Receive a typed tool call.' },
+		{ label: 'Policy', detail: 'Validate identity and scope.' },
+		{ label: 'Approve', detail: 'Escalate risky actions to a human.' },
+		{ label: 'Audit', detail: 'Record the decision and result.' },
+	],
+};
+const architectureFlow = projectFlows[project.id] ?? [
+	{ label: 'Input', detail: 'Receive a bounded task.' },
+	{ label: 'Policy', detail: 'Apply system constraints.' },
+	{ label: 'Execute', detail: 'Run the workflow.' },
+	{ label: 'Trace', detail: 'Capture evidence.' },
+];
 ---
 
 <SiteLayout
-	title={`${project.data.title} | Systems Work | Revanth Pattipati`}
+	title={`${project.data.title} | Projects | Revanth Pattipati`}
 	description={project.data.description}
 >
 	<article class="project-detail section-shell">
 		<header class="project-header">
-			<a class="back-link" href="/systems">Systems Work</a>
+			<a class="back-link" href="/systems">Projects</a>
 			<span class="tag">{project.data.status}</span>
 			<h1>{project.data.title}</h1>
 			<p>{project.data.description}</p>
 		</header>
 
-		<section class="architecture-panel" aria-label="Architecture diagram placeholder">
-			<div class="arch-node main">Workflow</div>
-			<div class="arch-node">Policy</div>
-			<div class="arch-node">Tools</div>
-			<div class="arch-node">Trace</div>
-			<div class="arch-line"></div>
+		<section class="architecture-panel" aria-labelledby="architecture-heading">
+			<div>
+				<p class="kicker">System flow</p>
+				<h2 id="architecture-heading">How the pieces move.</h2>
+			</div>
+			<SystemFlow
+				steps={architectureFlow}
+				label={`${project.data.title} architecture flow`}
+			/>
 		</section>
 
 		<div class="detail-grid">
@@ -100,61 +142,24 @@ const { Content } = await render(project);
 	}
 
 	.architecture-panel {
-		position: relative;
-		min-height: 420px;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background:
-			linear-gradient(120deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.48)),
-			linear-gradient(rgba(17, 19, 24, 0.045) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(17, 19, 24, 0.045) 1px, transparent 1px);
-		background-size: auto, 42px 42px, 42px 42px;
-		box-shadow: var(--shadow);
+		display: grid;
+		grid-template-columns: minmax(220px, 0.35fr) minmax(0, 1fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: center;
+		border-top: 1px solid var(--ink);
+		border-bottom: 1px solid var(--line);
 		margin-bottom: 3rem;
-		overflow: hidden;
+		padding: clamp(2.5rem, 6vw, 4.5rem) 0;
 	}
 
-	.arch-node {
-		position: absolute;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.86);
-		font-family: var(--mono);
-		font-size: 0.78rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		padding: 0.9rem 1.1rem;
-		text-transform: uppercase;
+	.architecture-panel > div {
+		display: grid;
+		gap: 0.7rem;
 	}
 
-	.arch-node.main {
-		left: 42%;
-		top: 42%;
-		border-color: rgba(21, 93, 252, 0.34);
-		color: var(--accent);
-	}
-
-	.arch-node:nth-child(2) {
-		left: 16%;
-		top: 22%;
-	}
-
-	.arch-node:nth-child(3) {
-		right: 18%;
-		top: 24%;
-	}
-
-	.arch-node:nth-child(4) {
-		left: 24%;
-		bottom: 18%;
-	}
-
-	.arch-line {
-		position: absolute;
-		inset: 18% 20%;
-		border: 1px solid rgba(21, 93, 252, 0.22);
-		border-radius: 50%;
-		transform: rotate(-12deg);
+	.architecture-panel h2 {
+		font-size: clamp(2rem, 4vw, 3.5rem);
+		letter-spacing: -0.04em;
 	}
 
 	.detail-grid {
@@ -203,17 +208,9 @@ const { Content } = await render(project);
 	}
 
 	@media (max-width: 760px) {
-		.detail-grid {
-			grid-template-columns: 1fr;
-		}
-
+		.detail-grid,
 		.architecture-panel {
-			min-height: 340px;
-		}
-
-		.arch-node {
-			font-size: 0.65rem;
-			padding: 0.65rem 0.75rem;
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

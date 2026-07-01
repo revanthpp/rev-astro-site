@@ -1,18 +1,18 @@
 name: "Revanth Pattipati"
 title: "Applied AI Leader with Infrastructure Roots"
 targetTitle: "Applied AI Leader. Analytics-trained. Infrastructure-tested."
-location: "Schaumburg, IL"
+location: "Chicago, IL"
 positioning: "Applied AI • Agentic Systems • Enterprise Execution"
 
 heroEyebrow: "Applied AI • Agentic Systems • Enterprise Execution"
 heroHeadline: "AI systems, built for the part after the demo."
-heroSubheadline: "I help turn AI ideas into practical enterprise systems — with enough infrastructure experience to know where the demo will break."
+heroSubheadline: "I help turn AI ideas into practical enterprise systems, with enough infrastructure experience to know where the demo will break."
 heroSupportingLine: "Applied AI Leader. Analytics-trained. Infrastructure-tested."
 
 shortBio: "I’m Revanth Pattipati, an applied AI leader with infrastructure roots."
 
 longBio: |
-  I help turn AI ideas into practical enterprise systems — the kind that have to survive contact with permissions, data access, cost, latency, monitoring, governance, stakeholders, and all the other things demos politely ignore.
+  I help turn AI ideas into practical enterprise systems. The kind that have to survive contact with permissions, data access, cost, latency, monitoring, governance, stakeholders, and all the other things demos politely ignore.
 
   My career started in infrastructure leadership, which shaped how I think about AI. Infrastructure teaches you humility quickly. Systems fail. Costs creep. Dependencies break. Access gets messy. Monitoring matters. And eventually, someone asks, “How do we support this in production?”
 

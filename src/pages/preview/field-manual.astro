@@ -1,0 +1,671 @@
+---
+import { getCollection } from 'astro:content';
+import PreviewLayout from '../../layouts/PreviewLayout.astro';
+
+const posts = (await getCollection('writing'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const notes = (await getCollection('notes'))
+	.filter((note) => !note.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
+const fieldProjects = projects.slice(0, 2);
+---
+
+<PreviewLayout
+	title="Field Manual Preview | Revanth Pattipati"
+	description="A practical field-guide homepage direction for Revanth Pattipati."
+	concept="manual"
+>
+	<div class="manual-frame">
+		<aside class="manual-rail">
+			<a class="manual-brand" href="/">
+				<strong>Rev</strong>
+				<span>Field Manual</span>
+			</a>
+			<nav aria-label="Field Manual navigation">
+				<a href="/notes">Notes</a>
+				<a href="/systems">Projects</a>
+				<a href="/newsletter">Newsletter</a>
+				<a href="/about">About</a>
+				<a href="/contact">Contact</a>
+			</nav>
+			<div class="rail-signup">
+				<p>Sunday reading, minus the Sunday scaries.</p>
+				<a href="/newsletter">Join FutureProofOS</a>
+			</div>
+		</aside>
+
+		<div class="manual-content">
+			<header class="mobile-manual-nav">
+				<a href="/">Rev</a>
+				<nav aria-label="Mobile Field Manual navigation">
+					<a href="/notes">Notes</a>
+					<a href="/systems">Projects</a>
+					<a href="/newsletter">Newsletter</a>
+					<a href="/about">About</a>
+				</nav>
+			</header>
+
+			<section class="manual-hero">
+				<div>
+					<p class="chapter-label">The demo is easy.</p>
+					<h1>The system is the work.</h1>
+				</div>
+				<div class="hero-note">
+					<p>
+						Notes, projects, and lessons from building AI that has to survive users, costs, and
+						Monday morning.
+					</p>
+					<div class="manual-actions">
+						<a class="manual-button" href="/notes">Start with the messy middle</a>
+						<a href="/systems">See field examples</a>
+					</div>
+				</div>
+			</section>
+
+			<section class="working-map" aria-labelledby="working-map-heading">
+				<div class="map-intro">
+					<h2 id="working-map-heading">What this manual covers</h2>
+					<p>Enough theory to think clearly. Enough practice to catch the expensive mistakes.</p>
+				</div>
+				<ol>
+					<li>
+						<strong>Agent systems</strong>
+						<span>Boundaries, tool use, orchestration, and knowing when to stop.</span>
+					</li>
+					<li>
+						<strong>Evaluation</strong>
+						<span>Tests that find failure before the user does.</span>
+					</li>
+					<li>
+						<strong>Enterprise delivery</strong>
+						<span>Ownership, governance, cost, support, and the rest of reality.</span>
+					</li>
+				</ol>
+			</section>
+
+			<section class="manual-notes">
+				<div class="notes-main">
+					<p class="chapter-label">Recent entry</p>
+					<h2>{posts[0].data.title}</h2>
+					<p>{posts[0].data.description}</p>
+					<a href={`/writing/${posts[0].id}/`}>Read the full entry</a>
+				</div>
+				<aside class="margin-notes" aria-label="Quick observations">
+					<p class="margin-title">Penciled in the margin</p>
+					{notes.slice(0, 3).map((note) => (
+						<blockquote>{note.data.title}</blockquote>
+					))}
+				</aside>
+			</section>
+
+			<section class="field-image">
+				<img
+					src="/images/revanth-skydiving-web.jpg"
+					alt="Revanth Pattipati skydiving above the landscape"
+					loading="lazy"
+				/>
+				<div>
+					<h2>Guardrails are useful when gravity is involved.</h2>
+					<p>
+						The same lesson applies to agents. Confidence is good. Boundaries, feedback, and a
+						recovery plan are better.
+					</p>
+				</div>
+			</section>
+
+			<section class="case-files">
+				<div class="case-heading">
+					<h2>Examples from the field</h2>
+					<p>Reference designs, prototypes, and useful ways to make failure visible.</p>
+				</div>
+				<div class="case-list">
+					{fieldProjects.map((project) => (
+						<a href={`/systems/${project.id}/`}>
+							<div>
+								<span>{project.data.category}</span>
+								<h3>{project.data.title}</h3>
+							</div>
+							<p>{project.data.description}</p>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<section class="manual-personal">
+				<img
+					src="/images/revanth-professional.jpg"
+					alt="Revanth Pattipati smiling in a professional portrait"
+					loading="lazy"
+				/>
+				<div>
+					<h2>Built from a slightly unusual route.</h2>
+					<p>
+						Information technology, analytics, data engineering, cloud, infrastructure, then
+						applied AI. The route was not tidy. The perspective is useful.
+					</p>
+					<a href="/about">Read the backstory</a>
+				</div>
+			</section>
+
+			<footer class="manual-footer">
+				<p>Notes from the messy middle.</p>
+				<a href="/preview/builder-lab">Next concept: Builder Lab</a>
+			</footer>
+		</div>
+	</div>
+</PreviewLayout>
+
+<style>
+	:global(body.preview-manual) {
+		--paper: #eeede3;
+		--ink: #242820;
+		--muted: #656b5e;
+		--olive: #56633f;
+		--wash: #dfe2d0;
+		--line: #b9bdab;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "IBM Plex Sans", "Avenir Next", Arial, sans-serif;
+	}
+
+	:global(.preview-manual *) {
+		box-sizing: border-box;
+	}
+
+	:global(.preview-manual a) {
+		color: inherit;
+	}
+
+	.manual-frame {
+		display: grid;
+		grid-template-columns: 240px minmax(0, 1fr);
+	}
+
+	.manual-rail {
+		position: sticky;
+		top: 0;
+		display: flex;
+		height: 100dvh;
+		align-self: start;
+		flex-direction: column;
+		border-right: 1px solid var(--line);
+		padding: 2rem 1.5rem;
+	}
+
+	.manual-brand {
+		display: grid;
+		gap: 0.1rem;
+		text-decoration: none;
+	}
+
+	.manual-brand strong {
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 1.7rem;
+	}
+
+	.manual-brand span {
+		color: var(--muted);
+		font-size: 0.7rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.manual-rail nav {
+		display: grid;
+		gap: 0.15rem;
+		margin-top: 4rem;
+	}
+
+	.manual-rail nav a {
+		border-bottom: 1px solid transparent;
+		font-size: 0.88rem;
+		font-weight: 750;
+		padding: 0.65rem 0;
+		text-decoration: none;
+	}
+
+	.manual-rail nav a:hover {
+		border-color: var(--olive);
+		color: var(--olive);
+	}
+
+	.rail-signup {
+		margin-top: auto;
+		border-top: 1px solid var(--line);
+		padding-top: 1rem;
+	}
+
+	.rail-signup p {
+		margin: 0 0 0.8rem;
+		color: var(--muted);
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 0.92rem;
+		line-height: 1.45;
+	}
+
+	.rail-signup a {
+		font-size: 0.75rem;
+		font-weight: 800;
+	}
+
+	.mobile-manual-nav {
+		display: none;
+	}
+
+	.manual-content {
+		min-width: 0;
+	}
+
+	.manual-hero,
+	.working-map,
+	.manual-notes,
+	.case-files,
+	.manual-personal,
+	.manual-footer {
+		width: min(1120px, calc(100% - 64px));
+		margin: 0 auto;
+	}
+
+	.manual-hero {
+		display: grid;
+		min-height: 100dvh;
+		grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.55fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: center;
+		padding: 5rem 0;
+	}
+
+	h1,
+	h2,
+	h3,
+	p {
+		margin-top: 0;
+	}
+
+	h1,
+	h2,
+	h3 {
+		color: var(--ink);
+	}
+
+	.chapter-label,
+	.margin-title {
+		margin-bottom: 1rem;
+		color: var(--olive);
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.68rem;
+		font-weight: 800;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		max-width: 760px;
+		margin-bottom: 0;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(3.6rem, 7vw, 7rem);
+		font-weight: 500;
+		letter-spacing: -0.05em;
+		line-height: 0.97;
+	}
+
+	.hero-note {
+		align-self: end;
+		border-top: 3px solid var(--olive);
+		margin-bottom: 2rem;
+		padding-top: 1.2rem;
+	}
+
+	.hero-note > p {
+		color: var(--muted);
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 1.15rem;
+		line-height: 1.55;
+	}
+
+	.manual-actions {
+		display: grid;
+		gap: 0.9rem;
+		margin-top: 1.5rem;
+	}
+
+	.manual-actions a {
+		width: fit-content;
+		font-size: 0.8rem;
+		font-weight: 800;
+	}
+
+	.manual-button {
+		display: inline-flex;
+		min-height: 46px;
+		align-items: center;
+		background: var(--olive);
+		color: #f8f8f2 !important;
+		padding: 0.7rem 0.95rem;
+		text-decoration: none;
+		transition: transform 160ms ease;
+	}
+
+	.manual-button:hover {
+		transform: translateY(-2px);
+	}
+
+	.working-map {
+		display: grid;
+		grid-template-columns: 0.7fr 1fr;
+		gap: clamp(3rem, 8vw, 8rem);
+		border-top: 1px solid var(--ink);
+		padding: clamp(4rem, 8vw, 7rem) 0;
+	}
+
+	.map-intro h2,
+	.case-heading h2,
+	.manual-personal h2 {
+		margin-bottom: 1rem;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(2.3rem, 4.5vw, 4rem);
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+
+	.map-intro p,
+	.case-heading p,
+	.manual-personal p {
+		max-width: 520px;
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.working-map ol {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.working-map li {
+		display: grid;
+		grid-template-columns: 0.5fr 1fr;
+		gap: 1.5rem;
+		border-bottom: 1px solid var(--line);
+		padding: 1.4rem 0;
+	}
+
+	.working-map li:first-child {
+		padding-top: 0;
+	}
+
+	.working-map strong {
+		font-size: 0.92rem;
+	}
+
+	.working-map span {
+		color: var(--muted);
+		line-height: 1.55;
+	}
+
+	.manual-notes {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.55fr);
+		gap: clamp(3rem, 7vw, 7rem);
+		background: var(--wash);
+		padding: clamp(2rem, 6vw, 5rem);
+	}
+
+	.notes-main h2 {
+		max-width: 760px;
+		margin-bottom: 1rem;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(2.4rem, 5vw, 4.8rem);
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+
+	.notes-main > p:not(.chapter-label) {
+		max-width: 650px;
+		color: var(--muted);
+		line-height: 1.65;
+	}
+
+	.notes-main > a,
+	.manual-personal a {
+		display: inline-block;
+		margin-top: 1.5rem;
+		font-size: 0.8rem;
+		font-weight: 800;
+	}
+
+	.margin-notes {
+		border-left: 1px solid var(--line);
+		padding-left: 1.5rem;
+	}
+
+	.margin-notes blockquote {
+		margin: 0;
+		border: 0;
+		border-bottom: 1px solid var(--line);
+		padding: 1rem 0;
+		color: var(--ink);
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 1.05rem;
+		line-height: 1.45;
+	}
+
+	.field-image {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+		align-items: stretch;
+		margin: clamp(5rem, 10vw, 9rem) 0;
+	}
+
+	.field-image img {
+		width: 100%;
+		min-height: 560px;
+		filter: saturate(0.75) contrast(1.05);
+		object-fit: cover;
+	}
+
+	.field-image > div {
+		display: grid;
+		align-content: end;
+		background: var(--olive);
+		padding: clamp(2rem, 5vw, 4rem);
+	}
+
+	.field-image h2 {
+		color: #f2f1e8;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(2.1rem, 4vw, 3.8rem);
+		font-weight: 500;
+		line-height: 1.05;
+	}
+
+	.field-image p {
+		margin-bottom: 0;
+		color: #dfe3d2;
+		line-height: 1.6;
+	}
+
+	.case-files {
+		padding: 0 0 clamp(5rem, 10vw, 9rem);
+	}
+
+	.case-heading {
+		max-width: 650px;
+		margin-bottom: 3rem;
+	}
+
+	.case-list {
+		border-top: 1px solid var(--ink);
+	}
+
+	.case-list a {
+		display: grid;
+		grid-template-columns: 0.8fr 1fr;
+		gap: 3rem;
+		border-bottom: 1px solid var(--line);
+		padding: 2rem 0;
+		text-decoration: none;
+	}
+
+	.case-list a:hover h3 {
+		color: var(--olive);
+	}
+
+	.case-list span {
+		color: var(--muted);
+		font-size: 0.7rem;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	.case-list h3 {
+		margin: 0.45rem 0 0;
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: clamp(1.7rem, 3vw, 2.5rem);
+		font-weight: 500;
+	}
+
+	.case-list p {
+		margin: 0;
+		color: var(--muted);
+		line-height: 1.6;
+	}
+
+	.manual-personal {
+		display: grid;
+		grid-template-columns: 240px 1fr;
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: center;
+		border-top: 1px solid var(--ink);
+		padding: clamp(4rem, 8vw, 7rem) 0;
+	}
+
+	.manual-personal img {
+		width: 100%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		filter: grayscale(1);
+		object-fit: cover;
+	}
+
+	.manual-footer {
+		display: flex;
+		justify-content: space-between;
+		gap: 2rem;
+		border-top: 1px solid var(--line);
+		padding: 2rem 0;
+		font-size: 0.76rem;
+		font-weight: 750;
+	}
+
+	.manual-footer p {
+		margin: 0;
+		color: var(--muted);
+	}
+
+	@media (max-width: 900px) {
+		.manual-frame {
+			display: block;
+		}
+
+		.manual-rail {
+			display: none;
+		}
+
+		.mobile-manual-nav {
+			display: flex;
+			width: min(100% - 32px, 1120px);
+			min-height: 68px;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1.5rem;
+			margin: 0 auto;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.mobile-manual-nav > a {
+			font-family: Georgia, "Times New Roman", serif;
+			font-size: 1.3rem;
+			font-weight: 700;
+			text-decoration: none;
+		}
+
+		.mobile-manual-nav nav {
+			display: flex;
+			gap: 1rem;
+			overflow-x: auto;
+		}
+
+		.mobile-manual-nav nav a {
+			font-size: 0.76rem;
+			font-weight: 750;
+			white-space: nowrap;
+		}
+	}
+
+	@media (max-width: 760px) {
+		.manual-hero,
+		.working-map,
+		.manual-notes,
+		.field-image,
+		.case-list a,
+		.manual-personal {
+			grid-template-columns: 1fr;
+		}
+
+		.manual-hero {
+			min-height: auto;
+			padding: 4rem 0;
+		}
+
+		h1 {
+			font-size: clamp(3.2rem, 14vw, 5rem);
+		}
+
+		.hero-note {
+			margin-bottom: 0;
+		}
+
+		.manual-notes {
+			width: 100%;
+		}
+
+		.margin-notes {
+			border-top: 1px solid var(--line);
+			border-left: 0;
+			padding-top: 1.5rem;
+			padding-left: 0;
+		}
+
+		.field-image img {
+			min-height: 420px;
+		}
+
+		.case-list a {
+			gap: 1rem;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.manual-hero,
+		.working-map,
+		.case-files,
+		.manual-personal,
+		.manual-footer {
+			width: min(100% - 28px, 1120px);
+		}
+
+		.working-map li {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+
+		.manual-footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>

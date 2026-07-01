@@ -1,0 +1,126 @@
+---
+interface Step {
+	label: string;
+	detail?: string;
+}
+
+interface Props {
+	steps: Step[];
+	label: string;
+	compact?: boolean;
+	tone?: 'blue' | 'red';
+}
+
+const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
+---
+
+<div
+	class:list={['system-flow', `tone-${tone}`, { compact }]}
+	style={`--flow-count: ${steps.length}`}
+	role="img"
+	aria-label={label}
+>
+	<ol>
+		{
+			steps.map((step) => (
+				<li>
+					<strong>{step.label}</strong>
+					{step.detail && <span>{step.detail}</span>}
+				</li>
+			))
+		}
+	</ol>
+</div>
+
+<style>
+	.system-flow {
+		--flow-accent: var(--accent);
+		--flow-soft: var(--accent-soft);
+		width: 100%;
+		border: 1px solid var(--line);
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.66);
+		overflow: hidden;
+		padding: clamp(1rem, 2vw, 1.5rem);
+	}
+
+	.system-flow.tone-red {
+		--flow-accent: #b8563e;
+		--flow-soft: #f4dfd7;
+	}
+
+	ol {
+		display: grid;
+		grid-template-columns: repeat(var(--flow-count, 4), minmax(0, 1fr));
+		gap: clamp(1.6rem, 4vw, 3.5rem);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		position: relative;
+		display: grid;
+		min-width: 0;
+		align-content: start;
+		gap: 0.35rem;
+	}
+
+	li:not(:last-child)::after {
+		position: absolute;
+		top: 50%;
+		left: calc(100% + 0.55rem);
+		color: var(--flow-accent);
+		content: "→";
+		font-family: var(--mono);
+		font-size: 1rem;
+		transform: translateY(-50%);
+	}
+
+	strong {
+		color: var(--ink);
+		font-size: 0.88rem;
+		line-height: 1.25;
+	}
+
+	span {
+		color: var(--muted);
+		font-size: 0.76rem;
+		line-height: 1.45;
+	}
+
+	.compact {
+		border-radius: var(--radius);
+		padding: 0.85rem;
+	}
+
+	.compact ol {
+		gap: 1.4rem;
+	}
+
+	.compact strong {
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		font-weight: 750;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.compact span {
+		display: none;
+	}
+
+	@media (max-width: 680px) {
+		ol {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		li:not(:last-child)::after {
+			top: calc(100% + 0.45rem);
+			left: 0;
+			content: "↓";
+			transform: none;
+		}
+	}
+</style>

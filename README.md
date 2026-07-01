@@ -133,3 +133,58 @@ For Vercel or Netlify:
 - Output directory: `dist`
 
 After pushing to GitHub, Vercel should automatically deploy the latest version.
+
+## Homepage Design Previews
+
+The current homepage remains in place. Four isolated design directions are available for comparison:
+
+- `/preview/editorial-operator`
+- `/preview/field-manual`
+- `/preview/builder-lab`
+- `/preview/human-signal`
+
+| Option | Best for | Visual feel | Strengths | Tradeoffs | Recommendation score |
+| --- | --- | --- | --- | --- | --- |
+| Editorial Operator | AI leaders, executives, hiring managers | Premium editorial, off-white, ink, muted rust | Highest immediate credibility, strong writing hierarchy, mature project framing | More formal and less playful | 8.9/10 |
+| Field Manual | Builders, operators, curious readers | Practical guidebook, bone, charcoal, olive | Most distinctive information architecture, integrates quick notes naturally | The vertical rail is more opinionated | 8.6/10 |
+| Builder Lab | Engineers, GitHub visitors, technical recruiters | Dark project ledger, graphite, restrained blue | Best project visibility, clearest technical depth, strongest GitHub path | Narrower appeal for non-technical readers | 8.8/10 |
+| Human Signal | Broad audience, collaborators, newsletter readers | Warm, image-led, deep navy, muted copper | Best personal voice, approachable authority, strong newsletter conversion | Slightly less formal than Editorial Operator | 9.3/10 |
+
+### Recommendation
+
+Human Signal is the strongest overall direction. It balances technical credibility with the warmth and humor that make the site feel like Revanth rather than a generic AI portfolio. It also gives FutureProofOS a natural conversion moment and leaves enough room for projects to grow.
+
+If selected, keep the Human Signal system and borrow the project ledger structure from Builder Lab for the full Projects page.
+
+### Recommended Navigation
+
+- Home
+- Notes
+- Projects
+- Newsletter
+- About
+- Contact
+
+Writing and Field Notes now share one destination: `/notes`. Long essays remain at their existing `/writing/<slug>` URLs for compatibility and SEO, while the Notes page presents essays and quick observations together.
+
+Newsletter stays separate because it has a different job. Notes is the reading archive. FutureProofOS is the email invitation and subscription layer.
+
+### Publishing a Selected Direction
+
+1. Copy the selected preview page structure into `src/pages/index.astro`.
+2. Keep its custom navigation treatment or move that treatment into `src/components/Header.astro`.
+3. Use `noindex={false}` if the selected page continues to use `PreviewLayout.astro`, or move it into a production layout.
+4. Preserve the existing metadata, canonical URL, project data, and post URLs.
+5. Run `npm run content:check` and `npm run build`.
+6. Check desktop and mobile before pushing to the production branch.
+
+### Files to Change After Selection
+
+- `src/pages/index.astro` for the selected homepage
+- `src/components/Header.astro` if the selected navigation becomes global
+- `src/components/Footer.astro` if the selected footer becomes global
+- `src/styles/global.css` for shared production tokens
+- `content/site/homepage.yml` for final homepage copy and featured content
+- `src/layouts/PreviewLayout.astro` only if it becomes the new production layout
+
+The preview files can remain as a design archive or be removed after the selected direction is published.

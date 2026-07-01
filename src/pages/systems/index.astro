@@ -1,36 +1,92 @@
 ---
 import { getCollection } from 'astro:content';
+import SystemFlow from '../../components/SystemFlow.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
+const buildFlow = [
+	{ label: 'Problem', detail: 'Name the operational risk.' },
+	{ label: 'Boundaries', detail: 'Make policy and constraints explicit.' },
+	{ label: 'Build', detail: 'Create the smallest useful system.' },
+	{ label: 'Evaluate', detail: 'Keep evidence, not vibes.' },
+];
+const projectFlows: Record<string, Array<{ label: string }>> = {
+	'agentops-reference-architecture': [
+		{ label: 'Scenario' },
+		{ label: 'Route' },
+		{ label: 'Execute' },
+		{ label: 'Evaluate' },
+	],
+	'cost-aware-model-router': [
+		{ label: 'Task' },
+		{ label: 'Policy' },
+		{ label: 'Browser' },
+		{ label: 'Trace' },
+	],
+	evalkit: [
+		{ label: 'Cases' },
+		{ label: 'Run' },
+		{ label: 'Score' },
+		{ label: 'Review' },
+	],
+	'llm-observability-dashboard': [
+		{ label: 'Failure' },
+		{ label: 'Fixture' },
+		{ label: 'Trace' },
+		{ label: 'Mitigate' },
+	],
+	'secure-tool-calling-sandbox': [
+		{ label: 'Request' },
+		{ label: 'Policy' },
+		{ label: 'Approve' },
+		{ label: 'Audit' },
+	],
+};
 ---
 
 <SiteLayout
-	title="Systems Work | Revanth Pattipati"
-	description="Production-style AI systems work by Revanth Pattipati, including evaluation frameworks, agent operations architecture, cost-aware routing, secure tool-calling, and LLM observability."
+	title="Projects | Revanth Pattipati"
+	description="Working AI systems, architecture decisions, tradeoffs, GitHub repositories, and detailed writeups by Revanth Pattipati."
 >
 	<section class="page-hero section-shell">
-		<p class="kicker">Systems Work</p>
-		<h1>Technical explorations designed around real production constraints.</h1>
-		<p>
-			Reference architectures and project concepts for evaluation, orchestration, secure
-			execution, model routing, and observability.
-		</p>
+		<p class="kicker">Projects</p>
+		<h1>Systems you can inspect.</h1>
+		<p>Working builds, reference architectures, and the tradeoffs hiding behind the tidy diagram.</p>
 	</section>
 
-	<section class="project-grid section-shell">
-		{projects.map((project) => (
+	<section class="method section-shell" aria-labelledby="method-heading">
+		<div>
+			<p class="kicker">Build loop</p>
+			<h2 id="method-heading">Less magic. More evidence.</h2>
+		</div>
+		<SystemFlow
+			steps={buildFlow}
+			label="Project method from the problem through boundaries and building to evaluation"
+		/>
+	</section>
+
+	<section class="project-list section-shell" aria-label="AI projects">
+		{projects.map((project, index) => (
 			<a class="project-card" href={`/systems/${project.id}/`}>
-				<div class="diagram" aria-hidden="true">
-					<span></span><span></span><span></span><span></span>
-				</div>
-				<div class="project-body">
-					<span class="tag">{project.data.status}</span>
+				<div class="project-number">{String(index + 1).padStart(2, '0')}</div>
+				<div class="project-copy">
+					<div class="project-meta">
+						<span>{project.data.status}</span>
+						<span>{project.data.category}</span>
+					</div>
 					<h2>{project.data.title}</h2>
 					<p>{project.data.description}</p>
 					<ul>
 						{project.data.technologies.slice(0, 4).map((tech) => <li>{tech}</li>)}
 					</ul>
+				</div>
+				<div class="project-flow">
+					<SystemFlow
+						steps={projectFlows[project.id] ?? buildFlow}
+						label={`${project.data.title} system flow`}
+						compact
+					/>
+					<strong>Open project →</strong>
 				</div>
 			</a>
 		))}
@@ -38,132 +94,147 @@ const projects = (await getCollection('projects')).filter((project) => !project.
 </SiteLayout>
 
 <style>
+	:global(body.site-body) {
+		background: #f6f5f1;
+	}
+
 	.page-hero {
-		padding: 5rem 0 3rem;
+		padding: clamp(5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
 	}
 
 	.page-hero h1 {
 		max-width: 1040px;
 		margin: 0.7rem 0 1.2rem;
+		font-size: clamp(3.8rem, 9vw, 8rem);
+		letter-spacing: -0.06em;
 	}
 
 	.page-hero p:not(.kicker) {
-		max-width: 760px;
-		font-size: 1.18rem;
+		max-width: 710px;
+		color: var(--graphite);
+		font-size: clamp(1.05rem, 2vw, 1.25rem);
 	}
 
-	.project-grid {
+	.method {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-		padding-bottom: 6rem;
+		grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: center;
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+		padding: clamp(3rem, 7vw, 5rem) 0;
+	}
+
+	.method > div {
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.method h2 {
+		font-size: clamp(2rem, 4vw, 3.6rem);
+		letter-spacing: -0.04em;
+	}
+
+	.project-list {
+		padding: clamp(4rem, 8vw, 7rem) 0;
 	}
 
 	.project-card {
 		display: grid;
-		grid-template-columns: 0.8fr 1fr;
-		min-height: 340px;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.58);
+		grid-template-columns: 70px minmax(0, 1fr) minmax(320px, 0.8fr);
+		gap: clamp(1rem, 4vw, 3.5rem);
+		align-items: center;
+		border-bottom: 1px solid var(--line);
 		color: inherit;
-		overflow: hidden;
+		padding: clamp(2rem, 5vw, 4rem) 0;
 		text-decoration: none;
-		transition:
-			transform 160ms ease,
-			box-shadow 160ms ease,
-			background 160ms ease;
 	}
 
-	.project-card:hover {
-		background: var(--surface);
-		box-shadow: var(--shadow);
-		transform: translateY(-2px);
+	.project-card:first-child {
+		border-top: 1px solid var(--ink);
 	}
 
-	.diagram {
-		position: relative;
-		min-height: 100%;
-		border-right: 1px solid var(--line);
-		background-image:
-			linear-gradient(rgba(17, 19, 24, 0.045) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(17, 19, 24, 0.045) 1px, transparent 1px);
-		background-size: 34px 34px;
+	.project-card:hover h2,
+	.project-card:hover .project-flow > strong {
+		color: var(--accent);
 	}
 
-	.diagram span {
-		position: absolute;
-		width: 44%;
-		height: 42px;
-		border: 1px solid rgba(21, 93, 252, 0.22);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.8);
+	.project-number {
+		align-self: start;
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
 	}
 
-	.diagram span:nth-child(1) {
-		left: 16%;
-		top: 18%;
-	}
-
-	.diagram span:nth-child(2) {
-		right: 12%;
-		top: 39%;
-	}
-
-	.diagram span:nth-child(3) {
-		left: 18%;
-		bottom: 22%;
-	}
-
-	.diagram span:nth-child(4) {
-		right: 18%;
-		bottom: 9%;
-		width: 10px;
-		height: 10px;
-		border-radius: 999px;
-		background: var(--accent);
-		box-shadow: 0 0 0 12px rgba(21, 93, 252, 0.1);
-	}
-
-	.project-body {
+	.project-copy {
 		display: grid;
-		align-content: space-between;
-		gap: 1.2rem;
-		padding: 1.25rem;
+		gap: 1rem;
 	}
 
-	.project-body h2 {
-		font-size: 1.7rem;
+	.project-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1rem;
+		color: var(--muted);
+		font-family: var(--mono);
+		font-size: 0.65rem;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
 	}
 
-	ul {
+	.project-copy h2 {
+		font-size: clamp(2rem, 4.5vw, 4rem);
+		letter-spacing: -0.045em;
+		transition: color 160ms ease;
+	}
+
+	.project-copy p {
+		max-width: 620px;
+	}
+
+	.project-copy ul {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.45rem;
-		list-style: none;
 		margin: 0;
 		padding: 0;
+		list-style: none;
 	}
 
-	li {
+	.project-copy li {
 		border: 1px solid var(--line);
 		border-radius: 999px;
 		color: var(--muted);
 		font-family: var(--mono);
-		font-size: 0.72rem;
-		padding: 0.25rem 0.45rem;
+		font-size: 0.66rem;
+		padding: 0.25rem 0.5rem;
 	}
 
-	@media (max-width: 980px) {
-		.project-grid,
+	.project-flow {
+		display: grid;
+		gap: 0.85rem;
+	}
+
+	.project-flow > strong {
+		justify-self: end;
+		font-size: 0.82rem;
+		transition: color 160ms ease;
+	}
+
+	@media (max-width: 900px) {
+		.method,
 		.project-card {
 			grid-template-columns: 1fr;
 		}
 
-		.diagram {
-			min-height: 220px;
-			border-right: 0;
-			border-bottom: 1px solid var(--line);
+		.project-number {
+			display: none;
+		}
+
+		.project-flow > strong {
+			justify-self: start;
 		}
 	}
 </style>

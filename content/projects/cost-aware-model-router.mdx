@@ -1,28 +1,28 @@
 ---
-title: Cost-Aware Model Router
-description: A routing layer that balances task complexity, latency, confidence, and budget.
+title: AgentDesk
+description: A control-plane exploration for policy-aware computer-use agents.
 problem: >-
-  Using the largest model for every task creates avoidable cost and latency, while under-routing can
-  degrade quality.
+  Computer-use agents can operate real interfaces, which makes policy boundaries, approval gates,
+  trajectory capture, and deterministic evaluation essential.
 architecture: >-
-  Requests are classified by task profile, routed through policy and budget checks, and resolved
-  with fallback paths based on confidence and evaluation signals.
+  Declarative tasks move through planning, policy checks, browser execution, trajectory recording,
+  cost limits, and replayable evaluation reports.
 tradeoffs:
-  - Introduces routing complexity to reduce long-term unit economics.
-  - Requires good telemetry before routing decisions can become trustworthy.
-  - Allows teams to tune for business constraints instead of raw model preference.
+  - Uses a deterministic planner before attempting unrestricted computer control.
+  - Prioritizes replayable evidence over autonomy theater.
+  - Treats policy denials as expected system behavior, not exceptional failures.
 technologies:
   - TypeScript
-  - FastAPI
-  - Redis
-  - OpenTelemetry
-status: Prototype
+  - Playwright
+  - JSON Schema
+  - Policy engine
+status: v0.1 release
 featured: true
-githubUrl: https://github.com/revanthpattipati/model-router
-writeupUrl: /writing/model-routing-enterprise-ai/
+githubUrl: https://github.com/revanthpp/AgentDesk
+writeupUrl: /writing/what-computer-use-agents-need-before-we-trust-them/
 draft: false
 category: Systems Design
 ---
 
 
-The router treats model choice as a runtime architecture decision. The goal is not just cheaper inference; it is disciplined orchestration aligned to task risk.
+AgentDesk explores the enclosure around a computer-use agent: policy, approvals, traces, evaluation, cost controls, and evidence that can be reviewed after the run.

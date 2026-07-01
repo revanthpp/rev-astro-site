@@ -1,28 +1,28 @@
 ---
-title: LLM Observability Dashboard
-description: A dashboard concept for tracing workflow quality, cost, latency, and failures.
+title: AI Failure Atlas
+description: A reproducible field guide to how agentic systems fail.
 problem: >-
-  Teams often know that an AI workflow failed without knowing where, why, how often, or what
-  changed.
+  Successful demos hide prompt injection, tool overreach, infinite loops, context poisoning, and
+  hallucinated tool calls.
 architecture: >-
-  Prompt, completion, tool, retry, latency, cost, and evaluation events are stitched into workflow
-  traces with release and version metadata.
+  Reproducible scenarios run against deterministic fixtures, capture traces, classify failures,
+  and document mitigations for each failure family.
 tradeoffs:
-  - Prioritizes trace readability over maximal metric density.
-  - Connects evaluation outcomes to observability so quality and operations stay close.
-  - Requires careful data handling for sensitive prompts and outputs.
+  - Uses small reproducible cases instead of broad benchmark claims.
+  - Keeps mitigations visible next to the failure they address.
+  - Prioritizes architectural failure analysis over model leaderboards.
 technologies:
-  - OpenTelemetry
-  - ClickHouse
-  - React
-  - PostgreSQL
-status: Concept
-featured: false
-githubUrl: https://github.com/revanthpattipati/llm-observability
-writeupUrl: /writing/observability-for-llm-workflows/
+  - Python
+  - Pytest
+  - OpenAI
+  - Failure taxonomy
+status: Working field guide
+featured: true
+githubUrl: https://github.com/revanthpp/ai-failure-atlas
+writeupUrl: /writing/ai-failure-atlas-agentic-system-failures/
 draft: false
 category: Systems Design
 ---
 
 
-The dashboard is a thinking tool for AI operations: traces that make workflow behavior explainable across cost, latency, quality, and release history.
+AI Failure Atlas turns common agent failures into cases that can be reproduced, inspected, discussed, and fixed.
