@@ -7,10 +7,10 @@ import { getCertifications, getProfile } from '../lib/siteContent';
 const profile = getProfile();
 const certifications = getCertifications().filter((certification) => certification.featured);
 const careerFlow = [
-	{ label: 'IT engineering', detail: 'Learned how systems fail.' },
-	{ label: 'Analytics and data', detail: 'Learned to find the signal.' },
-	{ label: 'Cloud infrastructure', detail: 'Learned what scale costs.' },
-	{ label: 'Applied AI', detail: 'Now putting judgment into the loop.' },
+	{ label: 'IT engineering', detail: 'Learned how software actually behaves.' },
+	{ label: 'Analytics and data', detail: 'Learned how to separate signal from noise.' },
+	{ label: 'Cloud infrastructure', detail: 'Learned what scale really costs.' },
+	{ label: 'Applied AI', detail: 'Learning where automation should stop.' },
 ];
 ---
 
@@ -21,10 +21,10 @@ const careerFlow = [
 	<section class="about-hero section-shell">
 		<div>
 			<p class="kicker">About</p>
-			<h1>Infrastructure roots. Applied AI focus.</h1>
+			<h1>From analytics to agentic systems.</h1>
 			<p class="intro">
-				I turn AI ideas into systems that can survive permissions, cost, latency, governance,
-				and the deeply inconvenient existence of production.
+				My career has been one long exercise in turning complexity into something people can
+				actually use. AI is simply the latest chapter.
 			</p>
 			<p class="location">{profile.location}</p>
 		</div>
@@ -34,7 +34,7 @@ const careerFlow = [
 	<section class="career section-shell" aria-labelledby="career-heading">
 		<header>
 			<p class="kicker">The path here</p>
-			<h2 id="career-heading">A useful sequence of hard lessons.</h2>
+			<h2 id="career-heading">Every chapter built the next.</h2>
 		</header>
 		<SystemFlow
 			steps={careerFlow}
@@ -44,17 +44,38 @@ const careerFlow = [
 
 	<section class="about-copy section-shell">
 		<div>
-			<p>{profile.shortBio}</p>
+			<p>I'm Revanth Pattipati.</p>
+			<p>My career has taken the scenic route, and honestly, that route did most of the teaching.</p>
 			<p>
-				My work sits around the model: orchestration, evaluation, security, observability, and
-				the operating decisions that turn a promising demo into something people can trust.
+				I started in software and IT, moved into analytics and data science, spent years around
+				cloud platforms and infrastructure, and eventually found my way into applied AI and
+				agentic systems. Each chapter taught me a different kind of discipline. Software taught
+				me precision. Analytics taught me how to find signal. Cloud taught me reliability and
+				cost. AI is where all of those lessons now collide.
+			</p>
+			<p>
+				Today, I focus on building AI systems that are useful beyond the demo. That means
+				thinking about orchestration, evaluation, security, observability, governance, cost, and
+				the very inconvenient fact that real users do not behave like test cases.
+			</p>
+			<p>
+				I care about AI that feels practical, trustworthy, and usable for technical and
+				non-technical people. Not magic tricks. Not hype confetti. Systems people can understand,
+				adopt, and improve.
 			</p>
 		</div>
-		<p>
-			Outside work, I am usually training for something or finding outdoor hobbies that make risk
-			management feel less theoretical. I like systems with guardrails and hobbies that
-			occasionally test them.
-		</p>
+		<div>
+			<p>
+				Outside work, I seem to collect hobbies that involve a suspicious amount of calculated
+				risk. I have finished multiple half marathons, I am training for a full marathon and a
+				triathlon, I have 75 skydives, and I am currently learning how to swim properly.
+			</p>
+			<p>That probably explains my engineering philosophy too.</p>
+			<p>
+				Good systems are not fearless. They are designed to fail safely, recover quickly, and get
+				better with every iteration.
+			</p>
+		</div>
 	</section>
 
 	<section class="credentials section-shell" aria-labelledby="credentials-heading">
