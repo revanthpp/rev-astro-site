@@ -3,7 +3,12 @@ import { getCollection } from 'astro:content';
 import SystemFlow from '../../components/SystemFlow.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
-const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
+const projects = (await getCollection('projects'))
+	.filter((project) => !project.data.draft)
+	.sort((a, b) => {
+		if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+		return a.data.priority - b.data.priority;
+	});
 const buildFlow = [
 	{ label: 'Problem', detail: 'Name the operational risk.' },
 	{ label: 'Boundaries', detail: 'Make policy and constraints explicit.' },
@@ -41,6 +46,18 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 		{ label: 'Approve' },
 		{ label: 'Audit' },
 	],
+	'mcp-notes-server': [
+		{ label: 'Ask' },
+		{ label: 'Discover' },
+		{ label: 'Validate' },
+		{ label: 'Notes' },
+	],
+	'a2a-agent-network': [
+		{ label: 'Request' },
+		{ label: 'Discover' },
+		{ label: 'Delegate' },
+		{ label: 'Return' },
+	],
 };
 ---
 
@@ -73,6 +90,7 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 					<div class="project-meta">
 						<span>{project.data.status}</span>
 						<span>{project.data.category}</span>
+						{project.data.series && <span class="series-tag">{project.data.series}</span>}
 					</div>
 					<h2>{project.data.title}</h2>
 					<p>{project.data.description}</p>
@@ -188,6 +206,11 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 		font-size: clamp(2rem, 4.5vw, 4rem);
 		letter-spacing: -0.045em;
 		transition: color 160ms ease;
+	}
+
+	.series-tag {
+		color: var(--accent);
+		font-weight: 700;
 	}
 
 	.project-copy p {

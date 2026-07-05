@@ -1,0 +1,38 @@
+---
+title: A2A Agent Network
+description: A beginner-friendly network for agent discovery, delegation, and structured task handoffs.
+problem: >-
+  Multiple agents cannot collaborate reliably if they have no shared way to advertise capabilities,
+  accept work, report task state, or explain partial failure.
+architecture: >-
+  A coordinator reads Agent Cards, delegates structured tasks to research, fact-check, and writer
+  services, then returns a final or partial result with a trace of completed work.
+tradeoffs:
+  - Uses local knowledge so the protocol shape stays visible without API keys or live web access.
+  - Models independent HTTP services instead of hiding four roles inside one prompt.
+  - Stays A2A-inspired and educational rather than claiming full protocol compliance.
+technologies:
+  - Python
+  - FastAPI
+  - Pydantic
+  - JSON-RPC
+status: Learning project
+featured: false
+priority: 110
+series: Beginner Series
+difficulty: Beginner
+tags:
+  - A2A
+  - Multi-Agent Systems
+  - FutureProofOS Labs
+githubUrl: https://github.com/revanthpp/a2a-agent-network
+writeupUrl: /writing/your-agents-need-business-cards/
+draft: false
+category: Agentic Systems
+---
+
+A2A Agent Network is four small services with actual job descriptions.
+
+The coordinator discovers a research agent, a fact-check agent, and a writer through Agent Cards. Tasks move through clear states, keep their IDs, and return partial work when a later stage fails.
+
+It is a practical introduction to the moment multi-agent systems stop being a prompt trick and start becoming distributed systems, just with more opinions about JSON.

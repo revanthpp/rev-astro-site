@@ -44,6 +44,18 @@ const projectFlows: Record<string, Array<{ label: string; detail: string }>> = {
 		{ label: 'Approve', detail: 'Escalate risky actions to a human.' },
 		{ label: 'Audit', detail: 'Record the decision and result.' },
 	],
+	'mcp-notes-server': [
+		{ label: 'Ask', detail: 'Request a note action.' },
+		{ label: 'Discover', detail: 'Choose a published MCP tool.' },
+		{ label: 'Validate', detail: 'Keep the path inside the workspace.' },
+		{ label: 'Notes', detail: 'Read or update Markdown safely.' },
+	],
+	'a2a-agent-network': [
+		{ label: 'Request', detail: 'Submit a structured task.' },
+		{ label: 'Discover', detail: 'Read specialist Agent Cards.' },
+		{ label: 'Delegate', detail: 'Pass work through the agent chain.' },
+		{ label: 'Return', detail: 'Collect the result and trace.' },
+	],
 };
 const architectureFlow = projectFlows[project.id] ?? [
 	{ label: 'Input', detail: 'Receive a bounded task.' },
@@ -60,7 +72,11 @@ const architectureFlow = projectFlows[project.id] ?? [
 	<article class="project-detail section-shell">
 		<header class="project-header">
 			<a class="back-link" href="/systems">Projects</a>
-			<span class="tag">{project.data.status}</span>
+			<div class="project-tags">
+				<span class="tag">{project.data.status}</span>
+				{project.data.series && <span class="tag">{project.data.series}</span>}
+				{project.data.difficulty && <span class="tag">{project.data.difficulty}</span>}
+			</div>
 			<h1>{project.data.title}</h1>
 			<p>{project.data.description}</p>
 		</header>
@@ -132,6 +148,12 @@ const architectureFlow = projectFlows[project.id] ?? [
 		color: var(--graphite);
 		font-size: 1.2rem;
 		line-height: 1.55;
+	}
+
+	.project-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
 	.back-link {

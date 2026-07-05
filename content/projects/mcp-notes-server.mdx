@@ -1,0 +1,38 @@
+---
+title: MCP Notes Server
+description: Safe, inspectable MCP access to a local Markdown notes workspace.
+problem: >-
+  AI assistants become useful when they can reach local context, but broad filesystem access turns
+  a simple notes task into an unnecessary security problem.
+architecture: >-
+  An MCP host discovers typed note tools, sends bounded requests to a local server, and lets one
+  path resolver keep every read and write inside the configured Markdown workspace.
+tradeoffs:
+  - Limits the server to Markdown notes instead of pretending arbitrary file access is harmless.
+  - Uses local stdio for a small teaching boundary, not a remote production security claim.
+  - Keeps validation and path resolution explicit so beginners can inspect the important parts.
+technologies:
+  - Python
+  - MCP Python SDK
+  - Pydantic
+  - Markdown
+status: Learning project
+featured: false
+priority: 100
+series: Beginner Series
+difficulty: Beginner
+tags:
+  - MCP
+  - Agentic Systems
+  - FutureProofOS Labs
+githubUrl: https://github.com/revanthpp/mcp-notes-server
+writeupUrl: /writing/your-ai-assistant-should-not-get-your-whole-hard-drive/
+draft: false
+category: Agentic Systems
+---
+
+MCP Notes Server gives an AI assistant five carefully bounded note tools: list, read, search, create, and append.
+
+The useful bit is not that it reads files. Plenty of software has achieved that historic milestone. The useful bit is that every path must stay inside one configured notes folder.
+
+It is a small project for learning how tool discovery, typed inputs, local context, and filesystem boundaries fit together without inviting the assistant to tour the rest of the laptop.
