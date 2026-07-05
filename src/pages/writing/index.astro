@@ -52,25 +52,38 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 				</div>
 			) : (
 				posts.map((post) => (
-					<a class="article-card" href={`/writing/${post.id}/`} data-category={post.data.category}>
+					<article class="article-card" data-category={post.data.category}>
 						<div class="article-meta">
 							<span class="tag">{post.data.category}</span>
 							<span class="meta">{post.data.readingTime}</span>
 						</div>
 						<div>
-							<h2>{post.data.title}</h2>
+							<h2><a href={`/writing/${post.id}/`}>{post.data.title}</a></h2>
 							<p>{post.data.description}</p>
 						</div>
+						{post.data.tags.length > 0 && (
+							<div class="article-tags" aria-label="Article tags">
+								{post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+							</div>
+						)}
 						<div class="article-footer">
 							<span class="meta">{post.data.date.toLocaleDateString('en-US', {
 								month: 'short',
 								day: 'numeric',
 								year: 'numeric',
+								timeZone: 'UTC',
 							})}</span>
-							{post.data.latest && <span class="tag">Latest</span>}
-							{post.data.featured && !post.data.latest && <span class="tag">Featured</span>}
+							{post.data.githubUrl ? (
+								<a class="github-link" href={post.data.githubUrl} target="_blank" rel="noreferrer">
+									GitHub project
+								</a>
+							) : post.data.latest ? (
+								<span class="tag">Latest</span>
+							) : post.data.featured ? (
+								<span class="tag">Featured</span>
+							) : null}
 						</div>
-					</a>
+					</article>
 				))
 			)}
 		</div>
@@ -145,7 +158,7 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 
 	.article-card {
 		display: grid;
-		min-height: 310px;
+		min-height: 340px;
 		align-content: space-between;
 		gap: 1.4rem;
 		border: 1px solid var(--line);
@@ -153,7 +166,6 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 		background: rgba(255, 255, 255, 0.58);
 		color: inherit;
 		padding: 1.25rem;
-		text-decoration: none;
 		transition:
 			transform 160ms ease,
 			box-shadow 160ms ease,
@@ -191,6 +203,33 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 		font-size: 1.45rem;
 		line-height: 1.12;
 		margin-bottom: 0.9rem;
+	}
+
+	.article-card h2 a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.article-card h2 a:hover,
+	.github-link:hover {
+		color: var(--accent);
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.article-tags .tag {
+		font-size: 0.62rem;
+	}
+
+	.github-link {
+		color: var(--graphite);
+		font-size: 0.78rem;
+		font-weight: 700;
+		white-space: nowrap;
 	}
 
 	@media (max-width: 980px) {
