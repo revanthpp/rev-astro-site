@@ -11,7 +11,6 @@ const navigation = getNavigation();
 	<nav class="nav-shell" aria-label="Primary navigation">
 		<a class="brand" href="/" aria-label={`${SITE_TITLE} home`}>
 			<span>{profile.name}</span>
-			<small>{profile.positioning}</small>
 		</a>
 		<div class="nav-links">
 			{navigation.items.map((item) => <HeaderLink href={item.href}>{item.label}</HeaderLink>)}
@@ -40,8 +39,8 @@ const navigation = getNavigation();
 	}
 
 	.brand {
-		display: grid;
-		gap: 0.08rem;
+		display: inline-flex;
+		align-items: center;
 		color: var(--ink);
 		text-decoration: none;
 	}
@@ -50,14 +49,6 @@ const navigation = getNavigation();
 		font-size: 0.95rem;
 		font-weight: 720;
 		letter-spacing: 0;
-	}
-
-	.brand small {
-		color: var(--muted);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
 	}
 
 	.nav-links {
