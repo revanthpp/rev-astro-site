@@ -1,0 +1,38 @@
+---
+title: Multi-Agent Planner
+description: A beginner-friendly planner-executor-reviewer workflow for learning multi-agent orchestration without the group chat chaos.
+problem: >-
+  Multi-agent demos often add more agents without giving each role clear ownership, state,
+  review boundaries, or a trace that explains what happened.
+architecture: >-
+  An orchestrator sends one goal through a planner, executor, and reviewer, records each handoff,
+  and allows one bounded revision cycle when the review score is too low.
+tradeoffs:
+  - Uses mock mode by default so the orchestration pattern is learnable without API keys.
+  - Keeps three explicit agent roles instead of hiding planning, execution, and review in one prompt.
+  - Limits revision to one cycle so failure handling stays visible instead of becoming an expensive loop.
+technologies:
+  - Python
+  - Typer
+  - Pydantic
+  - Pytest
+status: Learning project
+featured: false
+priority: 120
+series: Beginner Series
+difficulty: Beginner
+tags:
+  - Multi-Agent Systems
+  - Agentic Systems
+  - Planning
+githubUrl: https://github.com/revanthpp/multi-agent-planner
+writeupUrl: /writing/multi-agent-planning-without-group-chat-chaos/
+draft: false
+category: Agentic Systems
+---
+
+Multi-Agent Planner is a small Python project with one planner, one executor, one reviewer, and one orchestrator trying to keep everyone from turning the workflow into a meeting.
+
+The planner breaks a goal into tasks. The executor works through them. The reviewer scores the result and calls out missing pieces. The orchestrator owns the state, handoffs, revision limit, and final trace.
+
+It is a practical introduction to multi-agent orchestration for the moment when "just add another agent" stops sounding like architecture and starts sounding like a scheduling problem with better branding.

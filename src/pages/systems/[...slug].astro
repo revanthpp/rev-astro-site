@@ -56,6 +56,12 @@ const projectFlows: Record<string, Array<{ label: string; detail: string }>> = {
 		{ label: 'Delegate', detail: 'Pass work through the agent chain.' },
 		{ label: 'Return', detail: 'Collect the result and trace.' },
 	],
+	'multi-agent-planner': [
+		{ label: 'Goal', detail: 'Receive one planning objective.' },
+		{ label: 'Plan', detail: 'Break the goal into ordered tasks.' },
+		{ label: 'Execute', detail: 'Complete the tasks and collect outputs.' },
+		{ label: 'Review', detail: 'Score the result and record the trace.' },
+	],
 };
 const architectureFlow = projectFlows[project.id] ?? [
 	{ label: 'Input', detail: 'Receive a bounded task.' },
