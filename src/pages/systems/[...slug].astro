@@ -14,6 +14,12 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const projectFlows: Record<string, Array<{ label: string; detail: string }>> = {
+	'guardian-llm': [
+		{ label: 'Age', detail: 'Map the child to a developmental profile.' },
+		{ label: 'Privacy', detail: 'Redact personal data before provider calls.' },
+		{ label: 'Policy', detail: 'Score risk and choose a safety decision.' },
+		{ label: 'Validate', detail: 'Check the answer before returning it.' },
+	],
 	'agentops-reference-architecture': [
 		{ label: 'Scenario', detail: 'Choose the workflow and constraints.' },
 		{ label: 'Route', detail: 'Select a path and model.' },

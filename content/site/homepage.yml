@@ -2,12 +2,12 @@ primaryCta: "Read my thinking"
 secondaryCta: "Connect on LinkedIn"
 
 featuredWriting:
+  - "guardian-llm-child-safe-ai-middleware"
   - "what-computer-use-agents-need-before-we-trust-them"
   - "ai-failure-atlas-agentic-system-failures"
   - "secure-tool-gateway-agent-tool-security"
   - "agentops-simulator-agent-workflow-simulation"
   - "why-most-ai-agents-fail-before-production"
-  - "the-real-work-starts-after-the-ai-demo"
 
 featuredFieldNotes:
   - "everyone-is-building-ai-tools"
@@ -17,9 +17,9 @@ featuredFieldNotes:
   - "trust-is-getting-rearchitected"
 
 featuredProjects:
+  - "guardian-llm"
   - "evalkit"
   - "agentops-reference-architecture"
-  - "cost-aware-model-router"
 
 credibility:
   - "Applied AI in the enterprise"

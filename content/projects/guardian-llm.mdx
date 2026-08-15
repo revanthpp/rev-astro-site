@@ -1,0 +1,34 @@
+---
+title: GuardianLLM
+description: Age-aware AI safety middleware for child-facing LLM applications.
+problem: >-
+  Child-facing AI products need developmental safety, privacy protection, and explainable
+  policy decisions before raw prompts and responses move through provider calls.
+architecture: >-
+  GuardianLLM runs a modular safety pipeline for age profiling, PII redaction, topic and
+  intent classification, emotion detection, risk scoring, policy selection, provider calls,
+  and output validation.
+tradeoffs:
+  - Starts with deterministic, inspectable rules instead of opaque classifiers.
+  - Adds safety checks before and after provider calls, which is more deliberate than direct routing.
+  - Treats provider safeguards as one layer, not the whole child-safety strategy.
+technologies:
+  - Python
+  - FastAPI
+  - Pydantic
+  - OpenAI adapter
+  - Safety policy
+status: MVP foundation
+featured: true
+priority: 5
+githubUrl: https://github.com/revanthpp/guardian-llm
+writeupUrl: /writing/guardian-llm-child-safe-ai-middleware/
+draft: false
+category: AI Safety
+---
+
+GuardianLLM explores how child-facing AI products can route model interactions through an age-aware safety layer before and after provider calls.
+
+The MVP focuses on an inspectable foundation: age profiles, privacy redaction, topic and intent classification, emotion detection, risk scoring, policy decisions, output validation, API endpoints, SDK usage, tests, and a starter ChildSafeBench evaluation suite.
+
+The project is intentionally not a production child-safety product. It is a reference implementation for the architecture around the product: the privacy boundary, policy decision, provider abstraction, validation pass, and metadata that make safety behavior easier to inspect and improve.
