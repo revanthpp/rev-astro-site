@@ -1,0 +1,180 @@
+---
+title: "PromptShield: Because Your API Key Does Not Need a Wellness Journey"
+description: "PromptShield is my open-source, local-first privacy firewall for generative AI prompts."
+metaDescription: "PromptShield is an open-source, local-first privacy firewall for AI prompts, with local detection, policy profiles, surrogate substitution, and response rehydration."
+date: "2026-08-15"
+category: "AI Safety"
+tags:
+  - ai-safety
+  - privacy
+  - llm-infrastructure
+  - browser-extension
+  - data-protection
+readingTime: "5 min read"
+githubUrl: "https://github.com/revanthpp/PromptShield"
+featured: true
+latest: true
+draft: false
+---
+
+TL;DR
+
+- People paste wildly sensitive things into AI tools because the blank text box feels harmless.
+- It is not harmless. It is a very confident little shipping label.
+- `PromptShield` checks prompts locally before they reach an AI provider.
+- It detects PII, credentials, financial details, internal systems, and other "please do not put this on the internet" material.
+- It can replace sensitive values with synthetic stand-ins, send the safer prompt, and rehydrate the response locally.
+- It is an MVP foundation, not a compliance certificate wearing sunglasses.
+
+## The problem
+
+Generative AI has a wonderfully suspicious user interface.
+
+It is just a box.
+
+A friendly box. A helpful box. A box that says, "Tell me what you need," which is exactly the sort of sentence that makes people paste customer records, production logs, meeting notes, API keys, employee data, and occasionally the kind of spreadsheet that should be escorted by legal counsel.
+
+The problem is not that people are careless. The problem is that AI tools are useful precisely when we give them context. And real context is messy. It has names. Emails. account numbers. internal project names. logs. tokens. screenshots. weird financial details. Tuesday regrets.
+
+So the question becomes:
+
+How do we use AI without giving AI everything?
+
+That is the idea behind [PromptShield](https://github.com/revanthpp/PromptShield): an open-source, local-first privacy firewall for generative AI prompts.
+
+## The tiny example
+
+Imagine someone asks an AI assistant:
+
+```text
+Help me respond to customer Sarah Thompson.
+Her SSN is 123-45-6789.
+Her account is 77821.
+Her email is sarah@example.com.
+She owes us $14,892.
+Our internal API token is sk-example-secret-1234567890.
+```
+
+This is a useful prompt. It is also a small data breach wearing a cardigan.
+
+PromptShield checks the prompt before it leaves the browser. It can turn the risky parts into safer synthetic stand-ins:
+
+```text
+Help me respond to customer Emily Carter.
+Her SSN is [BLOCKED_SSN_2].
+Her account is 531722.
+Her email is emily.carter@example.com.
+She owes us $15,488.
+Our internal API token is [BLOCKED_API_KEY_1].
+```
+
+The model still gets enough shape to be useful. The original sensitive values stay local. Then, when the response comes back, PromptShield can use the local map to restore the answer on your machine.
+
+The AI provider does not need the real SSN to help draft a polite email. Shocking, I know. Society may recover.
+
+## What PromptShield does
+
+PromptShield sits between the user and the AI provider.
+
+```mermaid
+flowchart LR
+    A["You typing a prompt"] --> B["PromptShield"]
+    B --> C["Local detectors"]
+    C --> D["Risk engine"]
+    D --> E["Policy engine"]
+    E --> F["Surrogate transformer"]
+    F --> G["Protected prompt"]
+    G --> H["AI provider"]
+    H --> I["Model response"]
+    I --> J["Local rehydration"]
+    J --> K["You"]
+```
+
+The core flow is simple:
+
+1. Detect sensitive entities.
+2. Score the risk.
+3. Apply a policy profile.
+4. Block, warn, mask, redact, generalize, remove, or substitute values.
+5. Store the surrogate map locally.
+6. Rehydrate the response locally when possible.
+
+The first version includes deterministic detectors for emails, phones, SSNs, credit cards, customer IDs, API keys, GitHub-style tokens, JWTs, bearer tokens, passwords, private keys, database URLs, private IPs, internal hosts, financial amounts, people, and organizations.
+
+That list sounds paranoid until you remember production logs exist.
+
+## Why local-first matters
+
+The boring answer is privacy.
+
+The better answer is boundaries.
+
+PromptShield is designed so raw prompts do not need to go to a PromptShield server. The sensitive map stays in a local vault scoped to the conversation. Detected values should not end up in logs. The product should help the user before the risky text leaves their machine.
+
+That matters because a lot of AI privacy stories quietly move the sensitive data to another server and call it architecture.
+
+Which is cute, but no.
+
+If the job is to prevent accidental disclosure, the privacy layer should not become yet another place where the disclosure happens. PromptShield keeps the first boundary close to the user: in the browser, before submission, where the mistake is still recoverable.
+
+## Where this is useful
+
+Customer support teams are the obvious case.
+
+Support prompts often need enough context to draft a useful reply: the customer, the issue, the product, the account state, the tone. But the model probably does not need the customer's actual SSN, API token, database URL, or full account number. It needs the shape of the situation, not the crown jewels and a handwritten map.
+
+Developers are another case.
+
+We paste logs into AI tools because logs are where bugs go to become archaeology. But logs also contain bearer tokens, internal hostnames, database strings, emails, private IPs, and whatever else the system decided to confess at 2:17 a.m.
+
+Legal, HR, finance, healthcare operations, sales, research, and internal strategy work all have the same problem in different costumes: AI is useful when it sees context, and context is often sensitive.
+
+PromptShield is for that awkward middle: the work is too practical to avoid AI entirely, but too sensitive to fling raw text into the nearest chat box and hope vibes count as governance.
+
+## What works today
+
+The MVP includes:
+
+- A dependency-light JavaScript core package.
+- `analyze`, `protect`, `evaluate`, and `rehydrate` APIs.
+- Risk scoring from `0` to `100`.
+- Relaxed, standard, strict, and developer policy profiles.
+- Surrogate substitution for names, organizations, emails, phones, and money.
+- A local in-memory vault for conversation-scoped rehydration.
+- A Chrome Manifest V3 extension scaffold for ChatGPT, Claude, and Gemini.
+- A popup, privacy meter, warning modal, protected prompt preview, and extension build.
+- Automated detector, false-positive, surrogate, rehydration, and adversarial tests.
+
+The policy profiles are intentionally practical. A relaxed profile blocks credentials and critical identifiers. A developer profile cares about tokens, internal hosts, and infrastructure leakage. A strict profile is for when you want the prompt treated like it just tried to leave a secure facility with a backpack full of secrets.
+
+## What this is not
+
+PromptShield is not magic.
+
+It does not protect a compromised device. It does not save you from a malicious browser extension. It does not make regulatory promises. It does not prove that a prompt is anonymous just because obvious identifiers were replaced.
+
+Sometimes a combination of harmless-looking details is still identifying. "The CFO of a six-person startup in Tulsa who broke his ankle during the acquisition call" may not need a Social Security number to narrow things down.
+
+That is why the project is honest about its threat model. The first target is accidental disclosure: the very common, very human act of pasting something useful and realizing half a second too late that useful included confidential.
+
+## Why I built it
+
+I keep coming back to the same idea in AI systems:
+
+The model is only one part of the product.
+
+The surrounding system decides whether the model is safe enough, useful enough, observable enough, and governable enough to belong in real work.
+
+PromptShield is a small piece of that surrounding system. It is not trying to make people scared of AI. It is trying to make AI easier to use responsibly, especially in the normal messy workflows where people are not thinking like security engineers because they are busy doing their actual jobs.
+
+Privacy should not rely on everyone remembering to manually sanitize every prompt. That is not a strategy. That is a workplace trust fall with customer data underneath it.
+
+## Final thought
+
+AI is becoming part of everyday work, which means it is going to receive everyday mess.
+
+The answer is not "never use AI with real context." That is noble, pure, and mostly useless.
+
+The better answer is to build better boundaries around the context we do use.
+
+PromptShield is my attempt at one of those boundaries: local-first, inspectable, open source, and allergic to the idea that your API key needs to go on a field trip.

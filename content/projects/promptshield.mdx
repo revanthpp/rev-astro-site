@@ -1,0 +1,34 @@
+---
+title: PromptShield
+description: Local-first privacy firewall for generative AI prompts.
+problem: >-
+  People paste sensitive customer data, credentials, logs, and internal context into AI tools
+  because the blank prompt box feels safer than it is.
+architecture: >-
+  PromptShield detects sensitive entities locally, scores prompt risk, applies policy profiles,
+  substitutes or blocks risky values, stores surrogate mappings in a local vault, and rehydrates
+  model responses on the user's machine.
+tradeoffs:
+  - Protects against accidental disclosure, not compromised devices or formal compliance risk.
+  - Uses deterministic local detection first so behavior stays inspectable and dependency-light.
+  - Preserves prompt usefulness with synthetic stand-ins instead of blindly deleting all context.
+technologies:
+  - JavaScript
+  - Chrome MV3
+  - Policy engine
+  - Local vault
+  - Privacy testing
+status: MVP foundation
+featured: true
+priority: 4
+githubUrl: https://github.com/revanthpp/PromptShield
+writeupUrl: /writing/promptshield-local-first-ai-privacy-firewall/
+draft: false
+category: AI Safety
+---
+
+PromptShield explores how AI users can keep useful context in prompts without casually donating sensitive data to every model call.
+
+The MVP includes a local core engine, deterministic detectors, risk scoring, policy profiles, surrogate substitution, local conversation-scoped rehydration, a Chrome extension scaffold, privacy UI elements, and automated tests for detectors, surrogates, rehydration, and adversarial cases.
+
+The goal is practical protection against accidental disclosure: catch the SSNs, tokens, database URLs, customer details, financial numbers, and internal hints before they leave the browser.

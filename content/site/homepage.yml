@@ -2,11 +2,11 @@ primaryCta: "Read my thinking"
 secondaryCta: "Connect on LinkedIn"
 
 featuredWriting:
+  - "promptshield-local-first-ai-privacy-firewall"
   - "guardian-llm-child-safe-ai-middleware"
   - "what-computer-use-agents-need-before-we-trust-them"
   - "ai-failure-atlas-agentic-system-failures"
   - "secure-tool-gateway-agent-tool-security"
-  - "agentops-simulator-agent-workflow-simulation"
   - "why-most-ai-agents-fail-before-production"
 
 featuredFieldNotes:
@@ -17,9 +17,9 @@ featuredFieldNotes:
   - "trust-is-getting-rearchitected"
 
 featuredProjects:
+  - "promptshield"
   - "guardian-llm"
   - "evalkit"
-  - "agentops-reference-architecture"
 
 credibility:
   - "Applied AI in the enterprise"
