@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /preview/
+Disallow: /newsletter/
+
+Sitemap: https://www.revanthpp.com/sitemap-index.xml
