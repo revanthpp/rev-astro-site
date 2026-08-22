@@ -148,11 +148,11 @@ The current homepage remains in place. Four isolated design directions are avail
 | Editorial Operator | AI leaders, executives, hiring managers | Premium editorial, off-white, ink, muted rust | Highest immediate credibility, strong writing hierarchy, mature project framing | More formal and less playful | 8.9/10 |
 | Field Manual | Builders, operators, curious readers | Practical guidebook, bone, charcoal, olive | Most distinctive information architecture, integrates quick notes naturally | The vertical rail is more opinionated | 8.6/10 |
 | Builder Lab | Engineers, GitHub visitors, technical recruiters | Dark project ledger, graphite, restrained blue | Best project visibility, clearest technical depth, strongest GitHub path | Narrower appeal for non-technical readers | 8.8/10 |
-| Human Signal | Broad audience, collaborators, newsletter readers | Warm, image-led, deep navy, muted copper | Best personal voice, approachable authority, strong newsletter conversion | Slightly less formal than Editorial Operator | 9.3/10 |
+| Human Signal | Broad audience, collaborators, and serious AI builders | Warm, image-led, deep navy, muted copper | Best personal voice, approachable authority, strong notes and projects path | Slightly less formal than Editorial Operator | 9.3/10 |
 
 ### Recommendation
 
-Human Signal is the strongest overall direction. It balances technical credibility with the warmth and humor that make the site feel like Revanth rather than a generic AI portfolio. It also gives FutureProofOS a natural conversion moment and leaves enough room for projects to grow.
+Human Signal is the strongest overall direction. It balances technical credibility with the warmth and humor that make the site feel like Revanth rather than a generic AI portfolio. It gives the notes and projects enough room to carry the site without turning the homepage into a signup funnel.
 
 If selected, keep the Human Signal system and borrow the project ledger structure from Builder Lab for the full Projects page.
 
@@ -161,13 +161,12 @@ If selected, keep the Human Signal system and borrow the project ledger structur
 - Home
 - Notes
 - Projects
-- Newsletter
 - About
 - Contact
 
 Writing and Field Notes now share one destination: `/notes`. Long essays remain at their existing `/writing/<slug>` URLs for compatibility and SEO, while the Notes page presents essays and quick observations together.
 
-Newsletter stays separate because it has a different job. Notes is the reading archive. FutureProofOS is the email invitation and subscription layer.
+Futureproof is archived quietly under About. Notes is the reading archive, and Projects is the inspectable work.
 
 ### Publishing a Selected Direction
 

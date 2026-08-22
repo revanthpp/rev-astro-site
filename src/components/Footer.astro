@@ -2,8 +2,6 @@
 import { SOCIAL_LINKS } from '../consts';
 
 const today = new Date();
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isNewsletterPage = currentPath === '/newsletter';
 ---
 
 <footer class="site-footer">
@@ -13,7 +11,6 @@ const isNewsletterPage = currentPath === '/newsletter';
 			<span>&copy; {today.getFullYear()}</span>
 		</div>
 		<nav aria-label="Footer links">
-			{!isNewsletterPage && <a href="/newsletter">Newsletter</a>}
 			<a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
 			<a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
 			<a href={SOCIAL_LINKS.email}>Email</a>

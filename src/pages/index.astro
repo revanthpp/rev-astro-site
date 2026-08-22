@@ -50,11 +50,11 @@ const siteMap = [
 >
 	<section class="hero section-shell">
 		<div class="hero-copy">
-			<p class="kicker">PRACTICAL AI FOR THE REAL WORLD</p>
+			<p class="kicker">AI SYSTEMS FOR THE REAL WORLD</p>
 			<h1>Agentic AI, minus the theater.</h1>
 			<p>
-				I build practical AI systems and explain the tricky parts without making anyone feel
-				underqualified to open the browser.
+				I lead agentic architecture, enterprise AI platforms, evaluation, observability, secure
+				tool use, and governance that survives contact with reality.
 			</p>
 			<div class="button-row">
 				<a class="button" href="/notes">Read the notes</a>
@@ -115,18 +115,6 @@ const siteMap = [
 				<p>{featuredProject.data.description}</p>
 			</a>
 		</div>
-	</section>
-
-	<section class="newsletter-band section-shell" aria-labelledby="newsletter-heading">
-		<div>
-			<p class="kicker">FUTUREPROOFOS</p>
-			<h2 id="newsletter-heading">Future-proof your thinking.</h2>
-			<p>
-				One email each week on practical AI, useful tools, career lessons, systems thinking, and
-				ideas worth stealing before the future notices.
-			</p>
-		</div>
-		<a class="button light" href="/newsletter">Join FutureProofOS</a>
 	</section>
 </SiteLayout>
 
@@ -324,52 +312,6 @@ const siteMap = [
 		max-width: 650px;
 	}
 
-	.newsletter-band {
-		display: flex;
-		align-items: end;
-		justify-content: space-between;
-		gap: 3rem;
-		border-radius: 22px;
-		background: #a83f31;
-		margin-bottom: clamp(3rem, 7vw, 6rem);
-		padding: clamp(2rem, 6vw, 4.5rem);
-	}
-
-	.newsletter-band > div {
-		display: grid;
-		max-width: 760px;
-		gap: 0.8rem;
-	}
-
-	.newsletter-band .kicker,
-	.newsletter-band h2,
-	.newsletter-band p {
-		color: #fff8f2;
-	}
-
-	.newsletter-band h2 {
-		font-size: clamp(2.5rem, 6vw, 5.5rem);
-		letter-spacing: -0.05em;
-	}
-
-	.newsletter-band p:not(.kicker) {
-		max-width: 620px;
-		color: rgba(255, 248, 242, 0.78);
-		font-size: 1.05rem;
-	}
-
-	.button.light {
-		flex-shrink: 0;
-		border-color: #fff8f2;
-		background: #fff8f2;
-		color: #752a20;
-	}
-
-	.button.light:hover {
-		border-color: #fff;
-		background: #fff;
-	}
-
 	@media (max-width: 860px) {
 		.hero,
 		.career,
@@ -395,10 +337,6 @@ const siteMap = [
 			border-bottom: 1px solid var(--line);
 		}
 
-		.newsletter-band {
-			align-items: flex-start;
-			flex-direction: column;
-		}
 	}
 
 	@media (max-width: 520px) {

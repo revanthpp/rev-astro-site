@@ -6,18 +6,20 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = 'Revanth Pattipati',
-  description = 'AI infrastructure and agentic systems architect',
+  description = 'AI systems and agentic architecture leader',
+  noindex = false,
 } = Astro.props as Props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} noindex={noindex} />
   </head>
   <body class="site-body">
     <Header />

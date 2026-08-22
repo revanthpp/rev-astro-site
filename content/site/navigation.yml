@@ -5,7 +5,5 @@ items:
     href: "/notes"
   - label: "Projects"
     href: "/systems"
-  - label: "Newsletter"
-    href: "/newsletter"
   - label: "About"
     href: "/about"

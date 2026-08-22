@@ -1,228 +1,66 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import SystemFlow from '../components/SystemFlow.astro';
-
-const valueFlow = [
-	{
-		label: 'Understand',
-		detail: 'Simple AI explanations without jargon.',
-	},
-	{
-		label: 'Apply',
-		detail: 'Prompts, workflows, and tools you can use immediately.',
-	},
-	{
-		label: 'Build',
-		detail: 'Real projects, GitHub breakdowns, and build-in-public lessons.',
-	},
-];
 ---
 
 <SiteLayout
-	title="FutureProofOS Newsletter | Revanth Pattipati"
-	description="Practical AI for everyone. Simple explanations, useful workflows, and real-world projects delivered weekly."
+	title="Futureproof | Revanth Pattipati"
+	description="An archived note on Futureproof, Revanth Pattipati's earlier writing project on AI, work, and systems change."
+	noindex
 >
-	<section class="newsletter-hero section-shell" aria-labelledby="newsletter-heading">
-		<div class="hero-copy">
-			<h1 id="newsletter-heading">A smarter Sunday scroll.</h1>
-			<p class="hero-description">
-				Practical AI notes for staying useful, curious, and ready for what changes next.
-			</p>
+	<section class="archive-hero section-shell" aria-labelledby="archive-heading">
+		<p class="kicker">Archived Project</p>
+		<h1 id="archive-heading">Futureproof</h1>
+		<p>
+			Futureproof was my earlier writing project on AI, work, and systems change. It may come
+			back when it has something useful to say. The internet has enough forced newsletters
+			already.
+		</p>
+		<div class="button-row">
+			<a class="button" href="/notes">Read current notes</a>
+			<a class="button secondary" href="/systems">Explore projects</a>
 		</div>
-
-		<div
-			class="signup-panel"
-			id="join"
-			role="group"
-			aria-labelledby="signup-heading"
-			aria-describedby="signup-description signup-trust"
-		>
-			<h2 class="sr-only" id="signup-heading">Join FutureProofOS</h2>
-			<p class="sr-only" id="signup-description">
-				Enter your email address in the form to receive FutureProofOS every Sunday.
-			</p>
-			<div class="beehiiv-embed">
-				<!--
-					BEEHIIV EMBED START
-					To change the signup form later, replace only the Beehiiv loader script below.
-					Keep this .beehiiv-embed wrapper for responsive sizing and visual alignment.
-				-->
-				<script
-					is:inline
-					async
-					src="https://subscribe-forms.beehiiv.com/v3/loader.js"
-					data-beehiiv-form="a56888fb-5fbf-41f3-8da9-d886f1708e22"
-				></script>
-				<!-- BEEHIIV EMBED END -->
-				<noscript>
-					<p class="form-fallback">Enable JavaScript to join FutureProofOS.</p>
-				</noscript>
-			</div>
-			<script is:inline>
-				const beehiivEmbed = document.querySelector('.beehiiv-embed');
-
-				if (beehiivEmbed) {
-					const labelBeehiivFrame = () => {
-						const frame = beehiivEmbed.querySelector('iframe');
-
-						if (!frame) return false;
-
-						frame.title = 'Join FutureProofOS newsletter form';
-						return true;
-					};
-
-					if (!labelBeehiivFrame()) {
-						const observer = new MutationObserver(() => {
-							if (labelBeehiivFrame()) observer.disconnect();
-						});
-
-						observer.observe(beehiivEmbed, { childList: true, subtree: true });
-					}
-				}
-			</script>
-			<p class="trust-line" id="signup-trust">
-				5-minute read <span aria-hidden="true">•</span> Every Sunday <span aria-hidden="true"
-					>•</span
-				> No spam <span aria-hidden="true">•</span> Unsubscribe anytime
-			</p>
-		</div>
-	</section>
-
-	<section class="value-section section-shell" aria-labelledby="value-heading">
-		<div class="value-intro">
-			<p class="kicker">What you’ll get</p>
-			<h2 id="value-heading">Learn it. Use it. Build with it.</h2>
-		</div>
-		<SystemFlow
-			steps={valueFlow}
-			label="FutureProofOS learning flow from understanding AI to applying it and building with it"
-			tone="red"
-		/>
 	</section>
 </SiteLayout>
 
 <style>
 	:global(body.site-body) {
-		background: #fbfbfa;
+		background: #f6f5f1;
 	}
 
-	.newsletter-hero {
+	.archive-hero {
 		display: grid;
-		justify-items: center;
-		padding: clamp(5.5rem, 11vw, 9rem) 0 clamp(5rem, 9vw, 7.5rem);
-		text-align: center;
-	}
-
-	.hero-copy {
-		display: grid;
-		justify-items: center;
+		gap: 1rem;
 		max-width: 850px;
+		padding: clamp(5rem, 10vw, 8rem) 0 clamp(5rem, 10vw, 8rem);
 	}
 
-	.newsletter-hero h1 {
+	.archive-hero h1 {
 		max-width: 800px;
-		font-size: clamp(3.5rem, 9.5vw, 7.75rem);
-		font-weight: 680;
+		font-size: clamp(3.6rem, 9vw, 7rem);
 		letter-spacing: -0.055em;
-		line-height: 0.94;
-		text-wrap: balance;
 	}
 
-	.hero-description {
+	.archive-hero p:not(.kicker) {
 		max-width: 650px;
-		margin-top: 1.7rem;
-		color: var(--muted);
+		color: var(--graphite);
 		font-size: clamp(1.05rem, 2vw, 1.3rem);
 		line-height: 1.65;
 		text-wrap: balance;
 	}
 
-	.signup-panel {
-		width: min(620px, 100%);
-		margin-top: clamp(2.5rem, 5vw, 4rem);
-	}
-
-	.beehiiv-embed {
-		width: 100%;
-		min-height: 82px;
-		border: 1px solid var(--line);
-		border-radius: 16px;
-		background: var(--surface);
-		box-shadow: 0 18px 55px rgba(17, 19, 24, 0.07);
-		overflow: hidden;
-		padding: 0.65rem;
-	}
-
-	.beehiiv-embed :global(iframe) {
-		display: block;
-		width: 100% !important;
-		max-width: 100% !important;
-		margin: 0 auto !important;
-		border: 0 !important;
-		border-radius: 11px;
-	}
-
-	.form-fallback {
-		padding: 1rem;
-		text-align: center;
-	}
-
-	.trust-line {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.25rem 0.5rem;
-		margin-top: 1rem;
-		color: var(--muted);
-		font-size: 0.78rem;
-		line-height: 1.5;
-	}
-
-	.trust-line span {
-		color: #a3a5aa;
-	}
-
-	.value-section {
-		border-top: 1px solid var(--line);
-		padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(5.5rem, 10vw, 8.5rem);
-	}
-
-	.value-intro {
-		display: grid;
-		max-width: 760px;
-		gap: 0.8rem;
-		margin-bottom: clamp(2.25rem, 5vw, 3.75rem);
-	}
-
-	.value-intro h2 {
-		font-size: clamp(2.25rem, 5.5vw, 4.5rem);
-		letter-spacing: -0.045em;
-		line-height: 1;
-		text-wrap: balance;
-	}
-
 	@media (max-width: 760px) {
-		.newsletter-hero {
+		.archive-hero {
 			padding-top: 4.5rem;
 		}
 
-		.newsletter-hero h1 {
+		.archive-hero h1 {
 			font-size: clamp(3rem, 15vw, 5.5rem);
 		}
-
 	}
 
 	@media (max-width: 420px) {
-		.newsletter-hero h1 {
+		.archive-hero h1 {
 			font-size: clamp(2.75rem, 14.5vw, 4rem);
-		}
-
-		.beehiiv-embed {
-			padding: 0.35rem;
-		}
-
-		.trust-line {
-			font-size: 0.73rem;
 		}
 	}
 </style>

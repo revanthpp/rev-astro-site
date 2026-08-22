@@ -16,7 +16,7 @@ const careerFlow = [
 
 <SiteLayout
 	title="About and Contact | Revanth Pattipati"
-	description="About Revanth Pattipati, an applied AI leader in Chicago with infrastructure roots, plus certifications and contact links."
+	description="About Revanth Pattipati, an AI systems and agentic architecture leader in Chicago with infrastructure roots, plus certifications and contact links."
 >
 	<section class="about-hero section-shell">
 		<div>
@@ -54,9 +54,10 @@ const careerFlow = [
 				cost. AI is where all of those lessons now collide.
 			</p>
 			<p>
-				Today, I focus on building AI systems that are useful beyond the demo. That means
-				thinking about orchestration, evaluation, security, observability, governance, cost, and
-				the very inconvenient fact that real users do not behave like test cases.
+				Today, I focus on AI systems and agentic architecture at enterprise scale. That means
+				platforms, LLM evaluation, observability, secure tool use, production workflows,
+				governance, cost, and the very inconvenient fact that real users do not behave like test
+				cases.
 			</p>
 			<p>
 				I care about AI that feels practical, trustworthy, and usable for technical and
@@ -76,6 +77,16 @@ const careerFlow = [
 				better with every iteration.
 			</p>
 		</div>
+	</section>
+
+	<section class="archive-note section-shell" id="futureproof" aria-labelledby="futureproof-heading">
+		<p class="kicker">Earlier Project</p>
+		<h2 id="futureproof-heading">Futureproof</h2>
+		<p>
+			Futureproof was my earlier writing project on AI, work, and systems change. It may come
+			back when it has something useful to say. The internet has enough forced newsletters
+			already.
+		</p>
 	</section>
 
 	<section class="credentials section-shell" aria-labelledby="credentials-heading">
@@ -173,6 +184,7 @@ const careerFlow = [
 	}
 
 	.career,
+	.archive-note,
 	.credentials,
 	.contact {
 		border-top: 1px solid var(--line);
@@ -194,6 +206,7 @@ const careerFlow = [
 	}
 
 	.career h2,
+	.archive-note h2,
 	.credentials h2,
 	.contact h2 {
 		font-size: clamp(2.4rem, 5vw, 4.8rem);
@@ -216,6 +229,18 @@ const careerFlow = [
 	.about-copy p {
 		font-size: clamp(1.05rem, 1.8vw, 1.22rem);
 		line-height: 1.75;
+	}
+
+	.archive-note {
+		display: grid;
+		gap: 0.8rem;
+		max-width: 760px;
+	}
+
+	.archive-note p:not(.kicker) {
+		color: var(--graphite);
+		font-size: clamp(1.05rem, 1.7vw, 1.2rem);
+		line-height: 1.7;
 	}
 
 	.credentials header {
