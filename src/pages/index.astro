@@ -10,7 +10,7 @@ const writing = (await getCollection('writing'))
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
 const latestEssay = writing[0];
-const featuredProject = projects.find((project) => project.data.title === 'AgentOps Simulator') ?? projects[0];
+const featuredProject = projects.find((project) => project.data.title === 'Agents With Brakes') ?? projects[0];
 
 const careerFlow = [
 	{ label: 'Analytics', detail: 'Find the signal.' },

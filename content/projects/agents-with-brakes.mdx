@@ -1,0 +1,30 @@
+---
+title: Agents With Brakes
+description: A public reference architecture for production-grade enterprise agent platforms with policy, identity, evals, observability, approvals, rollback paths, and failure management.
+problem: >-
+  Most agent demos treat the agent as the system and skip the controls that decide whether it can
+  survive inside an enterprise.
+architecture: >-
+  A platform control plane wraps agent execution with policy, identity, tool access, memory,
+  knowledge boundaries, telemetry, evals, approvals, cost controls, and rollback paths.
+tradeoffs:
+  - Optimizes for architecture clarity over demo theatrics.
+  - Treats human approval, failure handling, and observability as core platform behavior.
+  - Keeps agent capability separate from authorization, evaluation, and operational control.
+technologies:
+  - Reference architecture
+  - Threat modeling
+  - Evaluation lifecycle
+  - Observability
+status: Public reference
+featured: true
+priority: 1
+githubUrl: https://github.com/revanthpp/agents-with-brakes
+writeupUrl: /writing/agents-with-brakes-production-agent-architecture/
+draft: false
+category: Agent Platforms
+---
+
+Short note: Agents With Brakes is the architecture argument I keep coming back to: production agents are not solo performers with better prompts. They are controlled systems with permissions, telemetry, evals, human approval, cost limits, memory boundaries, and recovery paths.
+
+The repo is a public map of the platform pieces that make agent autonomy less magical and more governable. Less "watch the agent do a cute thing." More "what happens when it is wrong, expensive, over-permissioned, under-observed, or confidently headed toward a sensitive system?"
