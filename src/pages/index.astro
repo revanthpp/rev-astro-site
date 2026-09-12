@@ -5,11 +5,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import { getProfile } from '../lib/siteContent';
 
 const profile = getProfile();
-const writing = (await getCollection('writing'))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
-const latestEssay = writing[0];
 const featuredProject = projects.find((project) => project.data.title === 'Agent Reliability') ?? projects[0];
 
 const careerFlow = [
@@ -19,102 +15,68 @@ const careerFlow = [
 	{ label: 'Applied AI', detail: 'Now add judgment.' },
 ];
 
-const siteMap = [
-	{
-		label: 'Notes',
-		title: 'What the demo forgot.',
-		description: 'Essays and quick lessons from building AI systems in the real world.',
-		href: '/notes',
-		link: 'Read the notes',
-	},
-	{
-		label: 'Projects',
-		title: 'Proof, with tradeoffs.',
-		description: 'Working builds, architecture decisions, GitHub links, and honest constraints.',
-		href: '/systems',
-		link: 'View projects',
-	},
-	{
-		label: 'About',
-		title: 'Human, still included.',
-		description: 'The short version of my work, credentials, controlled chaos, and how to reach me.',
-		href: '/about',
-		link: 'About and contact',
-	},
+const reliabilityFlow = [
+	{ label: 'Scenario', detail: 'Define the task and its boundaries.' },
+	{ label: 'Stress', detail: 'Introduce failures and adversarial conditions.' },
+	{ label: 'Evaluate', detail: 'Check actions, state, recovery, and truthfulness.' },
+	{ label: 'Replay', detail: 'Turn the evidence into a better system.' },
 ];
 ---
 
 <SiteLayout
-	title="Revanth Pattipati | Applied AI and Agentic Systems"
-	description="Revanth Pattipati builds practical AI systems and shares clear notes, projects, and architecture lessons from the work after the demo."
+	title="Revanth Pattipati | Practical AI Systems and Agent Reliability"
+	description="Revanth Pattipati builds reliable AI agents and explains the architecture, controls, and evidence required to make them useful in the real world."
 >
 	<section class="hero section-shell">
 		<div class="hero-copy">
-			<p class="kicker">AI SYSTEMS FOR THE REAL WORLD</p>
-			<h1>Agentic AI, minus the theater.</h1>
-			<p>
-				I lead agentic architecture, enterprise AI platforms, evaluation, observability, secure
-				tool use, and governance that survives contact with reality.
-			</p>
+			<p class="kicker">Applied AI for the real world</p>
+			<h1>I build AI agents for the real world.</h1>
+			<p>I turn promising AI demos into useful systems with clear controls, evidence, and a plan for when things fail.</p>
 			<div class="button-row">
-				<a class="button" href="/notes">Read the notes</a>
-				<a class="button secondary" href="/systems">Explore projects</a>
+				<a class="button" href="/systems">Explore projects</a>
+				<a class="button secondary" href="/notes">Read my writing</a>
 			</div>
 		</div>
 		<figure class="portrait">
 			<img src={profile.images.professional.src} alt={profile.images.professional.alt} />
-			<figcaption>
-				<span>BUILDING • WRITING • EXPERIMENTING</span>
-				<span>{profile.location}</span>
-			</figcaption>
 		</figure>
+	</section>
+
+	<section class="flagship section-shell" aria-labelledby="flagship-heading">
+		<div class="flagship-copy">
+			<p class="plain-label">My main project</p>
+			<h2 id="flagship-heading">The agent said “done.” I checked.</h2>
+			<p>
+				Agent Reliability is an open-source harness that stress-tests AI agents with controlled
+				failures, permission checks, and replayable evidence.
+			</p>
+			<div class="button-row">
+				<a class="button" href={`/systems/${featuredProject.id}/`}>View project</a>
+				<a class="button secondary" href={featuredProject.data.writeupUrl}>Read essay</a>
+			</div>
+		</div>
+		<div class="flagship-proof">
+			<div class="proof-points" aria-label="Agent Reliability project facts">
+				<div><strong>24</strong><span>reliability scenarios</span></div>
+				<div><strong>6</strong><span>controlled fault modes</span></div>
+				<div><strong>Replayable</strong><span>evidence for every failure</span></div>
+			</div>
+			<SystemFlow steps={reliabilityFlow} label="Agent Reliability testing flow" />
+		</div>
 	</section>
 
 	<section class="career section-shell" aria-labelledby="career-heading">
 		<div class="section-label">
-			<p class="kicker">The useful detour</p>
-			<h2 id="career-heading">Built from systems thinking.</h2>
+			<h2 id="career-heading">Systems thinking, all the way down.</h2>
+			<p>
+				My path through analytics, cloud, and infrastructure shapes how I build AI: start with
+				evidence, expect failure, and keep humans in the loop.
+			</p>
 		</div>
 		<SystemFlow
 			steps={careerFlow}
 			label="Career path from analytics through cloud and infrastructure to applied AI"
 		/>
-	</section>
-
-	<section class="site-map section-shell" aria-labelledby="site-map-heading">
-		<header>
-			<p class="kicker">A quick tour</p>
-			<h2 id="site-map-heading">The whole site, without the whole speech.</h2>
-		</header>
-		<div class="snapshot-grid">
-			{siteMap.map((item) => (
-				<a href={item.href}>
-					<span>{item.label}</span>
-					<h3>{item.title}</h3>
-					<p>{item.description}</p>
-					<strong>{item.link} →</strong>
-				</a>
-			))}
-		</div>
-	</section>
-
-	<section class="latest section-shell" aria-labelledby="latest-heading">
-		<header>
-			<p class="kicker">Currently useful</p>
-			<h2 id="latest-heading">Fresh thinking. Working code.</h2>
-		</header>
-		<div class="latest-grid">
-			<a class="latest-card" href={`/writing/${latestEssay.id}/`}>
-				<span>Latest essay</span>
-				<h3>{latestEssay.data.title}</h3>
-				<p>{latestEssay.data.description}</p>
-			</a>
-			<a class="latest-card project" href={`/systems/${featuredProject.id}/`}>
-				<span>Main project · Ongoing</span>
-				<h3>{featuredProject.data.title}</h3>
-				<p>{featuredProject.data.description}</p>
-			</a>
-		</div>
 	</section>
 </SiteLayout>
 
@@ -125,11 +87,11 @@ const siteMap = [
 
 	.hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.55fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.48fr);
+		gap: clamp(3rem, 7vw, 7rem);
 		align-items: center;
-		min-height: calc(100vh - 72px);
-		padding: clamp(4.5rem, 10vw, 8rem) 0;
+		min-height: calc(100dvh - 72px);
+		padding: clamp(3.5rem, 7vw, 6rem) 0;
 	}
 
 	.hero-copy {
@@ -138,17 +100,17 @@ const siteMap = [
 	}
 
 	.hero h1 {
-		max-width: 900px;
-		font-size: clamp(4rem, 9.5vw, 8.4rem);
-		letter-spacing: -0.065em;
-		line-height: 0.88;
+		max-width: 920px;
+		font-size: clamp(3.4rem, 7.4vw, 7rem);
+		letter-spacing: -0.055em;
+		line-height: 0.94;
 		text-wrap: balance;
 	}
 
 	.hero-copy > p:not(.kicker) {
-		max-width: 690px;
+		max-width: 650px;
 		color: var(--graphite);
-		font-size: clamp(1.08rem, 2vw, 1.35rem);
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
 		line-height: 1.55;
 	}
 
@@ -167,155 +129,90 @@ const siteMap = [
 		object-position: center 32%;
 	}
 
-	.portrait figcaption {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-top: 0.8rem;
-		color: var(--muted);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-	}
-
 	.career,
-	.site-map,
-	.latest {
+	.flagship {
 		border-top: 1px solid var(--line);
-		padding: clamp(4.5rem, 9vw, 7.5rem) 0;
+		padding: clamp(4rem, 8vw, 7rem) 0;
 	}
 
-	.career {
+	.flagship {
 		display: grid;
-		grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
+		grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
 		gap: clamp(2rem, 6vw, 6rem);
-		align-items: center;
+		align-items: start;
 	}
 
 	.section-label,
-	.site-map header,
-	.latest header {
+	.flagship-copy,
+	.flagship-proof {
 		display: grid;
-		gap: 0.7rem;
+		gap: 1.2rem;
 	}
 
 	.section-label h2,
-	.site-map h2,
-	.latest h2 {
+	.flagship h2 {
 		font-size: clamp(2.4rem, 5vw, 4.8rem);
 		letter-spacing: -0.045em;
 	}
 
-	.site-map header,
-	.latest header {
-		max-width: 800px;
-		margin-bottom: clamp(2rem, 5vw, 3.5rem);
+	.flagship-copy > p:not(.plain-label),
+	.section-label > p {
+		max-width: 620px;
+		font-size: 1.08rem;
 	}
 
-	.snapshot-grid {
+	.plain-label {
+		color: var(--accent);
+		font-size: 0.92rem;
+		font-weight: 720;
+	}
+
+	.proof-points {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border-top: 1px solid var(--ink);
-	}
-
-	.snapshot-grid a {
-		display: grid;
-		min-height: 285px;
-		align-content: start;
-		border-right: 1px solid var(--line);
-		color: inherit;
-		padding: clamp(1.25rem, 3vw, 2rem);
-		text-decoration: none;
-		transition: background 160ms ease;
-	}
-
-	.snapshot-grid a:last-child {
-		border-right: 0;
-	}
-
-	.snapshot-grid a:hover {
-		background: rgba(255, 255, 255, 0.58);
-	}
-
-	.snapshot-grid span,
-	.latest-card > span {
-		color: var(--accent);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		font-weight: 750;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	.snapshot-grid h3 {
-		margin: 3.5rem 0 0.8rem;
-		font-size: clamp(1.55rem, 2.4vw, 2.1rem);
-	}
-
-	.snapshot-grid p {
-		max-width: 34ch;
-	}
-
-	.snapshot-grid strong {
-		margin-top: auto;
-		padding-top: 2rem;
-		font-size: 0.9rem;
-	}
-
-	.latest-grid {
-		display: grid;
-		grid-template-columns: 1.2fr 0.8fr;
-		gap: 1rem;
-	}
-
-	.latest-card {
-		display: grid;
-		min-height: 330px;
-		align-content: end;
+		gap: 1px;
 		border: 1px solid var(--line);
 		border-radius: 18px;
-		background:
-			linear-gradient(rgba(17, 19, 24, 0.035) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(17, 19, 24, 0.035) 1px, transparent 1px),
-			rgba(255, 255, 255, 0.54);
-		background-size: 34px 34px, 34px 34px, auto;
-		color: inherit;
-		padding: clamp(1.4rem, 4vw, 2.4rem);
-		text-decoration: none;
-		transition:
-			box-shadow 160ms ease,
-			transform 160ms ease;
+		background: var(--line);
+		overflow: hidden;
 	}
 
-	.latest-card.project {
-		background:
-			linear-gradient(rgba(21, 93, 252, 0.06) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(21, 93, 252, 0.06) 1px, transparent 1px),
-			#eef3ff;
-		background-size: 34px 34px, 34px 34px, auto;
+	.proof-points div {
+		display: grid;
+		gap: 0.3rem;
+		min-height: 132px;
+		align-content: center;
+		background: rgba(255, 255, 255, 0.72);
+		padding: 1.2rem;
 	}
 
-	.latest-card:hover {
-		box-shadow: var(--shadow);
-		transform: translateY(-2px);
+	.proof-points strong {
+		color: var(--ink);
+		font-size: clamp(1.35rem, 2.4vw, 2.15rem);
+		letter-spacing: -0.035em;
 	}
 
-	.latest-card h3 {
-		max-width: 760px;
-		margin: 1rem 0 0.8rem;
-		font-size: clamp(1.8rem, 3.8vw, 3.5rem);
-		letter-spacing: -0.04em;
+	.proof-points span {
+		color: var(--muted);
+		font-size: 0.84rem;
+		line-height: 1.35;
 	}
 
-	.latest-card p {
-		max-width: 650px;
+	.career {
+		display: grid;
+		grid-template-columns: minmax(240px, 0.48fr) minmax(0, 1fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: center;
+	}
+
+	.section-label {
+		gap: 1rem;
 	}
 
 	@media (max-width: 860px) {
 		.hero,
-		.career,
-		.latest-grid {
+		.flagship,
+		.career {
 			grid-template-columns: 1fr;
 		}
 
@@ -327,27 +224,15 @@ const siteMap = [
 			max-width: 440px;
 		}
 
-		.snapshot-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.snapshot-grid a {
-			min-height: 230px;
-			border-right: 0;
-			border-bottom: 1px solid var(--line);
-		}
-
 	}
 
 	@media (max-width: 520px) {
 		.hero h1 {
-			font-size: clamp(3.6rem, 18vw, 5.4rem);
+			font-size: clamp(3.15rem, 16vw, 4.7rem);
 		}
 
-		.portrait figcaption {
-			align-items: flex-start;
-			flex-direction: column;
-			gap: 0.25rem;
+		.proof-points {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
