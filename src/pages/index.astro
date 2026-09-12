@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import SystemFlow from '../components/SystemFlow.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { getProfile } from '../lib/siteContent';
 
@@ -12,109 +11,72 @@ const projects = (await getCollection('projects')).filter((project) => !project.
 const latestEssay = writing[0];
 const featuredProject = projects.find((project) => project.data.title === 'Agent Reliability') ?? projects[0];
 
-const careerFlow = [
-	{ label: 'Analytics', detail: 'Find the signal.' },
-	{ label: 'Cloud', detail: 'Make it scale.' },
-	{ label: 'Infrastructure', detail: 'Keep it standing.' },
-	{ label: 'Applied AI', detail: 'Now add judgment.' },
-];
-
-const siteMap = [
+const editorialLinks = [
 	{
-		label: 'Notes',
-		title: 'What the demo forgot.',
-		description: 'Essays and quick lessons from building AI systems in the real world.',
-		href: '/notes',
-		link: 'Read the notes',
+		label: 'Main project',
+		title: featuredProject.data.title,
+		description: 'A practical way to test whether AI agents finish the job, respect boundaries, and tell the truth.',
+		href: `/systems/${featuredProject.id}/`,
+		link: 'Explore Agent Reliability',
 	},
 	{
-		label: 'Projects',
-		title: 'Proof, with tradeoffs.',
-		description: 'Working builds, architecture decisions, GitHub links, and honest constraints.',
+		label: 'Selected projects',
+		title: 'Systems I have built',
+		description: 'Working projects across agent reliability, evaluation, secure tool use, and observability.',
 		href: '/systems',
 		link: 'View projects',
 	},
 	{
-		label: 'About',
-		title: 'Human, still included.',
-		description: 'The short version of my work, credentials, controlled chaos, and how to reach me.',
+		label: 'Latest writing',
+		title: latestEssay.data.title,
+		description: 'Clear explanations of what breaks, what works, and what is worth building next.',
+		href: `/writing/${latestEssay.id}/`,
+		link: 'Read latest article',
+	},
+	{
+		label: 'Background and experience',
+		title: 'The path behind the work',
+		description: 'Analytics, cloud, infrastructure, and applied AI, plus the useful lessons from each chapter.',
 		href: '/about',
-		link: 'About and contact',
+		link: 'About me',
 	},
 ];
 ---
 
 <SiteLayout
-	title="Revanth Pattipati | Applied AI and Agentic Systems"
-	description="Revanth Pattipati builds practical AI systems and shares clear notes, projects, and architecture lessons from the work after the demo."
+	title="Revanth Pattipati | Reliable AI Systems and Agent Architecture"
+	description="Revanth Pattipati builds useful, reliable, and accountable AI agents, then writes clearly about what works and what breaks."
 >
 	<section class="hero section-shell">
 		<div class="hero-copy">
-			<p class="kicker">AI SYSTEMS FOR THE REAL WORLD</p>
-			<h1>Agentic AI, minus the theater.</h1>
-			<p>
-				I lead agentic architecture, enterprise AI platforms, evaluation, observability, secure
-				tool use, and governance that survives contact with reality.
-			</p>
+			<p class="kicker">Applied AI for the real world</p>
+			<h1>I make AI agents more useful, reliable, and accountable.</h1>
+			<p>I build systems, test their limits, and write about what I learn when reality gets involved.</p>
 			<div class="button-row">
-				<a class="button" href="/notes">Read the notes</a>
-				<a class="button secondary" href="/systems">Explore projects</a>
+				<a class="button" href="/systems">View projects</a>
+				<a class="button secondary" href="/notes">Read my writing</a>
 			</div>
 		</div>
 		<figure class="portrait">
 			<img src={profile.images.professional.src} alt={profile.images.professional.alt} />
-			<figcaption>
-				<span>BUILDING • WRITING • EXPERIMENTING</span>
-				<span>{profile.location}</span>
-			</figcaption>
 		</figure>
 	</section>
 
-	<section class="career section-shell" aria-labelledby="career-heading">
-		<div class="section-label">
-			<p class="kicker">The useful detour</p>
-			<h2 id="career-heading">Built from systems thinking.</h2>
-		</div>
-		<SystemFlow
-			steps={careerFlow}
-			label="Career path from analytics through cloud and infrastructure to applied AI"
-		/>
-	</section>
-
-	<section class="site-map section-shell" aria-labelledby="site-map-heading">
+	<section class="directory section-shell" aria-labelledby="directory-heading">
 		<header>
-			<p class="kicker">A quick tour</p>
-			<h2 id="site-map-heading">The whole site, without the whole speech.</h2>
+			<h2 id="directory-heading">Start here.</h2>
+			<p>The work, the writing, and the route that brought me here.</p>
 		</header>
-		<div class="snapshot-grid">
-			{siteMap.map((item) => (
-				<a href={item.href}>
-					<span>{item.label}</span>
+		<nav class="editorial-index" aria-label="Homepage highlights">
+			{editorialLinks.map((item) => (
+				<a class="index-row" href={item.href}>
+					<span class="index-label">{item.label}</span>
 					<h3>{item.title}</h3>
 					<p>{item.description}</p>
-					<strong>{item.link} →</strong>
+					<strong>{item.link}<span aria-hidden="true"> →</span></strong>
 				</a>
 			))}
-		</div>
-	</section>
-
-	<section class="latest section-shell" aria-labelledby="latest-heading">
-		<header>
-			<p class="kicker">Currently useful</p>
-			<h2 id="latest-heading">Fresh thinking. Working code.</h2>
-		</header>
-		<div class="latest-grid">
-			<a class="latest-card" href={`/writing/${latestEssay.id}/`}>
-				<span>Latest essay</span>
-				<h3>{latestEssay.data.title}</h3>
-				<p>{latestEssay.data.description}</p>
-			</a>
-			<a class="latest-card project" href={`/systems/${featuredProject.id}/`}>
-				<span>Main project · Ongoing</span>
-				<h3>{featuredProject.data.title}</h3>
-				<p>{featuredProject.data.description}</p>
-			</a>
-		</div>
+		</nav>
 	</section>
 </SiteLayout>
 
@@ -125,11 +87,11 @@ const siteMap = [
 
 	.hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.55fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		grid-template-columns: minmax(0, 1fr) 250px;
+		gap: clamp(3rem, 6vw, 5rem);
 		align-items: center;
-		min-height: calc(100vh - 72px);
-		padding: clamp(4.5rem, 10vw, 8rem) 0;
+		min-height: calc(100dvh - 72px);
+		padding: clamp(4rem, 8vw, 6rem) 0;
 	}
 
 	.hero-copy {
@@ -138,17 +100,17 @@ const siteMap = [
 	}
 
 	.hero h1 {
-		max-width: 900px;
-		font-size: clamp(4rem, 9.5vw, 8.4rem);
-		letter-spacing: -0.065em;
-		line-height: 0.88;
+		max-width: 920px;
+		font-size: clamp(3.5rem, 5vw, 4rem);
+		letter-spacing: -0.055em;
+		line-height: 0.96;
 		text-wrap: balance;
 	}
 
 	.hero-copy > p:not(.kicker) {
-		max-width: 690px;
+		max-width: 640px;
 		color: var(--graphite);
-		font-size: clamp(1.08rem, 2vw, 1.35rem);
+		font-size: clamp(1.08rem, 1.8vw, 1.3rem);
 		line-height: 1.55;
 	}
 
@@ -167,187 +129,136 @@ const siteMap = [
 		object-position: center 32%;
 	}
 
-	.portrait figcaption {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-top: 0.8rem;
-		color: var(--muted);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-	}
-
-	.career,
-	.site-map,
-	.latest {
+	.directory {
 		border-top: 1px solid var(--line);
 		padding: clamp(4.5rem, 9vw, 7.5rem) 0;
 	}
 
-	.career {
+	.directory header {
 		display: grid;
-		grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
-		gap: clamp(2rem, 6vw, 6rem);
-		align-items: center;
+		gap: 0.8rem;
+		max-width: 680px;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
 	}
 
-	.section-label,
-	.site-map header,
-	.latest header {
-		display: grid;
-		gap: 0.7rem;
-	}
-
-	.section-label h2,
-	.site-map h2,
-	.latest h2 {
-		font-size: clamp(2.4rem, 5vw, 4.8rem);
+	.directory h2 {
+		font-size: clamp(2.6rem, 5vw, 4.8rem);
 		letter-spacing: -0.045em;
 	}
 
-	.site-map header,
-	.latest header {
-		max-width: 800px;
-		margin-bottom: clamp(2rem, 5vw, 3.5rem);
+	.directory header p {
+		font-size: clamp(1rem, 1.7vw, 1.18rem);
 	}
 
-	.snapshot-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+	.editorial-index {
 		border-top: 1px solid var(--ink);
 	}
 
-	.snapshot-grid a {
+	.index-row {
 		display: grid;
-		min-height: 285px;
-		align-content: start;
-		border-right: 1px solid var(--line);
+		grid-template-columns: 170px minmax(210px, 0.8fr) minmax(280px, 1.2fr) max-content;
+		gap: clamp(1.25rem, 3vw, 2.5rem);
+		align-items: center;
+		min-height: 152px;
 		color: inherit;
-		padding: clamp(1.25rem, 3vw, 2rem);
-		text-decoration: none;
-		transition: background 160ms ease;
-	}
-
-	.snapshot-grid a:last-child {
-		border-right: 0;
-	}
-
-	.snapshot-grid a:hover {
-		background: rgba(255, 255, 255, 0.58);
-	}
-
-	.snapshot-grid span,
-	.latest-card > span {
-		color: var(--accent);
-		font-family: var(--mono);
-		font-size: 0.68rem;
-		font-weight: 750;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	.snapshot-grid h3 {
-		margin: 3.5rem 0 0.8rem;
-		font-size: clamp(1.55rem, 2.4vw, 2.1rem);
-	}
-
-	.snapshot-grid p {
-		max-width: 34ch;
-	}
-
-	.snapshot-grid strong {
-		margin-top: auto;
-		padding-top: 2rem;
-		font-size: 0.9rem;
-	}
-
-	.latest-grid {
-		display: grid;
-		grid-template-columns: 1.2fr 0.8fr;
-		gap: 1rem;
-	}
-
-	.latest-card {
-		display: grid;
-		min-height: 330px;
-		align-content: end;
-		border: 1px solid var(--line);
-		border-radius: 18px;
-		background:
-			linear-gradient(rgba(17, 19, 24, 0.035) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(17, 19, 24, 0.035) 1px, transparent 1px),
-			rgba(255, 255, 255, 0.54);
-		background-size: 34px 34px, 34px 34px, auto;
-		color: inherit;
-		padding: clamp(1.4rem, 4vw, 2.4rem);
+		padding: 1.6rem 1rem;
 		text-decoration: none;
 		transition:
-			box-shadow 160ms ease,
+			background 160ms ease,
 			transform 160ms ease;
 	}
 
-	.latest-card.project {
-		background:
-			linear-gradient(rgba(21, 93, 252, 0.06) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(21, 93, 252, 0.06) 1px, transparent 1px),
-			#eef3ff;
-		background-size: 34px 34px, 34px 34px, auto;
+	.index-row + .index-row {
+		border-top: 1px solid var(--line);
 	}
 
-	.latest-card:hover {
-		box-shadow: var(--shadow);
-		transform: translateY(-2px);
+	.index-row:hover {
+		background: rgba(255, 255, 255, 0.62);
 	}
 
-	.latest-card h3 {
-		max-width: 760px;
-		margin: 1rem 0 0.8rem;
-		font-size: clamp(1.8rem, 3.8vw, 3.5rem);
-		letter-spacing: -0.04em;
+	.index-row:active {
+		transform: translateY(1px);
 	}
 
-	.latest-card p {
-		max-width: 650px;
+	.index-label {
+		color: var(--accent);
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		font-weight: 750;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
 	}
 
-	@media (max-width: 860px) {
-		.hero,
-		.career,
-		.latest-grid {
-			grid-template-columns: 1fr;
+	.index-row h3 {
+		font-size: clamp(1.5rem, 2.6vw, 2.35rem);
+		letter-spacing: -0.035em;
+		text-wrap: balance;
+	}
+
+	.index-row p {
+		max-width: 48ch;
+		line-height: 1.55;
+	}
+
+	.index-row strong {
+		color: var(--ink);
+		font-size: 0.88rem;
+		white-space: nowrap;
+	}
+
+	.index-row:hover strong {
+		color: var(--accent);
+	}
+
+	@media (max-width: 980px) {
+		.hero {
+			grid-template-columns: minmax(0, 1fr) 220px;
 		}
 
+		.index-row {
+			grid-template-columns: 150px minmax(0, 1fr);
+		}
+
+		.index-row p,
+		.index-row strong {
+			grid-column: 2;
+		}
+	}
+
+	@media (max-width: 760px) {
 		.hero {
+			grid-template-columns: 1fr;
 			min-height: auto;
 		}
 
 		.portrait {
-			max-width: 440px;
+			max-width: 420px;
 		}
 
-		.snapshot-grid {
+		.index-row {
 			grid-template-columns: 1fr;
+			gap: 0.75rem;
+			padding: 1.75rem 0.25rem;
 		}
 
-		.snapshot-grid a {
-			min-height: 230px;
-			border-right: 0;
-			border-bottom: 1px solid var(--line);
+		.index-row p,
+		.index-row strong {
+			grid-column: 1;
 		}
-
 	}
 
 	@media (max-width: 520px) {
 		.hero h1 {
-			font-size: clamp(3.6rem, 18vw, 5.4rem);
+			font-size: clamp(2.15rem, 8.7vw, 2.8rem);
 		}
 
-		.portrait figcaption {
-			align-items: flex-start;
+		.button-row {
+			align-items: stretch;
 			flex-direction: column;
-			gap: 0.25rem;
+		}
+
+		.button {
+			width: 100%;
 		}
 	}
 </style>
