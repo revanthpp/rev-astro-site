@@ -1,0 +1,49 @@
+---
+title: Agent Reliability
+description: A local, open-source test harness that puts autonomous agents through controlled failures, permission checks, and adversarial scenarios, then produces replayable evidence instead of a reassuring green blob.
+problem: >-
+  Most agent evaluations grade the final answer. That misses the dangerous part: an agent can reach
+  the right outcome after crossing a permission boundary, retrying an irreversible action, following
+  an injected instruction, or simply claiming success when the tool failed.
+architecture: >-
+  Versioned YAML scenarios feed a bounded runner. Agent actions pass through a permission-aware tool
+  gateway into a deterministic sandbox, while faults, state changes, and trace events are recorded.
+  Deterministic evaluators then score outcome, security, recovery, truthfulness, and economics, with
+  an evidence bundle for every failed assertion.
+tradeoffs:
+  - Starts with deterministic world-state and trace graders, not a model judging another model's homework.
+  - Runs locally in one Python process so failures are safe, inspectable, and easy to replay.
+  - Keeps reliability dimensions separate because ten tidy runs do not cancel one unauthorized payment.
+  - Treats the current planner/executor path as an interface baseline until repeated live-model studies exist.
+technologies:
+  - Python 3.12
+  - Pydantic
+  - PyYAML
+  - JSONL traces
+  - OpenAI Responses API
+  - Deterministic evals
+status: Ongoing project
+featured: true
+priority: 0
+series: Agent Reliability
+difficulty: Intermediate
+tags:
+  - agent-evaluation
+  - reliability
+  - fault-injection
+  - agent-security
+githubUrl: https://github.com/revanthpp/agent-reliability
+writeupUrl: /writing/agent-reliability-your-agent-said-done-i-brought-receipts/
+draft: false
+category: Agent Evaluation
+---
+
+Agent Reliability asks a slightly impolite question: when an agent says "done," what actually happened?
+
+This is an ongoing project, currently at v0.1 alpha. I expect to keep returning to it as agent architectures, failure modes, and the industry's tolerance for cheerful uncertainty continue to evolve.
+
+The harness runs agents inside a controlled local world, introduces the sorts of failures that demos politely avoid, and checks the full trajectory. Did the task succeed? Did the agent stay inside its authority? Did it recover safely? Did its final claim match the world state? How much did the whole adventure cost?
+
+Phase 1 includes 24 scenarios covering ambiguity, permission limits, prompt injection, poisoned tools, duplicate side effects, rate limits, stale state, memory poisoning, evaluator tampering, false completion, shutdown behavior, and other ways autonomy can become an incident report.
+
+Every failed assertion points back to trace events, state differences, a failure class, and an exact replay command. The goal is not to award agents a vague gold star. It is to give builders evidence they can use to make the next engineering decision.

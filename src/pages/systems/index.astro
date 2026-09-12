@@ -16,6 +16,12 @@ const buildFlow = [
 	{ label: 'Evaluate', detail: 'Keep evidence, not vibes.' },
 ];
 const projectFlows: Record<string, Array<{ label: string }>> = {
+	'agent-reliability': [
+		{ label: 'Scenario' },
+		{ label: 'Stress' },
+		{ label: 'Evaluate' },
+		{ label: 'Replay' },
+	],
 	promptshield: [
 		{ label: 'Detect' },
 		{ label: 'Score' },
