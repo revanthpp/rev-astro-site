@@ -9,15 +9,15 @@ const writing = (await getCollection('writing'))
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
 const latestEssay = writing[0];
-const featuredProject = projects.find((project) => project.data.title === 'Agent Reliability') ?? projects[0];
+const featuredProject = projects.find((project) => project.data.title === 'Agent Native') ?? projects[0];
 
 const editorialLinks = [
 	{
 		label: 'Main project',
 		title: featuredProject.data.title,
-		description: 'A practical way to test whether AI agents finish the job, respect boundaries, and tell the truth.',
+		description: 'A passive way to check whether software agents can discover, understand, and safely use a business.',
 		href: `/systems/${featuredProject.id}/`,
-		link: 'Explore Agent Reliability',
+		link: 'Explore Agent Native',
 	},
 	{
 		label: 'Selected projects',

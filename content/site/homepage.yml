@@ -2,6 +2,7 @@ primaryCta: "Read my thinking"
 secondaryCta: "Connect on LinkedIn"
 
 featuredWriting:
+  - "can-an-ai-agent-actually-do-business-with-you"
   - "agent-reliability-your-agent-said-done-i-brought-receipts"
   - "agents-with-brakes-production-agent-architecture"
   - "promptshield-local-first-ai-privacy-firewall"
@@ -19,6 +20,7 @@ featuredFieldNotes:
   - "trust-is-getting-rearchitected"
 
 featuredProjects:
+  - "agent-native"
   - "agent-reliability"
   - "agents-with-brakes"
   - "promptshield"

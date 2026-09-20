@@ -1,0 +1,52 @@
+---
+title: Agent Native
+description: A passive readiness scanner that checks whether a business is discoverable, understandable, and safe for software agents to use through public interfaces.
+problem: >-
+  A business can have a good website and a working API while still leaving software agents unable to
+  identify capabilities, understand authority, classify side effects, recover from failure, or prove
+  what happened.
+architecture: >-
+  A bounded acquisition path collects public artifacts, modular parsers normalize supported business
+  interfaces, and 20 deterministic checks produce evidence-backed findings. A separate public-report
+  boundary validates provenance, removes sensitive content, and renders terminal, JSON, or Markdown.
+tradeoffs:
+  - Uses deterministic checks for the core scan so findings remain reproducible, inspectable, and safe under hostile content.
+  - Performs passive GET-only assessment and reports missing runtime evidence instead of pretending metadata proves behavior.
+  - Rejects a global readiness score because severe authorization or transaction weaknesses should remain individually visible.
+  - Adapts existing interface standards into an internal model instead of publishing another protocol for everyone to tolerate.
+technologies:
+  - Python 3.11+
+  - OpenAPI
+  - Deterministic checks
+  - Evidence validation
+  - Security testing
+status: Flagship project
+featured: true
+priority: -10
+series: Agent Native
+difficulty: Intermediate
+tags:
+  - agent-native
+  - interoperability
+  - agent-commerce
+  - API-design
+  - security
+githubUrl: https://github.com/revanthpp/agent-native
+writeupUrl: /writing/can-an-ai-agent-actually-do-business-with-you/
+draft: false
+category: Agent Interoperability
+---
+
+Agent Native asks a direct question: can an AI agent actually do business with you?
+
+The scanner reviews public business material such as a website, OpenAPI document, or agent card. It checks whether an agent can discover the interface, understand its operations, identify authentication and authorization requirements, distinguish reads from mutations, recover from failures, and preserve evidence for the user.
+
+The current catalog contains 20 deterministic checks. Results stay separate by design. Missing version information should not average away an exposed credential, and excellent response schemas should not excuse wildcard authorization.
+
+The scan is passive. It does not log in, submit forms, make purchases, or invoke discovered operations. When public evidence cannot prove runtime behavior, the result says so.
+
+The less visible part of the project is the report boundary. Fetched content remains internal. Public reports include sanitized summaries and bounded evidence fragments, and every finding must match a known artifact ID, URI, type, and content hash before rendering.
+
+Version 1.0.0 is standard-library-only and includes 50 passing tests across unit, integration, security, and evaluation suites. It is a readiness assessment, not a certification. The distinction is less marketable and more accurate.
+
+The larger idea is that agent-mediated business will require explicit interfaces for capability, authority, side effects, recovery, and human control. Agent Native is an early attempt to make those requirements concrete, testable, and open for improvement.

@@ -14,6 +14,12 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const projectFlows: Record<string, Array<{ label: string; detail: string }>> = {
+	'agent-native': [
+		{ label: 'Discover', detail: 'Collect a bounded set of public business artifacts.' },
+		{ label: 'Normalize', detail: 'Map supported interfaces into one internal model.' },
+		{ label: 'Check', detail: 'Run 20 deterministic readiness checks with evidence.' },
+		{ label: 'Report', detail: 'Validate, sanitize, and render the public findings.' },
+	],
 	'agent-reliability': [
 		{ label: 'Scenario', detail: 'Define the world, authority, fault, and assertions.' },
 		{ label: 'Stress', detail: 'Run the agent through a permission-aware gateway.' },

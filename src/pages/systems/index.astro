@@ -16,6 +16,12 @@ const buildFlow = [
 	{ label: 'Evaluate', detail: 'Keep evidence, not vibes.' },
 ];
 const projectFlows: Record<string, Array<{ label: string }>> = {
+	'agent-native': [
+		{ label: 'Discover' },
+		{ label: 'Normalize' },
+		{ label: 'Check' },
+		{ label: 'Report' },
+	],
 	'agent-reliability': [
 		{ label: 'Scenario' },
 		{ label: 'Stress' },
