@@ -107,7 +107,8 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 
 <style>
 	.page-hero {
-		padding: 5rem 0 3rem;
+		max-width: 900px;
+		padding: clamp(3.5rem, 7vw, 5.5rem) 0 2.5rem;
 	}
 
 	.page-hero h1 {
@@ -126,14 +127,17 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 
 	.filters {
 		display: flex;
-		flex-wrap: wrap;
+		overflow-x: auto;
 		gap: 0.5rem;
 		margin-bottom: 2rem;
+		padding-bottom: 0.4rem;
+		scrollbar-width: none;
 	}
 
 	.filter {
+		flex: 0 0 auto;
 		border: 1px solid var(--line);
-		border-radius: 999px;
+		border-radius: 6px;
 		background: rgba(255, 255, 255, 0.64);
 		color: var(--muted);
 		cursor: pointer;
@@ -152,24 +156,33 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 
 	.article-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0;
+		border-top: 1px solid var(--line-strong);
 	}
 
 	.article-card {
 		display: grid;
-		min-height: 340px;
+		min-height: 300px;
 		align-content: space-between;
 		gap: 1.4rem;
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		background: rgba(255, 255, 255, 0.58);
+		border-bottom: 1px solid var(--line);
 		color: inherit;
-		padding: 1.25rem;
+		padding: 1.5rem;
 		transition:
-			transform 160ms ease,
-			box-shadow 160ms ease,
-			background 160ms ease;
+			transform 180ms var(--ease-out),
+			background 180ms ease;
+	}
+
+	.article-card:nth-child(even) {
+		border-left: 1px solid var(--line);
+	}
+
+	.article-card:first-child {
+		grid-column: 1 / -1;
+		min-height: 260px;
+		border-left: 0;
+		padding: clamp(1.5rem, 4vw, 3rem);
 	}
 
 	.empty-state {
@@ -186,9 +199,8 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 	}
 
 	.article-card:hover {
-		background: var(--surface);
-		box-shadow: var(--shadow);
-		transform: translateY(-2px);
+		background: rgba(251, 250, 247, 0.76);
+		transform: translateY(-1px);
 	}
 
 	.article-meta,
@@ -232,15 +244,17 @@ const categories = [...new Set(posts.map((post) => post.data.category))].sort();
 		white-space: nowrap;
 	}
 
-	@media (max-width: 980px) {
-		.article-grid {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-
-	@media (max-width: 640px) {
+	@media (max-width: 700px) {
 		.article-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.article-card,
+		.article-card:first-child {
+			grid-column: 1;
+			min-height: 0;
+			border-left: 0;
+			padding: 1.5rem 0.25rem;
 		}
 	}
 </style>

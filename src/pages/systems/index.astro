@@ -153,14 +153,14 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 	}
 
 	.page-hero {
-		padding: clamp(5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
+		padding: clamp(3.5rem, 7vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem);
 	}
 
 	.page-hero h1 {
-		max-width: 1040px;
+		max-width: 900px;
 		margin: 0.7rem 0 1.2rem;
-		font-size: clamp(3.8rem, 9vw, 8rem);
-		letter-spacing: -0.06em;
+		font-size: clamp(3.3rem, 7vw, 6.5rem);
+		letter-spacing: -0.05em;
 	}
 
 	.page-hero p:not(.kicker) {
@@ -172,11 +172,11 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 	.method {
 		display: grid;
 		grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
-		gap: clamp(2rem, 6vw, 6rem);
+		gap: clamp(2rem, 5vw, 5rem);
 		align-items: center;
 		border-top: 1px solid var(--line);
 		border-bottom: 1px solid var(--line);
-		padding: clamp(3rem, 7vw, 5rem) 0;
+		padding: clamp(2.5rem, 5vw, 4rem) 0;
 	}
 
 	.method > div {
@@ -190,27 +190,51 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 	}
 
 	.project-list {
-		padding: clamp(4rem, 8vw, 7rem) 0;
+		padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 7rem);
 	}
 
 	.project-card {
+		position: relative;
 		display: grid;
 		grid-template-columns: 70px minmax(0, 1fr) minmax(320px, 0.8fr);
 		gap: clamp(1rem, 4vw, 3.5rem);
 		align-items: center;
 		border-bottom: 1px solid var(--line);
 		color: inherit;
-		padding: clamp(2rem, 5vw, 4rem) 0;
+		padding: clamp(2rem, 4vw, 3.25rem) 0;
 		text-decoration: none;
+		isolation: isolate;
+		transition: background 180ms ease, transform 180ms var(--ease-out);
+	}
+
+	.project-card::before {
+		position: absolute;
+		inset: 0 -1.5rem;
+		z-index: -1;
+		background: rgba(251, 250, 247, 0.76);
+		content: "";
+		opacity: 0;
+		transition: opacity 180ms ease;
 	}
 
 	.project-card:first-child {
 		border-top: 1px solid var(--ink);
 	}
 
+	.project-card:hover::before,
+	.project-card:focus-visible::before {
+		opacity: 1;
+	}
+
 	.project-card:hover h2,
-	.project-card:hover .project-flow > strong {
+	.project-card:hover .project-flow > strong,
+	.project-card:focus-visible h2,
+	.project-card:focus-visible .project-flow > strong {
 		color: var(--accent);
+	}
+
+	.project-card:active {
+		transform: translateY(1px);
 	}
 
 	.project-number {
@@ -279,7 +303,12 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 	.project-flow > strong {
 		justify-self: end;
 		font-size: 0.82rem;
-		transition: color 160ms ease;
+		transition: color 180ms ease, transform 180ms var(--ease-out);
+	}
+
+	.project-card:hover .project-flow > strong,
+	.project-card:focus-visible .project-flow > strong {
+		transform: translateX(4px);
 	}
 
 	@media (max-width: 900px) {
@@ -289,11 +318,21 @@ const projectFlows: Record<string, Array<{ label: string }>> = {
 		}
 
 		.project-number {
-			display: none;
+			align-self: auto;
 		}
 
 		.project-flow > strong {
 			justify-self: start;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.page-hero h1 {
+			font-size: clamp(2.8rem, 15vw, 4rem);
+		}
+
+		.project-card::before {
+			inset-inline: -0.75rem;
 		}
 	}
 </style>

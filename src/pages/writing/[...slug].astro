@@ -11,13 +11,15 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const tableOfContents = headings.filter((heading) => heading.depth <= 3);
 ---
 
 <SiteLayout
 	title={`${post.data.title} | Revanth Pattipati`}
 	description={post.data.metaDescription ?? post.data.description}
 >
+	<div class="reading-progress" aria-hidden="true"></div>
 	<article class="article section-shell">
 		<header class="article-header">
 			<a class="back-link" href="/writing">Writing</a>
@@ -47,8 +49,17 @@ const { Content } = await render(post);
 				</div>
 			)}
 		</header>
-		<div class="prose">
-			<Content />
+		<div class:list={['reading-layout', { 'has-toc': tableOfContents.length >= 4 }]}>
+			{tableOfContents.length >= 4 && (
+				<nav class="table-of-contents" aria-label="Table of contents">
+					{tableOfContents.map((heading) => (
+						<a href={`#${heading.slug}`}>{heading.text}</a>
+					))}
+				</nav>
+			)}
+			<div class="prose">
+				<Content />
+			</div>
 		</div>
 	</article>
 </SiteLayout>
@@ -82,18 +93,19 @@ const { Content } = await render(post);
 
 <style>
 	.article {
-		max-width: 860px;
-		padding: 5rem 0 7rem;
+		max-width: 1120px;
+		padding: clamp(3.5rem, 7vw, 5.5rem) 0 7rem;
 	}
 
 	.article-header {
 		display: grid;
+		max-width: 900px;
 		gap: 1.2rem;
 		margin-bottom: 3rem;
 	}
 
 	.article-header h1 {
-		font-size: clamp(2.8rem, 7vw, 5.4rem);
+		font-size: clamp(2.75rem, 6.2vw, 5rem);
 	}
 
 	.article-header p {
@@ -126,6 +138,44 @@ const { Content } = await render(post);
 
 	.back-link:hover {
 		color: var(--accent);
+	}
+
+	.reading-layout.has-toc {
+		display: grid;
+		grid-template-columns: 190px minmax(0, 74ch);
+		gap: clamp(2rem, 6vw, 5rem);
+		align-items: start;
+	}
+
+	.reading-layout:not(.has-toc) {
+		max-width: 74ch;
+	}
+
+	.table-of-contents {
+		position: sticky;
+		top: calc(var(--header-height) + 24px);
+		display: grid;
+		gap: 0.7rem;
+		border-left: 2px solid var(--line);
+		padding-left: 1rem;
+	}
+
+	.table-of-contents a {
+		color: var(--muted);
+		font-size: 0.82rem;
+		font-weight: 700;
+		line-height: 1.35;
+		text-decoration: none;
+	}
+
+	.table-of-contents a:hover,
+	.table-of-contents a:focus-visible {
+		color: var(--accent);
+	}
+
+	.prose {
+		min-width: 0;
+		margin: 0;
 	}
 
 	:global(.mermaid-diagram) {
@@ -189,5 +239,19 @@ const { Content } = await render(post);
 		max-width: 100%;
 		height: auto;
 		margin: 0 auto;
+	}
+
+	@media (max-width: 760px) {
+		.reading-layout.has-toc {
+			grid-template-columns: 1fr;
+		}
+
+		.table-of-contents {
+			position: static;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			border-top: 1px solid var(--line);
+			border-left: 0;
+			padding: 1rem 0;
+		}
 	}
 </style>

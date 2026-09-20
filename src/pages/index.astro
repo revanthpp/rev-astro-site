@@ -1,46 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { getProfile } from '../lib/siteContent';
+import { getHomepage, getProfile } from '../lib/siteContent';
 
 const profile = getProfile();
+const homepage = getHomepage();
 const writing = (await getCollection('writing'))
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
 const latestEssay = writing[0];
-const featuredProject = projects.find((project) => project.data.title === 'Agent Native') ?? projects[0];
-
-const editorialLinks = [
-	{
-		label: 'Main project',
-		title: featuredProject.data.title,
-		description: 'A passive way to check whether software agents can discover, understand, and safely use a business.',
-		href: `/systems/${featuredProject.id}/`,
-		link: 'Explore Agent Native',
-	},
-	{
-		label: 'Selected projects',
-		title: 'Systems I have built',
-		description: 'Working projects across agent reliability, evaluation, secure tool use, and observability.',
-		href: '/systems',
-		link: 'View projects',
-	},
-	{
-		label: 'Latest writing',
-		title: latestEssay.data.title,
-		description: 'Clear explanations of what breaks, what works, and what is worth building next.',
-		href: `/writing/${latestEssay.id}/`,
-		link: 'Read latest article',
-	},
-	{
-		label: 'Background and experience',
-		title: 'The path behind the work',
-		description: 'Analytics, cloud, infrastructure, and applied AI, plus the useful lessons from each chapter.',
-		href: '/about',
-		link: 'About me',
-	},
-];
+const featuredProjects = homepage.featuredProjects
+	.map((projectId) => projects.find((project) => project.id === projectId))
+	.filter((project) => project !== undefined)
+	.slice(0, 3);
 ---
 
 <SiteLayout
@@ -51,7 +24,7 @@ const editorialLinks = [
 		<div class="hero-copy">
 			<p class="kicker">Applied AI for the real world</p>
 			<h1>I make AI agents more useful, reliable, and accountable.</h1>
-			<p>I build systems, test their limits, and write about what I learn when reality gets involved.</p>
+			<p>{profile.shortBio}</p>
 			<div class="button-row">
 				<a class="button" href="/systems">View projects</a>
 				<a class="button secondary" href="/notes">Read my writing</a>
@@ -62,21 +35,54 @@ const editorialLinks = [
 		</figure>
 	</section>
 
-	<section class="directory section-shell" aria-labelledby="directory-heading">
+	<section class="home-about section-shell" aria-labelledby="home-about-heading">
+		<p class="kicker">About</p>
+		<h2 id="home-about-heading">From analytics to agentic systems.</h2>
+		<p>
+			My career has been one long exercise in turning complexity into something people can
+			actually use. AI is simply the latest chapter.
+		</p>
+		<a href="/about">About me <span aria-hidden="true">→</span></a>
+	</section>
+
+	<section class="selected-work section-shell" aria-labelledby="selected-work-heading">
 		<header>
-			<h2 id="directory-heading">Start here.</h2>
-			<p>The work, the writing, and the route that brought me here.</p>
+			<p class="kicker">Selected projects</p>
+			<h2 id="selected-work-heading">Systems I have built</h2>
+			<p>I build systems, test their limits, and write about what I learn when reality gets involved.</p>
 		</header>
-		<nav class="editorial-index" aria-label="Homepage highlights">
-			{editorialLinks.map((item) => (
-				<a class="index-row" href={item.href}>
-					<span class="index-label">{item.label}</span>
-					<h3>{item.title}</h3>
-					<p>{item.description}</p>
-					<strong>{item.link}<span aria-hidden="true"> →</span></strong>
+
+		<div class="project-list">
+			{featuredProjects.map((project) => (
+				<a class="project-row" href={`/systems/${project.id}/`}>
+					<div class="project-meta">
+						<span>{project.data.category}</span>
+						<span>{project.data.status}</span>
+					</div>
+					<div class="project-copy">
+						<h3>{project.data.title}</h3>
+						<p>{project.data.description}</p>
+					</div>
+					<div class="project-technologies" aria-label={`${project.data.title} technologies`}>
+						{project.data.technologies.slice(0, 3).map((technology) => <span>{technology}</span>)}
+					</div>
+					<strong>Explore {project.data.title}<span aria-hidden="true"> →</span></strong>
 				</a>
 			))}
-		</nav>
+		</div>
+
+		<a class="all-projects" href="/systems">View all projects <span aria-hidden="true">→</span></a>
+	</section>
+
+	<section class="latest-writing section-shell" aria-labelledby="latest-writing-heading">
+		<div>
+			<p class="kicker">Latest writing</p>
+			<h2 id="latest-writing-heading">{latestEssay.data.title}</h2>
+		</div>
+		<div>
+			<p>Clear explanations of what breaks, what works, and what is worth building next.</p>
+			<a href={`/writing/${latestEssay.id}/`}>Read latest article <span aria-hidden="true">→</span></a>
+		</div>
 	</section>
 </SiteLayout>
 
@@ -87,23 +93,22 @@ const editorialLinks = [
 
 	.hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) 250px;
-		gap: clamp(3rem, 6vw, 5rem);
+		grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+		gap: clamp(3rem, 7vw, 7rem);
 		align-items: center;
-		min-height: calc(100dvh - 72px);
-		padding: clamp(4rem, 8vw, 6rem) 0;
+		padding: clamp(2.75rem, 5vw, 4rem) 0 clamp(2.5rem, 4vw, 3.5rem);
 	}
 
 	.hero-copy {
 		display: grid;
-		gap: 1.4rem;
+		gap: 1.25rem;
 	}
 
 	.hero h1 {
-		max-width: 920px;
-		font-size: clamp(3.5rem, 5vw, 4rem);
+		max-width: 820px;
+		font-size: clamp(3.2rem, 5vw, 4.65rem);
 		letter-spacing: -0.055em;
-		line-height: 0.96;
+		line-height: 0.98;
 		text-wrap: balance;
 	}
 
@@ -123,127 +128,218 @@ const editorialLinks = [
 		width: 100%;
 		aspect-ratio: 4 / 5;
 		border: 1px solid var(--line);
-		border-radius: 18px;
-		box-shadow: 0 30px 80px rgba(17, 19, 24, 0.13);
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 		object-fit: cover;
 		object-position: center 32%;
 	}
 
-	.directory {
-		border-top: 1px solid var(--line);
-		padding: clamp(4.5rem, 9vw, 7.5rem) 0;
+	.home-about,
+	.selected-work,
+	.latest-writing {
+		border-top: 1px solid var(--line-strong);
+		padding: clamp(3.5rem, 7vw, 6rem) 0;
 	}
 
-	.directory header {
+	.home-about {
 		display: grid;
-		gap: 0.8rem;
-		max-width: 680px;
-		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+		max-width: 900px;
+		gap: 0.85rem;
 	}
 
-	.directory h2 {
-		font-size: clamp(2.6rem, 5vw, 4.8rem);
+	.home-about h2,
+	.selected-work h2,
+	.latest-writing h2 {
+		font-size: clamp(2.4rem, 4.8vw, 4.5rem);
 		letter-spacing: -0.045em;
 	}
 
-	.directory header p {
+	.home-about > p:not(.kicker) {
+		max-width: 680px;
+		color: var(--graphite);
+		font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+		line-height: 1.7;
+	}
+
+	.home-about a,
+	.latest-writing a,
+	.all-projects {
+		width: fit-content;
+		color: var(--ink);
+		font-weight: 700;
+		text-decoration: none;
+		transition: color 180ms ease, transform 180ms var(--ease-out);
+	}
+
+	.home-about a:hover,
+	.home-about a:focus-visible,
+	.latest-writing a:hover,
+	.latest-writing a:focus-visible,
+	.all-projects:hover,
+	.all-projects:focus-visible {
+		color: var(--accent);
+		transform: translateX(4px);
+	}
+
+	.selected-work header {
+		display: grid;
+		max-width: 760px;
+		gap: 0.8rem;
+		margin-bottom: clamp(2rem, 4vw, 3rem);
+	}
+
+	.selected-work header > p:last-child {
+		max-width: 640px;
 		font-size: clamp(1rem, 1.7vw, 1.18rem);
 	}
 
-	.editorial-index {
+	.project-list {
 		border-top: 1px solid var(--ink);
 	}
 
-	.index-row {
+	.project-row {
 		display: grid;
-		grid-template-columns: 170px minmax(210px, 0.8fr) minmax(280px, 1.2fr) max-content;
-		gap: clamp(1.25rem, 3vw, 2.5rem);
-		align-items: center;
-		min-height: 152px;
+		grid-template-columns: minmax(130px, 0.34fr) minmax(320px, 1fr) minmax(180px, 0.46fr);
+		grid-template-areas:
+			"meta copy technologies"
+			"meta copy action";
+		gap: 0.9rem clamp(1.5rem, 4vw, 3.5rem);
+		min-height: 190px;
+		align-items: start;
+		border-bottom: 1px solid var(--line);
 		color: inherit;
-		padding: 1.6rem 1rem;
+		padding: 1.75rem 0.75rem;
 		text-decoration: none;
-		transition:
-			background 160ms ease,
-			transform 160ms ease;
+		transition: background 180ms ease, padding 180ms var(--ease-out);
 	}
 
-	.index-row + .index-row {
-		border-top: 1px solid var(--line);
+	.project-row:hover,
+	.project-row:focus-visible {
+		background: rgba(251, 250, 247, 0.72);
+		padding-inline: 1.15rem;
 	}
 
-	.index-row:hover {
-		background: rgba(255, 255, 255, 0.62);
+	.project-meta {
+		grid-area: meta;
+		display: grid;
+		gap: 0.45rem;
 	}
 
-	.index-row:active {
-		transform: translateY(1px);
-	}
-
-	.index-label {
-		color: var(--accent);
+	.project-meta span,
+	.project-technologies span {
+		color: var(--muted);
 		font-family: var(--mono);
-		font-size: 0.7rem;
-		font-weight: 750;
-		letter-spacing: 0.07em;
+		font-size: 0.67rem;
+		font-weight: 700;
+		letter-spacing: 0.055em;
+		line-height: 1.45;
 		text-transform: uppercase;
 	}
 
-	.index-row h3 {
-		font-size: clamp(1.5rem, 2.6vw, 2.35rem);
-		letter-spacing: -0.035em;
-		text-wrap: balance;
+	.project-copy {
+		grid-area: copy;
+		display: grid;
+		gap: 0.65rem;
 	}
 
-	.index-row p {
-		max-width: 48ch;
-		line-height: 1.55;
+	.project-copy h3 {
+		font-size: clamp(1.7rem, 3vw, 2.7rem);
+		letter-spacing: -0.04em;
 	}
 
-	.index-row strong {
+	.project-copy p {
+		max-width: 60ch;
+		line-height: 1.6;
+	}
+
+	.project-technologies {
+		grid-area: technologies;
+		display: grid;
+		gap: 0.3rem;
+	}
+
+	.project-row strong {
+		grid-area: action;
+		align-self: end;
 		color: var(--ink);
-		font-size: 0.88rem;
-		white-space: nowrap;
+		font-size: 0.86rem;
+		transition: color 180ms ease, transform 180ms var(--ease-out);
 	}
 
-	.index-row:hover strong {
+	.project-row:hover strong,
+	.project-row:focus-visible strong {
 		color: var(--accent);
+		transform: translateX(4px);
 	}
 
-	@media (max-width: 980px) {
-		.hero {
-			grid-template-columns: minmax(0, 1fr) 220px;
-		}
+	.all-projects {
+		display: inline-flex;
+		margin-top: 1.5rem;
+	}
 
-		.index-row {
-			grid-template-columns: 150px minmax(0, 1fr);
-		}
+	.latest-writing {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.52fr);
+		gap: clamp(2rem, 7vw, 7rem);
+		align-items: end;
+	}
 
-		.index-row p,
-		.index-row strong {
-			grid-column: 2;
+	.latest-writing > div {
+		display: grid;
+		gap: 0.8rem;
+	}
+
+	.latest-writing h2 {
+		max-width: 820px;
+		font-size: clamp(2.2rem, 4.4vw, 4.2rem);
+	}
+
+	.latest-writing > div:last-child p {
+		max-width: 48ch;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 900px) {
+		.project-row {
+			grid-template-columns: minmax(130px, 0.32fr) minmax(0, 1fr);
+			grid-template-areas:
+				"meta copy"
+				"meta technologies"
+				"meta action";
 		}
 	}
 
 	@media (max-width: 760px) {
-		.hero {
+		.hero,
+		.latest-writing {
 			grid-template-columns: 1fr;
-			min-height: auto;
+		}
+
+		.hero {
+			gap: 2.5rem;
+			padding: 3rem 0;
 		}
 
 		.portrait {
-			max-width: 420px;
+			max-width: 340px;
 		}
 
-		.index-row {
+		.project-row {
 			grid-template-columns: 1fr;
-			gap: 0.75rem;
+			grid-template-areas:
+				"meta"
+				"copy"
+				"technologies"
+				"action";
+			min-height: 0;
 			padding: 1.75rem 0.25rem;
 		}
 
-		.index-row p,
-		.index-row strong {
-			grid-column: 1;
+		.project-meta,
+		.project-technologies {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.45rem 0.85rem;
 		}
 	}
 
@@ -259,6 +355,12 @@ const editorialLinks = [
 
 		.button {
 			width: 100%;
+		}
+
+		.home-about,
+		.selected-work,
+		.latest-writing {
+			padding: 3.5rem 0;
 		}
 	}
 </style>

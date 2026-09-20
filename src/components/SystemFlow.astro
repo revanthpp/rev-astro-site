@@ -38,8 +38,11 @@ const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
 		--flow-soft: var(--accent-soft);
 		width: 100%;
 		border: 1px solid var(--line);
-		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.66);
+		border-radius: var(--radius);
+		background:
+			linear-gradient(90deg, rgba(21, 93, 252, 0.035) 1px, transparent 1px),
+			rgba(251, 250, 247, 0.78);
+		background-size: 48px 100%;
 		overflow: hidden;
 		padding: clamp(1rem, 2vw, 1.5rem);
 	}
@@ -64,17 +67,19 @@ const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
 		min-width: 0;
 		align-content: start;
 		gap: 0.35rem;
+		border-top: 2px solid var(--flow-accent);
+		padding-top: 0.85rem;
 	}
 
 	li:not(:last-child)::after {
 		position: absolute;
-		top: 50%;
+		top: -0.72rem;
 		left: calc(100% + 0.55rem);
 		color: var(--flow-accent);
 		content: "→";
 		font-family: var(--mono);
 		font-size: 1rem;
-		transform: translateY(-50%);
+		transform: none;
 	}
 
 	strong {
@@ -90,7 +95,6 @@ const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
 	}
 
 	.compact {
-		border-radius: var(--radius);
 		padding: 0.85rem;
 	}
 
@@ -100,7 +104,7 @@ const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
 
 	.compact strong {
 		font-family: var(--mono);
-		font-size: 0.66rem;
+		font-size: 0.72rem;
 		font-weight: 750;
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
@@ -117,7 +121,7 @@ const { steps, label, compact = false, tone = 'blue' } = Astro.props as Props;
 		}
 
 		li:not(:last-child)::after {
-			top: calc(100% + 0.45rem);
+			top: calc(100% + 0.35rem);
 			left: 0;
 			content: "↓";
 			transform: none;
